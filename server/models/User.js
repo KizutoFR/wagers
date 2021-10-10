@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     coins: {
-        type: Integer,
+        type: Number,
         required: true
     },
     registered_at: {
@@ -36,6 +36,6 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-  });
+});
   
-  module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model('users', UserSchema);
