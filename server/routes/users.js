@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const User = require('../models/User');
+
+const { forwardAuthenticated } = require('../config/auth/auth');
 
 /** 
 @route GET /
@@ -19,7 +22,7 @@ router.get('/', (req, res) => {
 @description get user by id
 @access Public 
 */
-router.get('/:id', (req, res) => {
+router.get('/:id', forwardAuthenticated, (req, res) => {
   User.findOne({_id : req.params.id})
     .then(user => res.send(user))
     .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
@@ -31,9 +34,11 @@ router.get('/:id', (req, res) => {
 @access Public 
 */
 router.post('/login', (req, res) => {
-  User.findOne({username: req.body.username, password: req.body.password}, {_id: 1})
-      .then(user => res.json({sessid: user._id}))
-      .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
+  passport.authenticate('local', {
+    successRedirect: '/bet',
+    failureRedirect: '/login',
+    failureFlash: false
+  })(req, res, next);
 })
 
 /** 
@@ -41,13 +46,9 @@ router.post('/login', (req, res) => {
 @description logout
 @access Public 
 */
-router.post('/logout', (req, res) => {
-  console.log(req.body)
-  User.findOne({_id: req.body.id})
-      .then(user => {
-          res.json({message: "Logged out successfully"})
-      })
-      .catch(err => res.status(400).json({error: "Can't loggout user : " + err}))
+router.post('/logout', forwardAuthenticated, (req, res) => {
+  req.logout();
+  res.redirect('/users/login');
 })
 
 
