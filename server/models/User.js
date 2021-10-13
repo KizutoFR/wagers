@@ -17,20 +17,17 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: String,
-        required: true
-    },
     password: {
         type: String,
         required: true
     },
     coins: {
         type: Number,
-        required: true
+        default: 100
     },
     registered_at: {
         type: Date,
+        default: Date.now
     },
     updated_date: {
         type: Date,
