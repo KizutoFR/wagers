@@ -1,13 +1,10 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const passport = require('passport');
 const session = require('express-session');
 const league = require('./routes/league');
 const users = require('./routes/users');
 const app = express();
 var cors = require('cors');
-
-require('./config/auth/passport')(passport);
 
 connectDB();
 
@@ -25,9 +22,6 @@ app.use(
     cookie: { maxAge : 655555555 }
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/league', league);
 app.use('/users', users);
