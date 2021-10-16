@@ -1,62 +1,87 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const User = require('../models/User');
 
-/** 
-@route GET /
-@description get all users
-@access Public 
-*/
+/**
+ @route GET /
+ @description get all users
+ @access Public
+ */
 router.get('/', (req, res) => {
   User.find()
-    .then(users => res.send(users))
-    .catch(err => res.status(400).json({error: err}))
+      .then(users => res.send(users))
+      .catch(err => res.status(400).json({error: err}))
 })
 
-/** 
-@route GET users/:id
-@description get user by id
-@access Public 
-*/
-router.get('/:id', (req, res) => {
+/**
+ @route GET users/verify-toke/:id
+ @description check if user has auth token
+ @access Public
+ */
+router.get('/verify-token/:id', (req, res) => {
   User.findOne({_id : req.params.id})
-    .then(user => res.send(user))
-    .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
+      .then(user => {
+        if(user.auth_token) {
+          res.status(200).json({user: user})
+        } else {
+          res.status(400).json({user: null, error: "No auth token for this user"})
+        }
+      })
+      .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
 })
 
-/** 
-@route POST users/login
-@description login user
-@access Public 
-*/
+/**
+ @route post users/logout
+ @description logout user
+ @access Public
+ */
+router.post('/logout', (req, res) => {
+  console.log("logout", req.body.id)
+  User.updateOne({_id: req.body.id}, {$set: {auth_token: null}})
+      .then(user => res.status(200).json({success: true}))
+      .catch(err => {
+        console.log(err)
+        res.status(400).json({error: "Can't logout user : " + err})
+      })
+})
+
+/**
+ @route POST users/login
+ @description login user
+ @access Public
+ */
 router.post('/login', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
   User.findOne({ email: email })
-    .then(user => {
-      if(!user) {
-        res.json({ user: null, message: 'No user exist with this email'})
-        return;
-      }
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if(err) throw err;
-        if(isMatch) {
-          res.json({ user: user, message: 'You are now connected' })
-        } else {
-          res.json({ user: null, message: 'Wrong password' })
+      .then(user => {
+        if(!user) {
+          res.json({ user: null, message: 'No user exist with this email'})
+          return;
         }
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if(err) throw err;
+          if(isMatch) {
+            const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
+            User.updateOne({_id: user._id}, {$set : {auth_token: token}})
+                .then(() => res.status(200).json({user_id: user._id, token}));
+          } else {
+            res.json({ user: null, message: 'Wrong password' })
+          }
+        })
       })
-    })
 })
 
-/** 
-@route POST users/register
-@description register user
-@access Public 
-*/
+/**
+ @route POST users/register
+ @description register user
+ @access Public
+ */
 router.post('/register', (req, res) => {
   let { firstname, lastname, username, email, password, confirmPassword } = req.body;
   let errors = [];
@@ -65,7 +90,7 @@ router.post('/register', (req, res) => {
     errors.push({ msg: 'Please enter all fields' });
   }
 
-  if (password != confirmPassword) {
+  if (password !== confirmPassword) {
     errors.push({ msg: 'Passwords do not match' });
   }
 
@@ -94,15 +119,26 @@ router.post('/register', (req, res) => {
             if (err) throw err;
             newUser.password = hash;
             newUser.save()
-              .then(() => {
-                res.json({ success: true, errors: errors })
-              })
-              .catch(err => console.log(err));
+                .then(() => {
+                  res.json({ success: true, errors: errors })
+                })
+                .catch(err => console.log(err));
           });
         });
       }
     });
   }
+})
+
+/**
+ @route GET users/:id
+ @description get user by id
+ @access Public
+ */
+router.get('/:id', (req, res) => {
+  User.findOne({_id : req.params.id})
+      .then(user => res.status(200).json({user: user}))
+      .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
 })
 
 module.exports = router;

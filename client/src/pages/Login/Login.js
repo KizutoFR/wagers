@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext.js';
 import './Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { isFetching, dispatch } = useContext(AuthContext);
 
   const changePassword = (e) => {
     setPassword(e.target.value);
@@ -15,24 +17,33 @@ export default function Login() {
     setEmail(e.target.value);
   }
 
-  const login = (e) => {
+  const sendUserCredentials = async (credentials, dispatch) => {
+      dispatch({type: "LOGIN_START"});
+      try {
+          const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login', credentials)
+          if (res.status === 200) {
+              localStorage.setItem('wagers_auth_token', res.data.token);
+              localStorage.setItem('wagers_user_id', res.data.user_id);
+              dispatch({type: "LOGIN_SUCCESS", payload: res.data.token})
+          } else {
+              setErrorMessage(res.data.message);
+              dispatch({type: "LOGIN_FAILURE", payload: res.data.message});
+          }
+      } catch (err) {
+          dispatch({type: "LOGIN_FAILURE", payload: err});
+      }
+  }
+
+  const handleClick = (e) => {
     e.preventDefault();
-    axios.post(process.env.REACT_APP_API_URL+'/users/login', {email, password})
-      .then(res => {
-        if (res.data.user) {
-          localStorage.setItem('user', JSON.stringify(res.data.user))
-        } else {
-          setErrorMessage(res.data.message);
-        }
-      })
-      .catch(err => console.error(err))
+    sendUserCredentials({email, password}, dispatch);
   }
 
   return (
     <div>
       <h1>Login</h1>
       {errorMessage !== '' ? <p>{errorMessage}</p> : ''}
-      <form onSubmit={login}>
+      <form onSubmit={handleClick}>
         <input type="text" placeholder="Email" value={email} onChange={changeEmail} />
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
         <input type="submit" value="Log-in"/>
