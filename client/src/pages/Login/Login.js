@@ -21,7 +21,7 @@ export default function Login() {
       dispatch({type: "LOGIN_START"});
       try {
           const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login', credentials)
-          if (res.status === 200) {
+          if (res.data.success) {
               localStorage.setItem('wagers_auth_token', res.data.token);
               localStorage.setItem('wagers_user_id', res.data.user_id);
               dispatch({type: "LOGIN_SUCCESS", payload: res.data.token})

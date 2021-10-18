@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const User = require('../models/User');
+const AccountType = require('../models/AccountType');
 
 /**
  @route GET /
@@ -13,7 +14,7 @@ const User = require('../models/User');
  */
 router.get('/', (req, res) => {
   User.find()
-      .then(users => res.send(users))
+      .then(users => res.status(200).json({users}))
       .catch(err => res.status(400).json({error: err}))
 })
 
@@ -40,12 +41,10 @@ router.get('/verify-token/:id', (req, res) => {
  @access Public
  */
 router.post('/logout', (req, res) => {
-  console.log("logout", req.body.id)
   User.updateOne({_id: req.body.id}, {$set: {auth_token: null}})
       .then(user => res.status(200).json({success: true}))
       .catch(err => {
-        console.log(err)
-        res.status(400).json({error: "Can't logout user : " + err})
+        res.status(400).json({success: false, error: "Can't logout user : " + err})
       })
 })
 
@@ -61,7 +60,7 @@ router.post('/login', (req, res) => {
   User.findOne({ email: email })
       .then(user => {
         if(!user) {
-          res.json({ user: null, message: 'No user exist with this email'})
+          res.status(400).json({ success: false, message: 'No user exist with this email'})
           return;
         }
         bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -69,9 +68,9 @@ router.post('/login', (req, res) => {
           if(isMatch) {
             const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
             User.updateOne({_id: user._id}, {$set : {auth_token: token}})
-                .then(() => res.status(200).json({user_id: user._id, token}));
+                .then(() => res.status(200).json({success: true, user_id: user._id, token}));
           } else {
-            res.json({ user: null, message: 'Wrong password' })
+            res.status(400).json({ success: false, message: 'Wrong password' })
           }
         })
       })
@@ -137,8 +136,18 @@ router.post('/register', (req, res) => {
  */
 router.get('/:id', (req, res) => {
   User.findOne({_id : req.params.id})
-      .then(user => res.status(200).json({user: user}))
-      .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
+      .populate({
+        path: 'linked_account',
+        model: 'linked-account',
+        populate: [{
+          path: 'account_type',
+          model: 'account-type'
+        }]
+      })
+      .then(user => {
+          res.status(200).json({success: true, user: user})
+      })
+      .catch(err => res.status(400).json({success: false, error: "Unknwow user : " + err}))
 })
 
 module.exports = router;

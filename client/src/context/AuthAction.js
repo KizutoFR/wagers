@@ -13,6 +13,11 @@ export const LoginFailure = (error) => ({
     payload: error
 })
 
+export const LogoutStart = (token) => ({
+    type: "LOGOUT_START",
+    payload: token
+})
+
 export const LogoutSuccess = (token) => ({
     type: "LOGOUT_SUCCESS",
     payload: token

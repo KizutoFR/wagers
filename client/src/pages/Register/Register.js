@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Register() {
@@ -8,7 +9,7 @@ export default function Register() {
   const lastname = useRef();
   const username = useRef();
   const confirmPassword = useRef();
-
+  const history = useHistory();
   const [errors, setErrors] = useState([]);
 
   const register = async (e) => {
@@ -23,7 +24,7 @@ export default function Register() {
     };
     const result = await axios.post(process.env.REACT_APP_API_URL+'/users/register', data);
     if (result.data.success) {
-      //TODO: redirect to dashboard
+      history.push('/login');
     } else {
       setErrors(result.data.errors)
     }
@@ -31,7 +32,7 @@ export default function Register() {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       {errors.length > 0 
         ? errors.map((err, index) => <p key={index}>{err.msg}</p>)
         : ''
