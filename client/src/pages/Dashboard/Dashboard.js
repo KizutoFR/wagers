@@ -9,7 +9,8 @@ const getGamesAccount = async () => {
 }
 
 export default function Dashboard({ user_data }) {
-    const [games, setGames] = useState();
+    const [games, setGames] = useState([]);
+
     const { dispatch } = useContext(AuthContext);
 
     useEffect(() => {

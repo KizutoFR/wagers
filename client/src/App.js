@@ -11,10 +11,6 @@ import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
 import ProfilUser from './pages/ProfilUser/ProfilUser.js'
 
-async function getUserIfAuthToken(user_id) {
-  return await axios.get(process.env.REACT_APP_API_URL+'/users/verify-token/'+user_id).then(res => res.data.user);
-}
-
 async function fetchUserData(user_id) {
   return await axios.get(process.env.REACT_APP_API_URL+'/users/'+user_id).then(res => res.data.user);
 }
@@ -44,28 +40,16 @@ export default function App() {
             })
             .catch(() => {
               setUser(null)
+              // eslint-disable-next-line
               token = null;
-              localStorage.removeItem('wagers_user_id');
               localStorage.removeItem('wagers_auth_token');
             })
       } else {
         removeUserAuthToken(decryptedToken.user_id).then(() => {
           setUser(null);
           token = null;
-          localStorage.removeItem('wagers_user_id');
           localStorage.removeItem('wagers_auth_token');
         });
-      }
-    } else {
-      const user_id = localStorage.getItem('wagers_user_id');
-      if (user_id) {
-        getUserIfAuthToken(user_id).then(res => {
-          if(res) {
-            localStorage.setItem('wagers_auth_token', res.auth_token);
-            token = res.auth_token;
-            setUser(res.user);
-          }
-        })
       }
     }
   }, [token])
@@ -89,7 +73,6 @@ export default function App() {
             <Route path="/profil">
               {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login'/>}
             </Route>
-            
           </Switch>
       ) : (
           <Switch>

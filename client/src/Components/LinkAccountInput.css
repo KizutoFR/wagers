@@ -42,12 +42,16 @@
 }
 
 .game-card .inputContainer {
-    display: flex;
+    display: none;
     flex-direction: row;
     position: absolute;
     bottom: 0;
     width: 100%;
     justify-content: center;
+}
+
+.game-card .inputContainer.displayInput {
+    display: flex;
 }
 
 .game-card .inputContainer input {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Homepage.css';
 
 export default function Homepage({ user_data }) {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         setUser(user_data)

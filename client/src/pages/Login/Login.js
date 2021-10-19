@@ -7,7 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const changePassword = (e) => {
     setPassword(e.target.value);
@@ -23,7 +23,6 @@ export default function Login() {
           const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login', credentials)
           if (res.data.success) {
               localStorage.setItem('wagers_auth_token', res.data.token);
-              localStorage.setItem('wagers_user_id', res.data.user_id);
               dispatch({type: "LOGIN_SUCCESS", payload: res.data.token})
           } else {
               setErrorMessage(res.data.message);
