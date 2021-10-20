@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const User = require('../models/User');
 const AccountType = require('../models/AccountType');
+const LinkedAccount = require('../models/LinkedAccount');
 
 /**
  @route GET /
@@ -118,10 +119,10 @@ router.post('/register', (req, res) => {
             if (err) throw err;
             newUser.password = hash;
             newUser.save()
-                .then(() => {
-                  res.json({ success: true, errors: errors })
-                })
-                .catch(err => console.log(err));
+              .then(() => {
+                res.json({ success: true, errors: errors })
+              })
+              .catch(err => console.log(err));
           });
         });
       }
@@ -136,18 +137,18 @@ router.post('/register', (req, res) => {
  */
 router.get('/:id', (req, res) => {
   User.findOne({_id : req.params.id})
-      .populate({
-        path: 'linked_account',
-        model: 'linked-account',
-        populate: [{
-          path: 'account_type',
-          model: 'account-type'
-        }]
-      })
-      .then(user => {
-          res.status(200).json({success: true, user: user})
-      })
-      .catch(err => res.status(400).json({success: false, error: "Unknwow user : " + err}))
+    .populate({
+      path: 'linked_account',
+      model: 'LinkedAccount',
+      populate: {
+        path: 'account_type',
+        model: 'AccountType'
+      }
+    })
+    .then(user => {
+      res.status(200).json({success: true, user: user})
+    })
+    .catch(err => res.status(400).json({success: false, error: "Unknwow user : " + err}))
 })
 
 module.exports = router;

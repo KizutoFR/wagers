@@ -35,12 +35,11 @@ const UserSchema = new mongoose.Schema({
     },
     linked_account: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "linked-account"
+        ref: "LinkedAccount"
     }],
     updated_date: {
         type: Date,
         default: Date.now
     }
 });
-  
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);

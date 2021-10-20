@@ -29,7 +29,7 @@ export default function Login() {
               dispatch({type: "LOGIN_FAILURE", payload: res.data.message});
           }
       } catch (err) {
-          dispatch({type: "LOGIN_FAILURE", payload: err});
+        dispatch({type: "LOGIN_FAILURE", payload: err.message});
       }
   }
 

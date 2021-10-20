@@ -15,4 +15,4 @@ const AccountTypeSchema = new mongoose.Schema({
     }
 });
 
-module.exports = AccountType = mongoose.model('account-type', AccountTypeSchema);
+module.exports = AccountType = mongoose.model('AccountType', AccountTypeSchema);

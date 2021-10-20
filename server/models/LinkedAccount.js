@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const LinkedAccountSchema = new mongoose.Schema({
     user : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        ref: "User",
+        required: true
     },
     username: {
       type: String,
@@ -11,9 +12,9 @@ const LinkedAccountSchema = new mongoose.Schema({
     },
     account_type: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "account-type",
+        ref: "AccountType",
         required: true
     }
 });
 
-module.exports = LinkedAccount = mongoose.model('linked-account', LinkedAccountSchema);
+module.exports = LinkedAccount = mongoose.model('LinkedAccount', LinkedAccountSchema);

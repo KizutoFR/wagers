@@ -12,7 +12,17 @@ const modifyAccountName = async (accountName, linked_id) => {
     }
 }
 
-export default function LinkAccountInput({ data, available, linked_list }) {
+const createLinkedAccount = async (modifiedName, account_id, user_id) => {
+    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id, user_id });
+    if(res.data.success) {
+        //TODO: Afficher une jolie notif avec le message
+        console.log(res.data.message)
+    } else {
+        console.error(res.data.message);
+    }
+}
+
+export default function LinkAccountInput({ data, available, linked_list, user_id }) {
     const [pressed, setPressed] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [accountName, setAccountName] = useState('');
@@ -24,7 +34,11 @@ export default function LinkAccountInput({ data, available, linked_list }) {
     }
 
     const handleSubmit = (e) => {
-        modifyAccountName(modifiedName, linkedId);
+        if(accountName !== '') {
+            modifyAccountName(modifiedName, linkedId);
+        } else {
+            createLinkedAccount(modifiedName, data._id, user_id);
+        }
     }
 
     const stopPropagation = (e) => {
@@ -36,7 +50,7 @@ export default function LinkAccountInput({ data, available, linked_list }) {
     }
 
     useEffect(() => {
-        if (linked_list) {
+        if (linked_list && available) {
             let linkedAccount = linked_list.find(elem => elem.account_type.type === data.type);
             if(linkedAccount && !loaded) {
                 setLinkedId(linkedAccount._id);
@@ -45,7 +59,7 @@ export default function LinkAccountInput({ data, available, linked_list }) {
                 setLoaded(true);
             }
         }
-    }, [data.type, linked_list, modifiedName, accountName, loaded, linkedId])
+    }, [data.type, linked_list, modifiedName, accountName, loaded, linkedId, available])
 
     return (
         <div className="game-card" onClick={handleClick}>

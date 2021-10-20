@@ -4,18 +4,20 @@ import axios from 'axios';
 import './Dashboard.css';
 import LinkAccountInput from "../../Components/LinkAccountInput";
 
-const getGamesAccount = async () => {
-    return await axios.get(process.env.REACT_APP_API_URL+'/games').then(res => res.data.games);
-}
-
 export default function Dashboard({ user_data }) {
     const [games, setGames] = useState([]);
-
     const { dispatch } = useContext(AuthContext);
 
     useEffect(() => {
-        getGamesAccount().then(setGames)
+        getGamesAccount()
+        console.log(user_data)
     }, [user_data])
+
+    async function getGamesAccount() {
+        return await axios.get(process.env.REACT_APP_API_URL+'/games').then(res => {
+            setGames(res.data.games)
+        });
+    }
 
     const logoutUser = async (user, dispatch) => {
         dispatch({type:"LOGOUT_START", payload: user.token});
@@ -43,7 +45,7 @@ export default function Dashboard({ user_data }) {
             <h1>Dashboard</h1>
             <div className="row">
                 {games && games.map((game, index) => (
-                    <LinkAccountInput data={game} linked_list={user_data.linked_account} available={game.type === "LOL"} key={index} />
+                    <LinkAccountInput data={game} linked_list={user_data.linked_account} user_id={user_data._id} available={game.type === "LOL"} key={index} />
                 ))}
             </div>
             <button onClick={handleClick}>Logout</button>
