@@ -25,18 +25,22 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 100
     },
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FriendShip"
+    }],
+    linked_account: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "LinkedAccount"
+    }],
     auth_token: {
-      type: String,
-      default: null
+        type: String,
+        default: null
     },
     registered_at: {
         type: Date,
         default: Date.now
     },
-    linked_account: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "LinkedAccount"
-    }],
     updated_date: {
         type: Date,
         default: Date.now

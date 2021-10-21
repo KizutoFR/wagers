@@ -10,7 +10,6 @@ export default function Dashboard({ user_data }) {
 
     useEffect(() => {
         getGamesAccount()
-        console.log(user_data)
     }, [user_data])
 
     async function getGamesAccount() {

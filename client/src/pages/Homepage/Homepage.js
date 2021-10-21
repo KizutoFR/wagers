@@ -13,11 +13,15 @@ export default function Homepage({ user_data }) {
         <div>
             <h1>Homepage</h1>
             { user ? (
-                <Link to="/dashboard">Dashboard</Link>
+                <div>
+                    <Link to="/dashboard">Dashboard</Link>
+                    <br />
+                    <Link to="/profil">Profil</Link>
+                </div>
             ) : (
                 <div>
                     <Link to="/login">Login</Link>
-                    <br/>
+                    <br />
                     <Link to="/register">Register</Link>
                 </div>
             ) }

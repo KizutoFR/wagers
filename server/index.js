@@ -5,6 +5,8 @@ const league = require('./routes/league');
 const users = require('./routes/users');
 const games = require('./routes/games');
 const accounts = require('./routes/accounts');
+const friends = require('./routes/friends');
+
 
 const app = express();
 const cors = require('cors');
@@ -19,6 +21,8 @@ app.use('/league', league);
 app.use('/users', users);
 app.use('/games', games);
 app.use('/accounts', accounts);
+app.use('/friends', friends);
+
 
 
 const port = process.env.PORT || 8080;

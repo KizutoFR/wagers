@@ -10,6 +10,7 @@ import Homepage from './pages/Homepage/Homepage.js';
 import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
 import ProfilUser from './pages/ProfilUser/ProfilUser.js'
+import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 
 async function fetchUserData(user_id) {
   return await axios.get(process.env.REACT_APP_API_URL+'/users/'+user_id).then(res => res.data.user);
@@ -69,6 +70,9 @@ export default function App() {
             </Route>
             <Route path="/register">
               {token ? <Redirect to="/" user_data={user}/> : <Register/>}
+            </Route>
+             <Route path="/profil/:id">
+              {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
             </Route>
             <Route path="/profil">
               {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login'/>}

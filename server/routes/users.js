@@ -143,7 +143,21 @@ router.get('/:id', (req, res) => {
       populate: {
         path: 'account_type',
         model: 'AccountType'
-      }
+      },
+    })
+    .populate({
+      path: 'friends',
+      model: 'FriendShip',
+      populate: [
+        {
+          path: 'from',
+          model: 'User'
+        },
+        {
+          path: 'to',
+          model: 'User'
+        }
+      ]
     })
     .then(user => {
       res.status(200).json({success: true, user: user})
