@@ -7,6 +7,8 @@ export default function ProfilGlobal({ logged_user }){
   const [userData, setUserData] = useState(null);
   const [alreadyRequested, setAlreadyRequested] = useState(false)
   const [alreadyFriend, setAlreadyFriend] = useState(false)
+  const [isSender, setIsSender] = useState(true);
+  
   let history = useHistory();
 
   useEffect(() => {
@@ -22,13 +24,14 @@ export default function ProfilGlobal({ logged_user }){
 
   async function isAlreadyRequested(from, to) {
     return await axios.get(process.env.REACT_APP_API_URL+'/friends/requested/' + from + '/' + to).then(res => {
+      setIsSender(res.data.sender === logged_user._id)
       setAlreadyRequested(res.data.requested);
       setAlreadyFriend(res.data.accepted);
     })
   }
 
   async function sendFriendRequest() {
-    return await axios.post(process.env.REACT_APP_API_URL+'/friends/request', {from: logged_user._id, to: id}).then(res => {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/create', {from: logged_user._id, to: id}).then(res => {
       console.log(res.data.message)
       setAlreadyRequested(true);
     })
@@ -42,6 +45,22 @@ export default function ProfilGlobal({ logged_user }){
     })
   }
 
+  async function acceptFriendRequest() {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: true}).then(res => {
+      console.log(res.data.message)
+      setAlreadyFriend(true);
+      setAlreadyRequested(false);
+    })
+  }
+
+  async function declineFriendRequest() {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: false}).then(res => {
+      console.log(res.data.message)
+      setAlreadyFriend(true);
+      setAlreadyRequested(false);
+    })
+  }
+  
   if (id === logged_user._id) {
     return <Redirect to="/profil" />
   }
@@ -54,7 +73,16 @@ export default function ProfilGlobal({ logged_user }){
       <p>{userData.username}</p>
       <p>{userData.email}</p>
       <p>{userData.coins}</p>
-      {!alreadyRequested ? (alreadyFriend ? <button onClick={removeFromFriends}>Unfriend</button>  : <button onClick={sendFriendRequest}>Send friend request</button> ) : <button disabled>Pending request</button>}
+      {!alreadyRequested ? 
+        (alreadyFriend ? 
+          <button onClick={removeFromFriends}>Unfriend</button>  
+        : <button onClick={sendFriendRequest}>Send friend request</button> ) 
+      : isSender ? <button disabled>Pending request</button> : (
+        <div>
+          <button onClick={acceptFriendRequest}>Accept request</button>
+          <button onClick={declineFriendRequest}>Decline request</button>
+        </div>
+      )}
   </div> : <p>Loading....</p>)
   )
 }
