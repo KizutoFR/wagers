@@ -1,12 +1,10 @@
 import React, {useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import axios from 'axios';
 import './Dashboard.css';
 import LinkAccountInput from "../../Components/LinkAccountInput";
 
 export default function Dashboard({ user_data, setToken }) {
     const [games, setGames] = useState([]);
-    const history = useHistory();
 
     useEffect(() => {
         getGamesAccount()

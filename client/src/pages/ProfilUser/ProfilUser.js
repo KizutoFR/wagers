@@ -32,7 +32,7 @@ export default function ProfilUser({user_data}){
                                 {elem.from._id === user_data._id ? (
                                     <p><a href={'/profil/'+elem.to._id}>{elem.to.username}</a></p>
                                 ) : (
-                                    <p><a href={'/profil/'+elem.from._id}>{elem.to.username}</a></p>
+                                    <p><a href={'/profil/'+elem.from._id}>{elem.from.username}</a></p>
                                 )}
                             </div>
                         )
