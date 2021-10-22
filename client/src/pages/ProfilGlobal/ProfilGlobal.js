@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function ProfilGlobal({ logged_user }){
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
+  const [logged, setLogged] = useState(logged_user)
   const [alreadyRequested, setAlreadyRequested] = useState(false)
   const [alreadyFriend, setAlreadyFriend] = useState(false)
   const [isSender, setIsSender] = useState(true);
@@ -13,8 +14,11 @@ export default function ProfilGlobal({ logged_user }){
 
   useEffect(() => {
     getUserData(id)
-    isAlreadyRequested(logged_user._id, id);
-  }, [id])
+    setLogged(logged_user)
+    if(logged) {
+      isAlreadyRequested(logged._id, id);
+    }
+  }, [id, logged_user, logged])
 
   async function getUserData(id) {
     return await axios.get(process.env.REACT_APP_API_URL+'/users/'+id).then(res => {
@@ -25,6 +29,7 @@ export default function ProfilGlobal({ logged_user }){
   async function isAlreadyRequested(from, to) {
     return await axios.get(process.env.REACT_APP_API_URL+'/friends/requested/' + from + '/' + to).then(res => {
       setIsSender(res.data.sender === logged_user._id)
+      console.log(isSender)
       setAlreadyRequested(res.data.requested);
       setAlreadyFriend(res.data.accepted);
     })
@@ -33,6 +38,7 @@ export default function ProfilGlobal({ logged_user }){
   async function sendFriendRequest() {
     return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/create', {from: logged_user._id, to: id}).then(res => {
       console.log(res.data.message)
+      setIsSender(true)
       setAlreadyRequested(true);
     })
   }
@@ -60,28 +66,28 @@ export default function ProfilGlobal({ logged_user }){
       setAlreadyRequested(false);
     })
   }
-    if (id === logged_user._id) {
-    return <Redirect to="/profil" />
-  }
 
   return (
-    (userData ? <div>
-      <h1>Profil</h1>
-      <p>{userData.firstname}</p>
-      <p>{userData.lastname}</p>
-      <p>{userData.username}</p>
-      <p>{userData.email}</p>
-      <p>{userData.coins}</p>
-      {!alreadyRequested ? 
-        (alreadyFriend ? 
-          <button onClick={removeFromFriends}>Unfriend</button>  
-        : <button onClick={sendFriendRequest}>Send friend request</button> ) 
-      : isSender ? <button disabled>Pending request</button> : (
-        <div>
-          <button onClick={acceptFriendRequest}>Accept request</button>
-          <button onClick={declineFriendRequest}>Decline request</button>
-        </div>
-      )}
-  </div> : <p>Loading....</p>)
+    (userData ? (
+      <div>
+        <h1>Profil</h1>
+        <p>{userData.firstname}</p>
+        <p>{userData.lastname}</p>
+        <p>{userData.username}</p>
+        <p>{userData.email}</p>
+        <p>{userData.coins}</p>
+        {!alreadyRequested ? 
+          (alreadyFriend ? 
+            <button onClick={removeFromFriends}>Unfriend</button>  
+          : <button onClick={sendFriendRequest}>Send friend request</button> ) 
+        : isSender ? <button disabled>Pending request</button> : (
+          <div>
+            <button onClick={acceptFriendRequest}>Accept request</button>
+            <button onClick={declineFriendRequest}>Decline request</button>
+          </div>
+        )}
+      </div>
+    ) : <p>Loading....</p>)
+    
   )
 }

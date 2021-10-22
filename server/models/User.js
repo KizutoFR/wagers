@@ -33,10 +33,6 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "LinkedAccount"
     }],
-    auth_token: {
-        type: String,
-        default: null
-    },
     registered_at: {
         type: Date,
         default: Date.now

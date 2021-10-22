@@ -1,13 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../../context/AuthContext.js';
 import './Login.css';
 
-export default function Login() {
+export default function Login({setToken}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { dispatch } = useContext(AuthContext);
 
   const changePassword = (e) => {
     setPassword(e.target.value);
@@ -17,25 +15,22 @@ export default function Login() {
     setEmail(e.target.value);
   }
 
-  const sendUserCredentials = async (credentials, dispatch) => {
-      dispatch({type: "LOGIN_START"});
+  const sendUserCredentials = async (credentials) => {
       try {
           const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login', credentials)
           if (res.data.success) {
               localStorage.setItem('wagers_auth_token', res.data.token);
-              dispatch({type: "LOGIN_SUCCESS", payload: res.data.token})
+              setToken(res.data.token)
           } else {
               setErrorMessage(res.data.message);
-              dispatch({type: "LOGIN_FAILURE", payload: res.data.message});
           }
       } catch (err) {
-        dispatch({type: "LOGIN_FAILURE", payload: err.message});
       }
   }
 
   const handleClick = (e) => {
     e.preventDefault();
-    sendUserCredentials({email, password}, dispatch);
+    sendUserCredentials({email, password});
   }
 
   return (

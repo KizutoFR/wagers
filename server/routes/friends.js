@@ -69,7 +69,7 @@ router.post('/requests/update', (req, res) => {
  @access Public
  */
  router.get('/requests/list/:id', (req, res) => {
-  FriendShip.find({to: req.params.id}, {accepted: false})
+  FriendShip.find({to: req.params.id, accepted: false})
     .populate({
       path: 'from',
       model: 'User'

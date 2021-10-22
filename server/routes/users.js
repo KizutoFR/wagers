@@ -20,36 +20,6 @@ router.get('/', (req, res) => {
 })
 
 /**
- @route GET users/verify-toke/:id
- @description check if user has auth token
- @access Public
- */
-router.get('/verify-token/:id', (req, res) => {
-  User.findOne({_id : req.params.id})
-      .then(user => {
-        if(user.auth_token) {
-          res.status(200).json({user: user})
-        } else {
-          res.status(400).json({user: null, error: "No auth token for this user"})
-        }
-      })
-      .catch(err => res.status(400).json({error: "Unknwow user : " + err}))
-})
-
-/**
- @route post users/logout
- @description logout user
- @access Public
- */
-router.post('/logout', (req, res) => {
-  User.updateOne({_id: req.body.id}, {$set: {auth_token: null}})
-      .then(user => res.status(200).json({success: true}))
-      .catch(err => {
-        res.status(400).json({success: false, error: "Can't logout user : " + err})
-      })
-})
-
-/**
  @route POST users/login
  @description login user
  @access Public
