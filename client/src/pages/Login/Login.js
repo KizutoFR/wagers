@@ -42,7 +42,7 @@ export default function Login({setToken}) {
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
         {/* <input type="submit" value="Log-in"/> */}
        
-        <button class="g-recaptcha" 
+        <button className="g-recaptcha" 
         data-sitekey="6Ldzi-kcAAAAAE8KZmXGjO3krlvJ4q9rMVl3c2Te" 
         data-callback='onSubmit' 
         data-action='submit'>Log in</button>
