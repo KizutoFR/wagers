@@ -37,10 +37,15 @@ export default function Login({setToken}) {
     <div>
       <h1>Login</h1>
       {errorMessage !== '' ? <p>{errorMessage}</p> : ''}
-      <form onSubmit={handleClick}>
+      <form id="login-form" onSubmit={handleClick}>
         <input type="text" placeholder="Email" value={email} onChange={changeEmail} />
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
-        <input type="submit" value="Log-in"/>
+        {/* <input type="submit" value="Log-in"/> */}
+       
+        <button class="g-recaptcha" 
+        data-sitekey="6Ldzi-kcAAAAAE8KZmXGjO3krlvJ4q9rMVl3c2Te" 
+        data-callback='onSubmit' 
+        data-action='submit'>Log in</button>
       </form>
     </div>
   )
