@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 require('dotenv').config();
 
 const User = require('../models/User');
@@ -27,24 +28,34 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
+  let captcha_token = req.body.captcha_token;
 
-  User.findOne({ email: email })
-      .then(user => {
-        if(!user) {
-          res.status(400).json({ success: false, message: 'No user exist with this email'})
-          return;
-        }
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch) {
-            const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
-            User.updateOne({_id: user._id}, {$set : {auth_token: token}})
-                .then(() => res.status(200).json({success: true, user_id: user._id, token}));
-          } else {
-            res.status(400).json({ success: false, message: 'Wrong password' })
-          }
-        })
-      })
+  axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_API_SECRET_KEY}&response=${captcha_token}`, {}, {headers: {'content-type': 'application/x-www-form-urlencoded'}})
+    .then(result => {
+      if(result.data.success && result.data.score >= 0.5) {
+        User.findOne({ email: email })
+          .then(user => {
+            if(!user) {
+              res.status(400).json({ success: false, message: 'No user exist with this email'})
+              return;
+            }
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+              if(err) throw err;
+              if(isMatch) {
+                const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
+                User.updateOne({_id: user._id}, {$set : {auth_token: token}})
+                    .then(() => res.status(200).json({success: true, user_id: user._id, token}));
+              } else {
+                res.status(400).json({ success: false, message: 'Wrong password' })
+              }
+            })
+          })
+      } else {
+        res.status(400).json({ success: false, message: 'Invalid recaptcha'})
+        return;
+      }
+    })
+    .catch(() => res.status(400).json({ success: false, message: 'Invalid recaptcha' }));
 })
 
 /**
@@ -60,6 +71,10 @@ router.post('/register', (req, res) => {
     errors.push({ msg: 'Please enter all fields' });
   }
 
+  if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(email)) {
+    errors.push({msg: 'Email is not in a valid format'});
+  }
+
   if (password !== confirmPassword) {
     errors.push({ msg: 'Passwords do not match' });
   }
@@ -71,9 +86,9 @@ router.post('/register', (req, res) => {
   if (errors.length > 0) {
     res.send({ success: false, errors: errors })
   } else {
-    User.findOne({ email: email }).then(user => {
+    User.findOne({$or : [{ email: email }, {username: username}]}).then(user => {
       if (user) {
-        errors.push({ msg: 'Email already exists' });
+        errors.push({ msg: 'Email or username already registered' });
         res.send({ success: false, errors: errors })
       } else {
         const newUser = new User({
@@ -101,12 +116,24 @@ router.post('/register', (req, res) => {
 })
 
 /**
+ @route GET users/search/:username
+ @description get users by username
+ @access Public
+ */
+router.post('/search', (req, res) => {
+  var regxp = new RegExp('.*'+req.body.username+'.*', 'i');
+  User.find({$and: [{username: {$regex: regxp}}, {_id: {$ne: req.body.current_id}}]})
+    .then(users => res.status(200).json({success: true, users: users}))
+    .catch(err => res.status(400).json({success: false, error: "No users : " + err}))
+})
+
+/**
  @route GET users/:id
  @description get user by id
  @access Public
  */
 router.get('/:id', (req, res) => {
-  User.findOne({_id : req.params.id})
+  User.findOne({_id : req.params.id}, {password: 0, updated_date: 0, registered_at: 0})
     .populate({
       path: 'linked_account',
       model: 'LinkedAccount',

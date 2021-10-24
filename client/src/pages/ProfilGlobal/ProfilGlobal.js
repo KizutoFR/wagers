@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {useParams, Redirect, useHistory } from 'react-router-dom';
+import {useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ProfilGlobal({ logged_user }){
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
-  const [logged, setLogged] = useState(logged_user)
   const [alreadyRequested, setAlreadyRequested] = useState(false)
   const [alreadyFriend, setAlreadyFriend] = useState(false)
   const [isSender, setIsSender] = useState(true);
@@ -14,16 +13,18 @@ export default function ProfilGlobal({ logged_user }){
 
   useEffect(() => {
     getUserData(id)
-    setLogged(logged_user)
-    if(logged) {
-      isAlreadyRequested(logged._id, id);
+    if(logged_user) {
+      if(logged_user._id === id) {
+        history.push('/dashboard')
+      }
+      isAlreadyRequested(logged_user._id, id);
     }
-  }, [id, logged_user, logged])
+  }, [id, logged_user])
 
   async function getUserData(id) {
     return await axios.get(process.env.REACT_APP_API_URL+'/users/'+id).then(res => {
       setUserData(res.data.user)
-    }).catch(() => history.push('/dashboard'))
+    }).catch(err => console.error(err))
   }
 
   async function isAlreadyRequested(from, to) {

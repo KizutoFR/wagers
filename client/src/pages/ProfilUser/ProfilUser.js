@@ -5,6 +5,7 @@ export default function ProfilUser({user_data}){
     const [requestList, setRequestList] = useState([]);
 
     useEffect(() => {
+        console.log(user_data)
         if (user_data) {
             getPendingRequest(user_data._id)
         }
@@ -26,7 +27,7 @@ export default function ProfilUser({user_data}){
                     <p>{user_data.coins}</p>
 
                     <h3>Friendslist</h3>
-                    {user_data.friends.length > 0 ? (
+                    {user_data && user_data.friends.length > 0 ? (
                         user_data.friends.map((elem, index) => 
                             <div key={index}>
                                 {elem.from._id === user_data._id ? (

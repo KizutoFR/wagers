@@ -28,24 +28,25 @@ export default function Login({setToken}) {
       }
   }
 
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    sendUserCredentials({email, password});
+    window.grecaptcha.ready(function() {
+      window.grecaptcha.execute('6Ldzi-kcAAAAAE8KZmXGjO3krlvJ4q9rMVl3c2Te', {action: 'submit'}).then(function(token) {
+        sendUserCredentials({email, password, captcha_token: token});
+      });
+    });
   }
 
   return (
     <div>
       <h1>Login</h1>
       {errorMessage !== '' ? <p>{errorMessage}</p> : ''}
-      <form id="login-form" onSubmit={handleClick}>
+      <form id="login-form">
         <input type="text" placeholder="Email" value={email} onChange={changeEmail} />
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
         {/* <input type="submit" value="Log-in"/> */}
        
-        <button className="g-recaptcha" 
-        data-sitekey="6Ldzi-kcAAAAAE8KZmXGjO3krlvJ4q9rMVl3c2Te" 
-        data-callback='onSubmit' 
-        data-action='submit'>Log in</button>
+        <button data-action="submit" onClick={e => handleSubmit(e)}>Login</button>
       </form>
     </div>
   )

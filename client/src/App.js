@@ -10,6 +10,7 @@ import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
 import ProfilUser from './pages/ProfilUser/ProfilUser.js'
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
+import Header from './Components/Header/Header';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -45,27 +46,30 @@ export default function App() {
   }, [token])
 
   return (
-    <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <Homepage user_data={user}/>
-            </Route>
-            <Route path="/dashboard">
-              {token ? <Dashboard user_data={user} setToken={setToken}/> : <Redirect to="/login" />}
-            </Route>
-            <Route path="/login">
-              {token ? <Redirect to="/" user_data={user}/> : <Login setToken={setToken} />}
-            </Route>
-            <Route path="/register">
-              {token ? <Redirect to="/" user_data={user}/> : <Register />}
-            </Route>
-              <Route path="/profil/:id">
-              {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
-            </Route>
-            <Route path="/profil">
-              {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login' />}
-            </Route>
-          </Switch>
-    </BrowserRouter>
+    <div>
+      {token && <Header user_data={user} /> }
+      <BrowserRouter>
+            <Switch>
+              <Route exact path="/">
+                <Homepage user_data={user}/>
+              </Route>
+              <Route path="/dashboard">
+                {token ? <Dashboard user_data={user} setToken={setToken}/> : <Redirect to="/login" />}
+              </Route>
+              <Route path="/login">
+                {token ? <Redirect to="/" user_data={user}/> : <Login setToken={setToken} />}
+              </Route>
+              <Route path="/register">
+                {token ? <Redirect to="/" user_data={user}/> : <Register />}
+              </Route>
+                <Route path="/profil/:id">
+                {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
+              </Route>
+              <Route path="/profil">
+                {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login' />}
+              </Route>
+            </Switch>
+      </BrowserRouter>
+    </div>
   )
 }
