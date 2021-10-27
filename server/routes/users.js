@@ -10,7 +10,7 @@ const AccountType = require('../models/AccountType');
 const LinkedAccount = require('../models/LinkedAccount');
 
 /**
- @route GET /
+ @route GET users/
  @description get all users
  @access Public
  */
@@ -32,7 +32,8 @@ router.post('/login', (req, res) => {
 
   axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_API_SECRET_KEY}&response=${captcha_token}`, {}, {headers: {'content-type': 'application/x-www-form-urlencoded'}})
     .then(result => {
-      if(result.data.success && result.data.score >= 0.5) {
+      //TODO: Send email if score <= 0.3 to verify identity
+      if(result.data.success && result.data.score > 0) {
         User.findOne({ email: email })
           .then(user => {
             if(!user) {
