@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
             })
           })
       } else {
-        res.status(400).json({ success: false, message: 'Invalid recaptcha'})
+        res.status(400).json({ success: false, message: 'Invalid recaptcha score'})
         return;
       }
     })
@@ -72,7 +72,7 @@ router.post('/register', (req, res) => {
     errors.push({ msg: 'Please enter all fields' });
   }
 
-  if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(email)) {
+  if(!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
     errors.push({msg: 'Email is not in a valid format'});
   }
 
