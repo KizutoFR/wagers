@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const RiotAPI = require('../lib/RiotAPI.js');
 const LinkedAccount = require('../models/LinkedAccount');
 
 router.post('/linked/modify', (req, res) => {
@@ -11,24 +11,32 @@ router.post('/linked/modify', (req, res) => {
     .catch(err => res.status(400).json({success: false, message: err.message}))
 })
 
-router.post('/linked/create', (req, res) => {
+router.post('/linked/create', async (req, res) => {
   let user = req.body.user_id;
   let username = req.body.name;
   let account_type = req.body.account_id;
-
-  const newLinkedAccount = new LinkedAccount({
-    user,
-    username,
-    account_type
-  })
-
-  newLinkedAccount.save()
-    .then(account => {
-      User.updateOne({_id: user}, {$push: {linked_account: account._id}}).then(() => {
-        res.status(200).json({success: true, message: "Account linked successfully"})
-      })
+  let region = req.body.account_region;
+  
+  try {
+    let account_details = await RiotAPI.getSummonerByName(username, region);
+    let value = account_details.accountId;
+    const newLinkedAccount = new LinkedAccount({
+      user,
+      username,
+      account_type,
+      value
     })
-    .catch(err => res.status(400).json({success: false, message: err.message}))
+  
+    newLinkedAccount.save()
+      .then(account => {
+        User.updateOne({_id: user}, {$push: {linked_account: account._id}}).then(() => {
+          res.status(200).json({success: true, message: "Account linked successfully"})
+        })
+      })
+      .catch(err => res.status(400).json({success: false, message: err.message}))
+  } catch (err) {
+    res.status(400).json({success: false, message: err.message})
+  }
 })
 
 module.exports = router;

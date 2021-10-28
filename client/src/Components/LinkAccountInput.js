@@ -12,8 +12,8 @@ const modifyAccountName = async (accountName, linked_id) => {
     }
 }
 
-const createLinkedAccount = async (modifiedName, account_id, user_id) => {
-    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id, user_id });
+const createLinkedAccount = async (modifiedName, account_id, user_id, account_region) => {
+    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id, user_id, account_region });
     if(res.data.success) {
         //TODO: Afficher une jolie notif avec le message
         console.log(res.data.message)
@@ -37,7 +37,8 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
         if(accountName !== '') {
             modifyAccountName(modifiedName, linkedId);
         } else {
-            createLinkedAccount(modifiedName, data._id, user_id);
+            //TODO: put <select> to choose account_region
+            createLinkedAccount(modifiedName, data._id, user_id, 'EUW');
         }
     }
 
