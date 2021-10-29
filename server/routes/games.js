@@ -24,14 +24,10 @@ router.get('/', (req, res) => {
 
 
 //GET SUMMONER Current Match
-router.get('/league-of-legends/:id', (req, res, next) => {
-    console.log("route lol id", req.params.id);
-    LinkedAccount.findOne({_id: req.params.id}).then(async (account)=>{
-        console.log("route lol findone");
-        const currentMatch = await RiotAPI.getLastMatch(account.value, 'EUW');  
-        console.log(currentMatch);
-        res.status(200).json(currentMatch);
-    })
-    
+router.get('/league-of-legends/:username', async (req, res, next) => {
+    const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
+    const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
+    console.log(currentMatch)
+    res.status(200).json({matchInfo: currentMatch, accountInfo});   
 });
 module.exports = router;

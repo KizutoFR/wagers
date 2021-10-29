@@ -3,30 +3,34 @@ import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 export default function Game({user_data}) {
-  const [linkedAccountId, setLinkedAccountID] = useState(null);
-  const [CurrentGameInfo, setCurrentGameInfo] = useState(null);
+  const [data, setData] = useState({});
   const {slug} = useParams();
-  async function getCurrentGameInfo(linkedAccountId){
-    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+slug+'/'+linkedAccountId).then(res =>{
-      setCurrentGameInfo(res.data)
-    })
-  }
 
   useEffect(() => {
     if(user_data){
-      setLinkedAccountID(user_data.linked_account.find(element => {
-        console.log(element.account_type)
-        return element.account_type.slug=== slug
-      }))
-      getCurrentGameInfo(linkedAccountId)
+      const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+      getCurrentGameInfo(linked.username);
     }
+  }, [user_data, slug])
 
-}, [user_data])
-
+  async function getCurrentGameInfo(username){
+    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+slug+'/'+username)
+      .then(res => {
+        console.log(res.data);
+        setData(res.data)
+      })
+  }
 
   return (
     <div>
-        {CurrentGameInfo}
+        {data.accountInfo ? <h1>{data.accountInfo.overview.name} {data.accountInfo.overview.summonerLevel}</h1> : <p>Loading...</p>}
+        {data.accountInfo ? data.accountInfo.rank.map((element, index) => (
+          <div key={index}>
+            <p>- {element.queueType}:</p>
+            <img src={"https://wagers.fr/assets/ranks/Emblem_"+element.tier+".png"} />
+          </div>
+        )) : <p>Loading...</p>}
+        {data.matchInfo ? <p>{data.matchInfo.currentMatch.gameMode} {data.matchInfo.currentMatch.gameType}</p> : <p>Aucune partie en cours</p>}
     </div>
   )
 }
