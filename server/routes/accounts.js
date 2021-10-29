@@ -19,7 +19,7 @@ router.post('/linked/create', async (req, res) => {
   
   try {
     let account_details = await RiotAPI.getSummonerByName(username, region);
-    let value = account_details.accountId;
+    let value = account_details.id;
     const newLinkedAccount = new LinkedAccount({
       user,
       username,
