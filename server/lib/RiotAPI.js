@@ -41,12 +41,7 @@ class RiotAPI {
             this.getSummonerByName(summonerName, region)
                 .then(async summoner => {
                     const currentMatch = await this.getLastMatch(summoner.id, region);
-                    //no
-
-                    resolve({
-                        overview: summoner,
-                        currentMatch
-                    });
+                    resolve(currentMatch);
                 })
                 .catch(() => {
                     reject();

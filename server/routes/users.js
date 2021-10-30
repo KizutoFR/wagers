@@ -108,7 +108,7 @@ router.post('/register', (req, res) => {
               .then(() => {
                 res.json({ success: true, errors: errors })
               })
-              .catch(err => console.log(err));
+              .catch(err => console.log(err.message));
           });
         });
       }
