@@ -18,16 +18,13 @@ const RiotAPI = require('../lib/RiotAPI.js');
 
 router.get('/', (req, res) => {
     AccountType.find()
-        .then(games => res.send({success: true, games}))
+        .then(games => res.status(200).send({success: true, games}))
         .catch(err => res.status(400).json({error: err}))
 })
 
-
-//GET SUMMONER Current Match
 router.get('/league-of-legends/:username', async (req, res, next) => {
     const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
     const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
-    console.log(currentMatch)
     res.status(200).json({matchInfo: currentMatch, accountInfo});   
 });
 module.exports = router;

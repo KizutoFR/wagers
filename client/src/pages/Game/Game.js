@@ -1,15 +1,20 @@
 import React, {useEffect,useState} from "react";
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
+import { SLUG } from '../../utils/config.json'
 
 export default function Game({user_data}) {
   const [data, setData] = useState({});
   const {slug} = useParams();
 
   useEffect(() => {
-    if(user_data){
-      const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
-      getCurrentGameInfo(linked.username);
+    if(SLUG.includes(slug)){
+      if(user_data){
+        const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+        getCurrentGameInfo(linked.username);
+      }
+    } else {
+      window.location.replace('/dashboard')
     }
   }, [user_data, slug])
 
@@ -30,7 +35,7 @@ export default function Game({user_data}) {
             <img src={"https://wagers.fr/assets/ranks/Emblem_"+element.tier+".png"} />
           </div>
         )) : <p>Loading...</p>}
-        {data.matchInfo ? <p>{data.matchInfo.currentMatch.gameMode} {data.matchInfo.currentMatch.gameType}</p> : <p>Aucune partie en cours</p>}
+        {data.matchInfo ? <p>{data.matchInfo.gameMode} {data.matchInfo.gameType}</p> : <p>Aucune partie en cours</p>}
     </div>
   )
 }

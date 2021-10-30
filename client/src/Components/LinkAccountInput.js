@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 
-const modifyAccountName = async (accountName, linked_id) => {
-    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: accountName, linked_id });
+const modifyAccountName = async (accountName, linked_id, account_region) => {
+    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: accountName, linked_id, account_region });
     if(res.data.success) {
         //TODO: Afficher une jolie notif avec le message
         console.log(res.data.message)
@@ -30,7 +30,8 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
 
     const handleSubmit = (e) => {
         if(accountName !== '') {
-            modifyAccountName(modifiedName, linkedId);
+            //TODO: put <select> to choose account_region
+            modifyAccountName(modifiedName, linkedId, 'EUW');
         } else {
             //TODO: put <select> to choose account_region
             createLinkedAccount(modifiedName, data._id, user_id, 'EUW');
