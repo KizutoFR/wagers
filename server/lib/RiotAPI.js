@@ -1,6 +1,7 @@
 const axios = require('axios');
 const riotConsts = require('../config/url.json');
 const { format } = require('../config/utils.js');
+const champions = require('../config/champion.json');
 
 class RiotAPI {
 
@@ -40,8 +41,17 @@ class RiotAPI {
         return new Promise((resolve, reject) => {
             this.getSummonerByName(summonerName, region)
                 .then(async summoner => {
-                    const currentMatch = await this.getLastMatch(summoner.id, region);
-                    resolve(currentMatch);
+                    try {
+                        const currentMatch = await this.getLastMatch(summoner.id, region);
+                        if(currentMatch) {
+                            currentMatch.participants = currentMatch.participants.map(p => {
+                                return {...p, championName: findInChamp(p.championId)}
+                            })
+                        }
+                        resolve(currentMatch);
+                    } catch (err) {
+                        console.log(err.message)
+                    }
                 })
                 .catch(() => {
                     reject();
@@ -79,7 +89,7 @@ class RiotAPI {
 const checkStatus = res => {
     if (res.status === 200)
         return res;
-    throw new Error();
+    return null;
 };
 
 /**
@@ -112,8 +122,17 @@ const get = url => {
     return axios.get(url, options)
         .then(checkStatus)
         .then(res => res.data)
-        .catch(console.error);
+        .catch(err => console.error(err.message));
 };
+
+const findInChamp = id => {
+    for (const [key, value] of Object.entries(champions.data)) {
+        console.log(value)
+        if(parseInt(value.key) === id){
+            return key;
+        }
+    }
+}
 
 const getRiotAPIkey = (query = false) => (query ? '?api_key=' : '') + process.env.RIOT_API_KEY;
 

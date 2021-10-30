@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../models/User');
 const AccountType = require('../models/AccountType');
-const LinkedAccount = require('../models/LinkedAccount');
-
 const RiotAPI = require('../lib/RiotAPI.js');
 
 // router.get('/add-types', (req, res) => {
@@ -22,9 +19,13 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json({error: err}))
 })
 
-router.get('/league-of-legends/:username', async (req, res, next) => {
-    const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
-    const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
-    res.status(200).json({matchInfo: currentMatch, accountInfo});   
+router.get('/league-of-legends/:username', async (req, res) => {
+    try {
+        const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
+        const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
+        res.status(200).json({currentMatch, accountInfo});
+    } catch (err) {
+        console.log(err.message)
+    }
 });
 module.exports = router;

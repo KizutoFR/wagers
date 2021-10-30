@@ -5,7 +5,6 @@ export default function ProfilUser({user_data}){
     const [requestList, setRequestList] = useState([]);
 
     useEffect(() => {
-        console.log(user_data)
         if (user_data) {
             getPendingRequest(user_data._id)
         }
