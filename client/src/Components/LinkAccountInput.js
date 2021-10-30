@@ -39,6 +39,7 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
     }
 
     const handleClick = (e) => {
+        e.stopPropagation();
         window.location.href = `/dashboard/${data.slug}`;
     }
 
@@ -63,17 +64,17 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
     }, [data.type, linked_list, modifiedName, accountName, loaded, linkedId, available])
 
     return (
-        <div className="game-card" onClick={handleClick}>
+        <div className="game-card">
             <h5>{data.name}</h5>
             <div className={(available) ? 'inputContainer displayInput' : 'inputContainer'}>
                 <input type="text" placeholder="Give your name account" defaultValue={accountName} onChange={handleChange} onClick={stopPropagation} />
                 {accountName === modifiedName ? (
-                    <button disabled>Ok</button>
+                    <button disabled onClick={stopPropagation}>Ok</button>
                 ) : (
                     <button onClick={handleSubmit}>Ok</button>
                 )}
             </div>
-            <img src={"images/"+data.thumbnail} alt=""/>
+            <img src={"images/"+data.thumbnail} alt="" onClick={handleClick}/>
         </div>
     );
 }

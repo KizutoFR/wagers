@@ -4,7 +4,7 @@
         "summonerByName": "summoner/{version}/summoners/by-name/{username}",
         "summonerRank": "league/{version}/entries/by-summoner/{encryptedSummonerId}",
         "summonerMasteries": "champion-mastery/{version}/champion-masteries/by-summoner/{encryptedSummonerId}",
-        "lastMatch":"spectator/{version}/active-games/by-summoner/{encryptedSummonerId}"
+        "lastMatch": "spectator/{version}/active-games/by-summoner/{encryptedSummonerId}"
     },
 
     "DDRAGON": {
@@ -43,6 +43,7 @@
     },
 
     "REGIONS": {
+        "match_EUW": "europe",
         "EUW": "euw1",
         "EUN": "eun1",
         "NA": "na1",
