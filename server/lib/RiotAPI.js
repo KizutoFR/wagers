@@ -127,7 +127,6 @@ const get = url => {
 
 const findInChamp = id => {
     for (const [key, value] of Object.entries(champions.data)) {
-        console.log(value)
         if(parseInt(value.key) === id){
             return key;
         }
