@@ -44,13 +44,15 @@ class RiotAPI {
                     try {
                         const currentMatch = await this.getLastMatch(summoner.id, region);
                         if(currentMatch) {
-                            currentMatch.participants = currentMatch.participants.map(p => {
-                                return {...p, championName: findInChamp(p.championId)}
-                            })
+                            currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
+                                const summonerInfo = await this.getSummonerRank(p.summonerId, region);
+                                const champ = findInChamp(p.championId);
+                                return {...p, championName: champ, rank: summonerInfo[0].tier}
+                            }))
                         }
                         resolve(currentMatch);
                     } catch (err) {
-                        console.log(err.message)
+                        reject(err.message)
                     }
                 })
                 .catch(() => {

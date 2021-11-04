@@ -50,6 +50,7 @@ export default function Game({user_data}) {
             {data.currentMatch.participants.map((part, num) => (
               <div key={num}>
                 <img src={`http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/${part.championName}.png`} />
+                <img src={"https://wagers.fr/assets/ranks/Emblem_"+part.rank+".png"} style={{width: 120+'px', height: 120+'px'}} />
                 <p>{part.teamId} {part.summonerName}</p>
               </div>
             ))}
