@@ -47,7 +47,8 @@ class RiotAPI {
                             currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
                                 const summonerInfo = await this.getSummonerRank(p.summonerId, region);
                                 const champ = findInChamp(p.championId);
-                                return {...p, championName: champ, rank: summonerInfo[0].tier}
+                                const rank = summonerInfo[0] ? summonerInfo[0].tier : "None";
+                                return {...p, championName: champ, rank}
                             }))
                         }
                         resolve(currentMatch);

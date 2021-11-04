@@ -8,9 +8,13 @@ router.post('/linked/modify', async (req, res) => {
   let linked_id = req.body.linked_id;
   let region = req.body.account_region;
   let account_details = await RiotAPI.getSummonerByName(name, region);
-  LinkedAccount.updateOne({_id: linked_id}, {$set: {username: name, value: account_details.id}})
+  if(account_details) {
+    LinkedAccount.updateOne({_id: linked_id}, {$set: {username: name, value: account_details.id}})
     .then(() => res.status(200).json({success: true, message: "Account's username updated successfully"}))
     .catch(err => res.status(400).json({success: false, message: err.message}))
+  } else {
+    res.status(400).json({success: false, message: "Unknow summoner"});
+  }
 })
 
 router.post('/linked/create', async (req, res) => {

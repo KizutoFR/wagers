@@ -46,7 +46,7 @@ export default function Login({setToken}) {
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
         {/* <input type="submit" value="Log-in"/> */}
        
-        <button data-action="submit" onClick={e => handleSubmit(e)}>Login</button>
+        <button data-action="submit" onClick={e => handleSubmit(e)}>Log-in</button>
       </form>
     </div>
   )

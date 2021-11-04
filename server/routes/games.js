@@ -25,7 +25,7 @@ router.get('/league-of-legends/:username', async (req, res) => {
         const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
         res.status(200).json({currentMatch, accountInfo});
     } catch (err) {
-        console.log(err.message)
+        console.error(err)
     }
 });
 module.exports = router;
