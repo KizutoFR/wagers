@@ -7,7 +7,7 @@ export default function Header({user_data}) {
   return (
     <div className="container">
       <div className="logo"></div>
-      <SearchBar user_data={user_data} />
+      {user_data ? (<SearchBar user_data={user_data} />) : ''}
       <p>Username</p>
     </div>
   )
