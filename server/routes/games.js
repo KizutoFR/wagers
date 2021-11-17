@@ -12,13 +12,21 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json({error: err}))
 })
 
-router.get('/league-of-legends/:username', async (req, res) => {
+router.get('/:game/:user_id/:username', async (req, res) => {
+  const game_slug = req.params.game;
+  const user_id = req.params.user_id;
   try {
-    const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
-    const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, 'EUW');  
-    res.status(200).json({currentMatch, accountInfo});
+    const bet = Bet.find({game_name: game_slug, user: user_id})
+      .populate({
+        path: 'requirements',
+        model: 'VictoryRequirements'
+      })[0];
+      const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
+      const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
+      const match_id = bet ? bet.match_id : null;
+      res.status(200).json({currentMatch, accountInfo, bet});
   } catch (err) {
-    console.error(err)
+    res.status(400).json({success: false, err: err})
   }
 });
 
@@ -36,26 +44,12 @@ router.post('/requirements/add', (req, res) => {
     .catch(err => res.status(400).json({success: false, err: err.message}))
 })
 
-router.get('/bet/:game/:user', (req, res) => {
-  const game_slug = req.params.game;
-  const user_id = req.params.user;
-
-  Bet.find({game_name: game_slug, user: user_id})
-    .populate({
-      path: 'requirements',
-      model: 'VictoryRequirements'
-    })
-    .then(bet => {
-      res.status(200).json({success: true, bet: bet})
-    })
-    .catch(err => res.status(400).json({success: false, error: "No bet founded : " + err}))
-})
-
 router.post('/bet/add', (req, res) => {
-  const {game_name, predefined, requirements, multiplier, coin_put, user} = req.body;
+  const {game_name, match_id, predefined, requirements, multiplier, coin_put, user} = req.body;
 
   const bet = new Bet({
     game_name,
+    match_id,
     predefined,
     requirements,
     multiplier,

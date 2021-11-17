@@ -5,6 +5,10 @@ const BetSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    match_id: {
+        type: Number,
+        required: true
+    },
     predefined: {
         type: Boolean,
         required: false,

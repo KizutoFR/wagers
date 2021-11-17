@@ -4,7 +4,7 @@ import { VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import BetPanelSwitch from '../BetPanelSwitch/BetPanelSwitch';
 import './BetPanel.css';
 
-export default function BetPanel({slug, user_id, setBetList, setBetPanel}) {
+export default function BetPanel({slug, user_id, match_id, setBet, setBetAlreadyExist}) {
   const [list, setList] = useState([]);
   const stake = useRef();
 
@@ -27,10 +27,10 @@ export default function BetPanel({slug, user_id, setBetList, setBetPanel}) {
     e.preventDefault();
     await Promise.all(list.map(el => axios.post(process.env.REACT_APP_API_URL+'/games/requirements/add', el)))
       .then(async res => {
-        console.log(res);
         const requirements = res.map(r => r.data.data._id);
         await axios.post(process.env.REACT_APP_API_URL+'/games/bet/add', {
           game_name: slug,
+          match_id: match_id ? match_id : 0,
           predefined: false,
           requirements,
           multiplier: 1.5,
@@ -39,8 +39,8 @@ export default function BetPanel({slug, user_id, setBetList, setBetPanel}) {
         })
         // TODO: Afficher une notif dans les deux cas
         .then(finalbet => {
-          setBetList([finalbet.data.data]);
-          setBetPanel(false);
+          setBet(finalbet.data.data);
+          setBetAlreadyExist(true);
           console.log("Bet created successfully")
         })
         .catch(err => console.error(err)) 

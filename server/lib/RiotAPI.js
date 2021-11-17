@@ -30,14 +30,22 @@ class RiotAPI {
     }
 
     static getLastMatch (encryptedSummonerId, region) {
-        return get(format(url('API', 'lastMatch'), {
+        return get(format(url('API', 'currentMatch'), {
             region: riotConsts.REGIONS[region.toUpperCase()],
             version: 'v4',
             encryptedSummonerId
         }));
     }
 
-    static getCurrentMatch(summonerName, region) {
+    static getMatchDetails (matchId, region) {
+        return get(format(url('API', 'lastMatchDetails'), {
+            region: riotConsts.REGIONS['match_'+region.toUpperCase()],
+            version: 'v5',
+            matchId
+        }))
+    }
+
+    static getCurrentMatch(summonerName, match_id, region) {
         return new Promise((resolve, reject) => {
             this.getSummonerByName(summonerName, region)
                 .then(async summoner => {
@@ -47,11 +55,19 @@ class RiotAPI {
                             currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
                                 const summonerInfo = await this.getSummonerRank(p.summonerId, region);
                                 const champ = findInChamp(p.championId);
-                                const rank = summonerInfo && summonerInfo[0] ? summonerInfo[0].tier : "None";
+                                let game_type_id = 0;
+                                if(currentMatch.gameType === "MATCHED_GAME") {
+                                    game_type_id = 1
+                                }
+                                const rank = summonerInfo && summonerInfo[game_type_id] ? summonerInfo[game_type_id].tier : "None";
                                 return {...p, championName: champ, rank}
                             }))
                         }
-                        resolve(currentMatch);
+                        
+                        const current_match_id = match_id ? match_id : currentMatch.gameId;
+                        const match_identifier = riotConsts.REGIONS[region.toUpperCase()].toUpperCase() + '_' + current_match_id;
+                        const matchDetails = await this.getMatchDetails(match_identifier, region);
+                        resolve(currentMatch, matchDetails);
                     } catch (err) {
                         reject(err.message)
                     }
@@ -67,15 +83,9 @@ class RiotAPI {
             this.getSummonerByName(summonerName, region)
                 .then(async summoner => {
                     const rank = await this.getSummonerRank(summoner.id, region);
-                    //no
-                    
-                    const masteries = await this.getSummonerMasteries(summoner.id, region);
-                    //const matches = await ...;
-
                     resolve({
                         overview: summoner,
-                        rank,
-                        masteries
+                        rank
                     });
                 })
                 .catch(() => {
