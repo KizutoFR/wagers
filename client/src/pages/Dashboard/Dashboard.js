@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Dashboard.css';
 import LinkAccountInput from "../../Components/LinkAccountInput";
 
@@ -32,8 +33,14 @@ export default function Dashboard({ user_data, setToken }) {
                             <LinkAccountInput data={game} linked_list={user_data.linked_account} user_id={user_data._id} available={game.type === "LOL"} key={index} />
                         ))}
                     </div>
+                    <br />
+                    <Link to="/profil">Profil</Link>
+                    <br />
+                    <br />
                     <button onClick={handleClick}>Logout</button>
+                    
                 </div>
+               
             ) : (
                 <div>Loading...</div>
             )}

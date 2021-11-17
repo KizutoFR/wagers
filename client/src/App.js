@@ -11,8 +11,10 @@ import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
 import ProfilUser from './pages/ProfilUser/ProfilUser.js'
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
+import ModifUser from './pages/ModifUser/ModifUser';
 
 import Header from './Components/Header/Header';
+import modifLogin from './pages/ModifUser/ModifUser';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -72,6 +74,9 @@ export default function App() {
               </Route>
               <Route path="/profil">
                 {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login' />}
+              </Route>
+              <Route path="/update">
+                {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}
               </Route>
             </Switch>
       </BrowserRouter>

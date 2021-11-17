@@ -17,6 +17,8 @@ export default function Homepage({ user_data }) {
                     <Link to="/dashboard">Dashboard</Link>
                     <br />
                     <Link to="/profil">Profil</Link>
+                    <br />
+                    <Link to="/update">Modification</Link>
                 </div>
             ) : (
                 <div>

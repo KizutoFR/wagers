@@ -115,7 +115,47 @@ router.post('/register', (req, res) => {
     });
   }
 })
+router.post('/update', (req, res) => {
+  let { firstname, lastname, username, email, id } = req.body;
+  let errors = [];
 
+  if (!firstname || !lastname || !username || !email) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+
+  if(!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    errors.push({msg: 'Email is not in a valid format'});
+  }
+  User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email}).then(user=>{
+    console.log(user)
+    User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
+    .populate({
+      path: 'linked_account',
+      model: 'LinkedAccount',
+      populate: {
+        path: 'account_type',
+        model: 'AccountType'
+      },
+    })
+    .populate({
+      path: 'friends',
+      model: 'FriendShip',
+      populate: [
+        {
+          path: 'from',
+          model: 'User'
+        },
+        {
+          path: 'to',
+          model: 'User'
+        }
+      ]
+    })
+    .then(u =>res.status(200).json({success: true,user:u}))
+    .catch(err => res.status(400).json({success: false, error: "No users : " + err}))
+    
+  }).catch(err => res.status(400).json({success: false, error: "No users : " + err}))
+})
 /**
  @route GET users/search/:username
  @description get users by username

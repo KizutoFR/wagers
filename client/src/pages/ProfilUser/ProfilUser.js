@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function ProfilUser({user_data}){
     const [requestList, setRequestList] = useState([]);
@@ -47,6 +48,11 @@ export default function ProfilUser({user_data}){
                     ) : (
                         <p>No friend requests...</p>
                     )}
+                    <footer>
+                    <Link to="/update">Modification</Link>
+                    <br />
+                    <Link to="/dashboard">Dashboard</Link>
+                    </footer>
                </div>
             ) : (
                 <div>Loading...</div>
