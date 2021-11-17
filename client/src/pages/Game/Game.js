@@ -2,7 +2,7 @@ import React, {useEffect,useState} from "react";
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import { SLUG } from '../../utils/config.json'
-
+import './Game.css'
 import BetPanel from '../../Components/BetPanel/BetPanel'
 
 export default function Game({user_data}) {
@@ -42,6 +42,8 @@ export default function Game({user_data}) {
         }
       })
 
+  }
+
   return (
     <div>
         {data.accountInfo ? (
@@ -66,12 +68,15 @@ export default function Game({user_data}) {
               </div>
             ) : ''}
             <p>{data.currentMatch.gameMode} {data.currentMatch.gameType}</p>
-            {data.currentMatch.participants.map((part, num) => (
-              <div key={num}>
-                <img src={`http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/${part.championName}.png`} />
-                <p>{part.teamId} {part.summonerName}</p>
-              </div>
-            ))}
+            <div className="match-container">
+              {data.currentMatch.participants.map((part, num) => (
+                <div key={num} className="match-item">
+                  <img src={`http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/${part.championName}.png`} />
+                  <img src={"https://wagers.fr/assets/ranks/Emblem_"+part.rank+".png"} style={{width: 120+'px', height: 120+'px'}} />
+                  <p>{part.teamId} {part.summonerName}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ) : <p>Aucune partie en cours</p>}
         /** TODO: Faire un composant Bet pour les paris */
