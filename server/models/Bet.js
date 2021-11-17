@@ -3,17 +3,17 @@ const mongoose = require('mongoose');
 const BetSchema = new mongoose.Schema({
     game_name: {
         type: String,
-        required: true,
+        required: true
     },
     predefined: {
         type: Boolean,
         required: false,
         default: false
     },
-    requirements: {
+    requirements: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'VictoryRequirements'
-    },
+    }],
     multiplier: {
         type: Number,
         required: true
@@ -21,11 +21,12 @@ const BetSchema = new mongoose.Schema({
     coin_put: {
         type: Number,
         required: true,
-        max: 100000,
+        max: 100000
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        required: false,
+        default: null
     }
 });
 

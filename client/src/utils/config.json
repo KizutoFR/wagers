@@ -1,5 +1,20 @@
 {
     "SLUG": [
         "league-of-legends"
+    ],
+
+    "VICTORY_REQUIREMENTS": [
+        {
+            "identifier": "MATCH_WIN",
+            "label": "Victory",
+            "params": false,
+            "type": "boolean"
+        },
+        {
+            "identifier": "KILLS_AMOUNT",
+            "label": "Minimum number of kills",
+            "params": true,
+            "type": "number"
+        }
     ]
 }
