@@ -9,6 +9,10 @@ const AccountTypeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    slug: {
+        type: String,
+        required: true
+    },
     type: {
         type: String,
         required: true,

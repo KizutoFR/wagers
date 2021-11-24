@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const session = require('express-session')
 
 const league = require('./routes/league');
 const users = require('./routes/users');
@@ -16,6 +17,18 @@ connectDB();
 app.use(express.static('public'))
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
+
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET || 'Super Secret (change it)',
+      resave: true,
+      saveUninitialized: false,
+      cookie: {
+        sameSite: 'none',
+        secure: true,
+      }
+    })
+  );
 
 app.use('/league', league);
 app.use('/users', users);

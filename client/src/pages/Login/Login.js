@@ -31,7 +31,7 @@ export default function Login({setToken}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     window.grecaptcha.ready(function() {
-      window.grecaptcha.execute('6Ldzi-kcAAAAAE8KZmXGjO3krlvJ4q9rMVl3c2Te', {action: 'submit'}).then(function(token) {
+      window.grecaptcha.execute('6Lcn2_gcAAAAAPO4_cXw7cDGOiJbIQY4qF_e8PAO', {action: 'submit'}).then(function(token) {
         sendUserCredentials({email, password, captcha_token: token});
       });
     });
@@ -46,7 +46,7 @@ export default function Login({setToken}) {
         <input type="password" placeholder="Password" value={password} onChange={changePassword} />
         {/* <input type="submit" value="Log-in"/> */}
        
-        <button data-action="submit" onClick={e => handleSubmit(e)}>Login</button>
+        <button data-action="submit" onClick={e => handleSubmit(e)}>Log-in</button>
       </form>
     </div>
   )

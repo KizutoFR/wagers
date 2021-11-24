@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 
-const modifyAccountName = async (accountName, linked_id) => {
-    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: accountName, linked_id });
+const modifyAccountName = async (accountName, linked_id, account_region) => {
+    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: accountName, linked_id, account_region });
     if(res.data.success) {
         //TODO: Afficher une jolie notif avec le message
         console.log(res.data.message)
@@ -12,8 +12,8 @@ const modifyAccountName = async (accountName, linked_id) => {
     }
 }
 
-const createLinkedAccount = async (modifiedName, account_id, user_id) => {
-    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id, user_id });
+const createLinkedAccount = async (modifiedName, account_id, user_id, account_region) => {
+    const res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id, user_id, account_region });
     if(res.data.success) {
         //TODO: Afficher une jolie notif avec le message
         console.log(res.data.message)
@@ -23,22 +23,24 @@ const createLinkedAccount = async (modifiedName, account_id, user_id) => {
 }
 
 export default function LinkAccountInput({ data, available, linked_list, user_id }) {
-    const [pressed, setPressed] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [accountName, setAccountName] = useState('');
     const [modifiedName, setModifiedName] = useState('');
     const [linkedId, setLinkedId] = useState('');
 
-    const handleClick = (e) => {
-        setPressed(!pressed);
-    }
-
     const handleSubmit = (e) => {
         if(accountName !== '') {
-            modifyAccountName(modifiedName, linkedId);
+            //TODO: put <select> to choose account_region
+            modifyAccountName(modifiedName, linkedId, 'EUW');
         } else {
-            createLinkedAccount(modifiedName, data._id, user_id);
+            //TODO: put <select> to choose account_region
+            createLinkedAccount(modifiedName, data._id, user_id, 'EUW');
         }
+    }
+
+    const handleClick = (e) => {
+        e.stopPropagation();
+        window.location.href = `/dashboard/${data.slug}`;
     }
 
     const stopPropagation = (e) => {
@@ -62,18 +64,17 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
     }, [data.type, linked_list, modifiedName, accountName, loaded, linkedId, available])
 
     return (
-        <div className="game-card" onClick={handleClick}>
+        <div className="game-card">
             <h5>{data.name}</h5>
-            { !available ? <p>Coming soon</p> : null }
-            <div className={(available && pressed) ? 'inputContainer displayInput' : 'inputContainer'}>
+            <div className={(available) ? 'inputContainer displayInput' : 'inputContainer'}>
                 <input type="text" placeholder="Give your name account" defaultValue={accountName} onChange={handleChange} onClick={stopPropagation} />
                 {accountName === modifiedName ? (
-                    <button disabled>Ok</button>
+                    <button disabled onClick={stopPropagation}>Ok</button>
                 ) : (
                     <button onClick={handleSubmit}>Ok</button>
                 )}
             </div>
-            <img src={"images/"+data.thumbnail} alt=""/>
+            <img src={"images/"+data.thumbnail} alt="" onClick={handleClick}/>
         </div>
     );
 }

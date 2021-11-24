@@ -5,12 +5,14 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 import Login from './pages/Login/Login.js';
+import Game from './pages/Game/Game';
 import Homepage from './pages/Homepage/Homepage.js';
 import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
 import ProfilUser from './pages/ProfilUser/ProfilUser.js'
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
-import Header from './Components/Header/Header';
+import ModifUser from './pages/ModifUser/ModifUser';
+import Header from './components/Header/Header';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -36,6 +38,10 @@ export default function App() {
                 setToken(null);
                 localStorage.removeItem('wagers_auth_token');
               })
+        } else {
+          setUser(null)
+          setToken(null);
+          localStorage.removeItem('wagers_auth_token');
         }
       } catch(err) {
         setUser(null);
@@ -45,6 +51,12 @@ export default function App() {
     }
   }, [token])
 
+  useEffect(() => {
+    if(user){
+      console.log("user updated", user);
+    }
+  }, [user])
+
   return (
     <div>
       {token && <Header user_data={user} /> }
@@ -53,20 +65,26 @@ export default function App() {
               <Route exact path="/">
                 <Homepage user_data={user}/>
               </Route>
-              <Route path="/dashboard">
+              <Route exact path="/dashboard/:slug">
+                {token ? <Game user_data={user} /> : <Redirect to="/login" />}
+              </Route>
+              <Route exact path="/dashboard">
                 {token ? <Dashboard user_data={user} setToken={setToken}/> : <Redirect to="/login" />}
               </Route>
-              <Route path="/login">
+              <Route exact path="/login">
                 {token ? <Redirect to="/" user_data={user}/> : <Login setToken={setToken} />}
               </Route>
-              <Route path="/register">
+              <Route exact path="/register">
                 {token ? <Redirect to="/" user_data={user}/> : <Register />}
               </Route>
-                <Route path="/profil/:id">
+              <Route exact path="/profil/:id">
                 {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
               </Route>
-              <Route path="/profil">
+              <Route exact path="/profil">
                 {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login' />}
+              </Route>
+              <Route exact path="/update">
+                {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}
               </Route>
             </Switch>
       </BrowserRouter>

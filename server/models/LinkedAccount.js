@@ -14,6 +14,11 @@ const LinkedAccountSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "AccountType",
         required: true
+    },
+    value: {
+        type: String,
+        required: true,
+        default: "none"
     }
 });
 
