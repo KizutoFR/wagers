@@ -7,7 +7,10 @@
         "currentMatch": "spectator/{version}/active-games/by-summoner/{encryptedSummonerId}",
         "lastMatchDetails": "match/{version}/matches/{matchId}"
     },
-
+    "OPGG": {
+        "base": "https://{region}op.gg/",
+        "summonerByName": "summoner/userName={username}"
+    },
     "DDRAGON": {
         "base": "http://ddragon.leagueoflegends.com/cdn/",
         "champions": "{patch}/data/{lang}/champion.json",
@@ -56,6 +59,19 @@
         "OC": "oc1",
         "TR": "tr1",
         "BR": "br1"
+    },
+    "REGIONSOPGG": {
+        "EUW": "euw.",
+        "EUN": "eune.",
+        "NA": "na.",
+        "KR": "",
+        "JP": "jp.",
+        "RU": "ru.",
+        "LAN": "lan.",
+        "LAS": "las.",
+        "OC": "oce.",
+        "TR": "tr.",
+        "BR": "br."
     },
 
     "LANGS": {

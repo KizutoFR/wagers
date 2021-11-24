@@ -12,6 +12,12 @@ class RiotAPI {
             username
         }));
     }
+    static getOPGGByName(username, region) {
+        return format(url('OPGG', 'summonerByName'), {
+            region: riotConsts.REGIONSOPGG[region.toUpperCase()],
+            username
+        });
+    }
 
     static getSummonerRank(encryptedSummonerId, region) {
         return get(format(url('API', 'summonerRank'), {

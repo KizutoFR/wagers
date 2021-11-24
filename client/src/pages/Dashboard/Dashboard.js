@@ -6,15 +6,22 @@ import LinkAccountInput from "../../Components/LinkAccountInput";
 
 export default function Dashboard({ user_data, setToken }) {
     const [games, setGames] = useState([]);
-
+    const [scoreboard, setScoreboard] = useState([]);
     useEffect(() => {
         getGamesAccount()
+        getScoreBoard()
     }, [user_data])
 
     async function getGamesAccount() {
         return await axios.get(process.env.REACT_APP_API_URL+'/games').then(res => {
             setGames(res.data.games)
         });
+    }
+
+    async function getScoreBoard(){                             //url de l'api
+        return await axios.get(process.env.REACT_APP_API_URL+'/users/scoreboard').then(res => {
+            setScoreboard(res.data.users)
+        })
     }
 
     const handleClick = (e) => {
@@ -35,6 +42,12 @@ export default function Dashboard({ user_data, setToken }) {
                     </div>
                     <br />
                     <Link to="/profil">Profil</Link>
+
+                    {/* nom dans le state */}
+                    {scoreboard && scoreboard.map((user, index) => (
+                            <p>{user.username} {user.coins}</p>
+                        ))}
+
                     <br />
                     <br />
                     <button onClick={handleClick}>Logout</button>
