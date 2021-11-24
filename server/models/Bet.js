@@ -31,6 +31,11 @@ const BetSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: false,
         default: null
+    },
+    ended: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 });
 

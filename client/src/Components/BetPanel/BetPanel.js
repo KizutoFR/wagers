@@ -3,8 +3,9 @@ import React, {useRef, useState} from 'react';
 import { VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import BetPanelSwitch from '../BetPanelSwitch/BetPanelSwitch';
 import './BetPanel.css';
+import Swal from 'sweetalert2'
 
-export default function BetPanel({slug, user_id, match_id, setBet, setBetAlreadyExist}) {
+export default function BetPanel({slug, user_id, user_coins, match_id, setBet, setBetAlreadyExist}) {
   const [list, setList] = useState([]);
   const stake = useRef();
 
@@ -25,7 +26,8 @@ export default function BetPanel({slug, user_id, match_id, setBet, setBetAlready
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await Promise.all(list.map(el => axios.post(process.env.REACT_APP_API_URL+'/games/requirements/add', el)))
+    if(user_coins - Number(stake.current.value) >= 0) {
+      await Promise.all(list.map(el => axios.post(process.env.REACT_APP_API_URL+'/games/requirements/add', el)))
       .then(async res => {
         const requirements = res.map(r => r.data.data._id);
         await axios.post(process.env.REACT_APP_API_URL+'/games/bet/add', {
@@ -45,6 +47,14 @@ export default function BetPanel({slug, user_id, match_id, setBet, setBetAlready
         })
         .catch(err => console.error(err)) 
       })
+    } else {
+      Swal.fire({
+        title: 'You don\'t have enought coins :/',
+        text: `${stake.current.value} is bigger than your wallet`,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    }
   }
 
   return (

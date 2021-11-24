@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
-import LinkAccountInput from "../../Components/LinkAccountInput";
+import LinkAccountInput from "../../components/LinkAccountInput";
 
 export default function Dashboard({ user_data, setToken }) {
     const [games, setGames] = useState([]);

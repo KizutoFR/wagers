@@ -9,9 +9,9 @@ export default function BetPanelSwitch({addToList, removeFromList, data, needPar
   const toggleSwitch = () => {
     if (!needParams || value !== '') {
       if (toggled) {
-        removeFromList({identifier: data.identifier, value: toggled, label: data.label})
+        removeFromList({identifier: data.identifier, value: !toggled, label: data.label})
       } else {
-        addToList({identifier: data.identifier, value: toggled, label: data.label})
+        addToList({identifier: data.identifier, value: !toggled, label: data.label})
       }
     }
     setToggled(!toggled);
