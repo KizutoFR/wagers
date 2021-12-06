@@ -26,11 +26,9 @@ router.get('/', (req, res) => {
  @access Public
  */
  router.get('/scoreboard', (req, res) => {
-  User.find().sort( { coins: -1 } ).then(users =>{
-        console.log(users[0].coins)
-        res.status(200).json({users})
-      }) 
-      .catch(err => res.status(400).json({error: err}))
+  User.find().sort({ coins: -1 }).limit(10)
+    .then(users => res.status(200).json({users})) 
+    .catch(err => res.status(400).json({error: err}))
 })
 
 /**
@@ -50,7 +48,7 @@ router.post('/login', (req, res) => {
         User.findOne({ email: email })
           .then(user => {
             if(!user) {
-              res.status(400).json({ success: false, message: 'No user exist with this email'})
+              res.status(400).json({ success: false, message: 'Incorrect email or password'})
               return;
             }
             bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -60,12 +58,12 @@ router.post('/login', (req, res) => {
                 User.updateOne({_id: user._id}, {$set : {auth_token: token}})
                     .then(() => res.status(200).json({success: true, user_id: user._id, token}));
               } else {
-                res.status(400).json({ success: false, message: 'Wrong password' })
+                res.status(200).json({ success: false, message: 'Incorrect email or password' })
               }
             })
           })
       } else {
-        res.status(400).json({ success: false, message: 'Someting went wrong'})
+        res.status(200).json({ success: false, message: 'Someting went wrong'})
         return;
       }
     })

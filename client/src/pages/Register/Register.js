@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
+import './Register.css';
 
 export default function Register() {
   const email = useRef();
@@ -31,21 +32,46 @@ export default function Register() {
   }
 
   return (
-    <div>
-      <h1>Register</h1>
-      {errors.length > 0 
-        ? errors.map((err, index) => <p key={index}>{err.msg}</p>)
-        : ''
-      }
-      <form onSubmit={register}>
-        <input type="text" placeholder="Firstname" ref={firstname} />
-        <input type="text" placeholder="Lastname" ref={lastname}/>
-        <input type="text" placeholder="Username" ref={username}/>
-        <input type="text" placeholder="Email" ref={email}/>
-        <input type="password" placeholder="Password" ref={password}/>
-        <input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
-        <input type="submit" value="Register"/>
-      </form>
+    <div className="register-container">
+      <div className="form-container">
+        <img src="/images/logo.svg"/>
+        {errors.length > 0 
+          ? errors.map((err, index) => <p className="error-message" key={index}>{err.msg}</p>)
+          : ''}
+        <form>
+          <div className="form-row">
+            <div className="form-element">
+              <input type="text" placeholder="Firstname" ref={firstname} />
+            </div>
+            <div className="form-element">
+              <input type="text" placeholder="Lastname" ref={lastname}/>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-element">
+              <input type="text" placeholder="Username" ref={username}/>
+            </div>
+            <div className="form-element">
+              <input type="text" placeholder="Email" ref={email}/>
+            </div>
+          </div>
+          <div className="form-element">
+            <input type="password" placeholder="Password" ref={password}/>
+          </div>
+          <div className="form-element">
+            <input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
+          </div>
+          <div className="form-options">
+            <Link to="/login">Log-In</Link>
+            <button onClick={register}>Register</button>
+          </div>
+        </form>
+      </div>
+      <div className="login-video-container">
+        <video autoPlay loop muted>
+          <source src='/videos/leagues.mp4' type="video/mp4" />
+        </video>
+      </div>
     </div>
   )
 }
