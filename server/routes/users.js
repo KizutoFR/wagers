@@ -188,7 +188,6 @@ router.post('/update-wallet', (req, res) => {
     .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
 })
 
-
 /**
  @route GET users/search/:username
  @description get users by username

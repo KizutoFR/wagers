@@ -28,8 +28,9 @@ export default function Game({user_data}) {
 
   const getCurrentGameInfo = async (game_slug, username) => {
     return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user_data._id+'/'+username)
-      .then(res => {
-        setData({currentMatch: res.data.match.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.match.matchDetails})
+      .then(res => { //on recupere data ici
+        console.log(res.data)
+        setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.matchDetails, opgg:res.data.opgg})
         if(res.data.bet){
           setBet(res.data.bet);
           setBetAlreadyExist(true);

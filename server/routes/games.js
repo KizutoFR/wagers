@@ -20,13 +20,12 @@ router.get('/:game/:user_id/:username', async (req, res) => {
       .populate({
         path: 'requirements',
         model: 'VictoryRequirements'
-      });
-      const match_id = bet ? bet.match_id : null;
-      const match = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
+      })[0];
+      const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
       const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
-
-      res.status(200).json({match, accountInfo, bet});
-
+      const opgg = await RiotAPI.getOPGGByName(req.params.username, 'EUW');
+      const match_id = bet ? bet.match_id : null;
+      res.status(200).json({currentMatch, accountInfo, bet,opgg});
   } catch (err) {
     res.status(400).json({success: false, err: err})
   }
