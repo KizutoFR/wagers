@@ -107,7 +107,7 @@ export default function Game({user_data}) {
             ))}
           </div>
         ) : <p>Loading...</p>}
-        {data.currentMatch ? (
+        {data.currentMatch && data.currentMatch.matchDetails ? (
           <div>
             {!betAlreadyExist ? (
               <div>
