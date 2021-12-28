@@ -1,23 +1,112 @@
 .container {
-  background-color: #2B2B37;
-  height: 60px;
+  background: rgb(8,6,26);
+  background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
   width: 100%;
+  height: 122px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
 }
+.container-left{
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+.container-right{
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
 
-.container .logo {
-  background-color: #f3f3f3;
+.container-left .logo {
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 65px;
   min-width: 40px;
-  margin-left: 10px;
+  margin-left: 50px;
 }
 
 .container p {
   margin-right: 10px;
   color: #fff;
+}
+
+.container .pdp {
+
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  margin-left: 10px;
+	margin-right: 35px;
+  margin-top:7px;
+}
+
+.container-left a{
+	color:white;
+	text-decoration:none;
+	margin-left: 60px;
+}
+.container-left a:hover{
+  background: -webkit-linear-gradient(120deg, #F970FE, #B33CED);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+	margin-left: 60px;
+}
+
+.container-right .coins{
+	display: flex;
+	flex-direction: row;
+	align-items:center;
+	margin-right: 75px;
+	color:white;
+  border: none;
+  background-color: #27253B;
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+.container-right .coins img{
+  padding-left: 10px;
+  width: 25px;
+}
+
+.container-right .coins .plus{
+  margin-left:3px;
+  border: none;
+	/* background: linear-gradient(120deg, #F970FE, #B33CED); */
+  border-radius: 1px;
+  height: 100%;
+}
+
+.container-right .coins .plus img{
+  width: 15px;
+  height: auto;
+  padding:5px;
+  padding-left:10px;
+  padding-right:10px;
+  margin: 5px 5px;
+  margin-top:7px;
+  background: linear-gradient(120deg, #F970FE, #B33CED);
+  border-radius: 3px;
+}
+
+.banner-left button {
+	border: none;
+	background: linear-gradient(120deg, #F970FE, #B33CED);
+	color: #fff;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-right: 60px;
+}
+
+.banner-left button {
+	width: 150px;
+	height: 40px;
 }

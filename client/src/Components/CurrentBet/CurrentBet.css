@@ -1,0 +1,191 @@
+.dashboard-bet {
+    background-color: #17152A;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    width: calc(100% - 15px);
+    margin-top: 30px;
+}
+
+.dashboard-bet > div {
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.dashboard-bet .ticket-edge {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: translateX(50%);
+}
+
+.dashboard-bet button {
+    width: 100%;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.dashboard-bet .ticket-edge span {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #08061A;
+}
+
+.dashboard-bet .dashboard-bet-left {
+    height: 100%;
+    padding: 20px;
+}
+
+.dashboard-bet .dashboard-bet-left .left-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dashboard-bet .dashboard-bet-left .left-header img {
+    width: 20px;
+}
+
+.dashboard-bet .dashboard-bet-left .left-header span {
+    flex-grow: 3;
+    height: 1px;
+    background-color: #F970FE;
+    margin-left: 15px;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content {
+    background-color: #08061A;
+    width: 100%;
+    height: 200px;
+    margin: 30px 0;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content > div {
+    width: 100%;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content p {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content span img {
+    width: 20px;
+    margin-left: 5px;
+}
+
+.dashboard-bet .dashboard-bet-left .left-content p:first-child {
+    margin-bottom: 15px;
+}
+
+.no-bet {
+    height: 350px;
+}
+
+.dashboard-bet .dashboard-bet-right {
+    height: 100%;
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.dashboard-bet-right .code-barre {
+    width: 80px;
+    height: 100%;
+    background-image: url('/images/code.svg');
+}
+
+.requirements-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.requirements-grid .requirement-item {
+    background-color: #121121;
+    border-radius: 6px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    white-space:normal;
+}
+
+.requirements-grid .requirement-item .requirement-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 95px;
+}
+
+.requirements-grid .requirement-item .requirement-content img {
+    margin: 15px;
+    width: 50px;
+    max-height: 50%;
+}
+
+.requirements-grid .requirement-item .requirement-footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F970FE;
+    height: 25px;
+    position: relative;
+}
+
+.requirements-grid .requirement-item .requirement-footer img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 0;
+}
+
+.requirements-grid .requirement-item .requirement-footer p {
+    margin: 0;
+    z-index: 1;
+    font-size: 12px;
+}

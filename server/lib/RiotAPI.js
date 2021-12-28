@@ -54,38 +54,43 @@ class RiotAPI {
     static getCurrentMatch(summonerName, match_id, region) {
         return new Promise(async (resolve, reject) => {
             const summoner = await this.getSummonerByName(summonerName, region)
-            const currentMatch = await this.getLastMatch(summoner.id, region);
-            let current_match_id = match_id;
-            if(currentMatch) {
-                currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
-                    let summonerInfo = await this.getSummonerRank(p.summonerId, region);
-                    const champ = findInChamp(p.championId);
-                    let rank = "None";
-                    if(summonerInfo){
-                        summonerInfo = summonerInfo.filter(info => allowedQueueType.includes(info.queueType))
-                        rank = summonerInfo.find(info => {
-                            if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_SOLO_DUO && info.queueType === "RANKED_SOLO_5x5") {
-                                return info;
-                            }
+            let currentMatch = {}
+            if(summoner) {
+                currentMatch = await this.getLastMatch(summoner.id, region);
+                let current_match_id = match_id;
+                if(currentMatch) {
+                    currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
+                        let summonerInfo = await this.getSummonerRank(p.summonerId, region);
+                        const champ = findInChamp(p.championId);
+                        let rank = "None";
+                        if(summonerInfo){
+                            summonerInfo = summonerInfo.filter(info => allowedQueueType.includes(info.queueType))
+                            rank = summonerInfo.find(info => {
+                                if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_SOLO_DUO && info.queueType === "RANKED_SOLO_5x5") {
+                                    return info;
+                                }
 
-                            if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_FLEX && info.queueType === "RANKED_FLEX_SR") {
-                                return info;
-                            }
-                        }).tier;
+                                if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_FLEX && info.queueType === "RANKED_FLEX_SR") {
+                                    return info;
+                                }
+                            }).tier;
+                        }
+                        return {...p, championName: champ, rank}
+                    }))
+                } else {
+                    currentMatch = {};
+                }
+                let matchDetails = null;
+                if (current_match_id) {
+                    const match_identifier = riotConsts.REGIONS[region.toUpperCase()].toUpperCase() + '_' + current_match_id;
+                    matchDetails = await this.getMatchDetails(match_identifier, region);
+                    if(matchDetails){
+                        matchDetails.info.participants = matchDetails.info.participants.find(player => player.puuid === summoner.puuid);
                     }
-                    return {...p, championName: champ, rank}
-                }))
-                current_match_id = currentMatch.gameId;
-            }
-            let matchDetails = null;
-            if (current_match_id) {
-                const match_identifier = riotConsts.REGIONS[region.toUpperCase()].toUpperCase() + '_' + current_match_id;
-                matchDetails = await this.getMatchDetails(match_identifier, region);
-                if(matchDetails){
-                    matchDetails.info.participants = matchDetails.info.participants.find(player => player.puuid === summoner.puuid);
+                    currentMatch.matchDetails = matchDetails ? matchDetails : null;
                 }
             }
-            resolve({currentMatch, matchDetails});
+            resolve(currentMatch);
         });
     }
 
