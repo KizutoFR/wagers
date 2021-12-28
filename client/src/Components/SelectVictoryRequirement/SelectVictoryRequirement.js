@@ -9,14 +9,14 @@ export default function SelectVictoryRequirement({list, addToList, setStep, step
 
     const handleRequirementSelection = (event) => {
         const identifier = event.target.value;
-        if(identifier != 0) {
+        if(identifier !== 0) {
             const requirement = VICTORY_REQUIREMENTS.find(elem => elem.identifier === identifier);
             setSelectedRequirement(requirement);
         }
     }
 
     const handleSelectOption = () => {
-        if((selectedRequirement && !selectedRequirement.params) || (selectedRequirement && requirementValue.current.value != "")) {
+        if((selectedRequirement && !selectedRequirement.params) || (selectedRequirement && requirementValue.current.value !== "")) {
             addToList({identifier: selectedRequirement.identifier, figure: selectedRequirement.figure, value: selectedRequirement.params ? requirementValue.current.value : true, label: selectedRequirement.label})
             setStep(step + 1);
         }
@@ -29,7 +29,7 @@ export default function SelectVictoryRequirement({list, addToList, setStep, step
                 <select onChange={handleRequirementSelection}>
                     <option value="0">Select an option</option>
                     {VICTORY_REQUIREMENTS.map((requirement, index) => (
-                        list.find(elem => elem.identifier === requirement.identifier) == undefined ? <option key={index} value={requirement.identifier}>{requirement.label}</option> : ''
+                        list.find(elem => elem.identifier === requirement.identifier) === undefined ? <option key={index} value={requirement.identifier}>{requirement.label}</option> : ''
                     ))}
                 </select>
             </div>

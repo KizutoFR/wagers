@@ -44,7 +44,7 @@ export default function CurrentBet({current_bet, verifyBetWin}) {
                                         <img src={requirement.figure} alt={requirement.identifier} />
                                     </div>
                                     <div className='requirement-footer'>
-                                        <img src="images/blop.svg" />
+                                        <img src="images/blop.svg"  alt="svg form" />
                                         <p>{requirement.value === true ? 'Yes' : requirement.value}</p>
                                     </div>
                                 </div>

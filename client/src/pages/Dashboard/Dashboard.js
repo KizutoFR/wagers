@@ -12,10 +12,10 @@ import BetPanel from '../../components/BetPanel/BetPanel';
 export default function Dashboard({ user_data, setToken }) {
     const [data, setData] = useState({});
     const [currentBet, setBet] = useState();
-    const [betAlreadyExist, setBetAlreadyExist] = useState(false);
     const [scoreboard, setScoreboard] = useState([]);
     const [slug, setSlug] = useState('league-of-legends')
     const [betPanel, setBetPanel] = useState(false);
+    const [linkedUsername, setLinkedUsername] = useState('');
 
     useEffect(async () => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
@@ -23,6 +23,7 @@ export default function Dashboard({ user_data, setToken }) {
         if(SLUG.includes(slug)){
             if(user_data){
               const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+              setLinkedUsername(linked.username);
               await getCurrentGameInfo(slug, user_data._id, linked.username);
             }
         } else {
@@ -39,7 +40,6 @@ export default function Dashboard({ user_data, setToken }) {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
-                setBetAlreadyExist(true);
             }
         })
         .catch(err => console.error(err))
@@ -51,30 +51,32 @@ export default function Dashboard({ user_data, setToken }) {
         })
     }
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        localStorage.removeItem('wagers_auth_token')
-        setToken(null)
-    }
+    // const handleLogout = (e) => {
+    //     e.preventDefault();
+    //     localStorage.removeItem('wagers_auth_token')
+    //     setToken(null)
+    // }
 
     const verifyBetWin = async () => {
         let valideBet = true;
         const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
         await getCurrentGameInfo(slug, user_data._id, linked.username);
         if(data.matchDetails) {
-          currentBet.requirements.map(r => {
+          for(const r of currentBet.requirements) {
             switch(r) {
-              case "MATCH_WIN":
-                if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
-                break;
-              case "KILLS_AMOUNT":
-                if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
-                break;
-            //   case "DESTROYED_TURRET":
-            //     if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
-            //     break;
+                case "MATCH_WIN":
+                    if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
+                    break;
+                case "DESTROYED_TURRET":
+                    break;
+                case "KILLS_AMOUNT":
+                    if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
+                    break;
+                default:
+                    valideBet = false;
+                    break;
             }
-          })
+          }
           if(valideBet){
             await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + (currentBet.coin_put * currentBet.multiplier)});
             user_data.coins = user_data.coins + (currentBet.coin_put * currentBet.multiplier);
@@ -114,7 +116,7 @@ export default function Dashboard({ user_data, setToken }) {
 
     return (
         <div className="dashboard-container">
-            {betPanel ? <BetPanel slug={slug} user_data={user_data} match_id={data.currentMatch.gameId} setBet={setBet} setBetAlreadyExist={setBetAlreadyExist} /> : ""}
+            {betPanel ? <BetPanel slug={slug} user_data={user_data} match_id={data.currentMatch.gameId} setBet={setBet} /> : ""}
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
@@ -131,13 +133,14 @@ export default function Dashboard({ user_data, setToken }) {
                     <div>
                         <div className="dashboard-profile">
                             <div className="dashboard-profile-image">
-                                <img src={"images/lol_thumbnail.jpg"} />
+                                <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
                                     <p>Parieur incroyable</p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
                                 <h3>{user_data.username}</h3>
+                                <p className='game-username'>Game username: {linkedUsername}</p>
                                 <p>Level 50</p>
                             </div>
                             <div className="dashboard-profile-xp">
@@ -146,13 +149,13 @@ export default function Dashboard({ user_data, setToken }) {
                         </div>
                         <div className="dashboard-game-selector">
                             <div>
-                                <img src={"images/r6_selector.svg"}/>
+                                <img src={"images/r6_selector.svg"} alt="game selector figure"/>
                             </div>
                             <div className="active">
-                                <img src={"images/lol_selector.png"}/>
+                                <img src={"images/lol_selector.png"} alt="game selector figure"/>
                             </div>
                             <div>
-                                <img src={"images/valorant_selector.svg"}/>
+                                <img src={"images/valorant_selector.svg"} alt="game selector figure"/>
                             </div>
                         </div>
                         <div className="dashboard-scoreboard">
@@ -200,7 +203,7 @@ export default function Dashboard({ user_data, setToken }) {
                             <div className="match-background"></div>
                             <div className="match-details">
                                 <div className="details">
-                                    <CurrentMatch currentMatch={data.currentMatch}/>
+                                    <CurrentMatch currentMatch={data.currentMatch} linkedUsername={linkedUsername} />
                                 </div>
                             </div>
                         </div>

@@ -110,7 +110,7 @@
   transition: transform 0.35s;
 }
 
-.betpanel .requirements-list li div:last-child button {
+.betpanel .requirements-list li div:last-child .remove-icon {
   transition: right 0.35s;
   position: absolute;
   background: none;
@@ -121,13 +121,15 @@
   right: -50px;
 }
 
-.betpanel .requirements-list li:hover div:last-child button {
+.betpanel .requirements-list li:hover div:last-child .remove-icon {
   right: 5px;
 }
 
 .betpanel .requirements-list li:hover div:last-child p {
   transform: translateX(-10px);
 }
+
+
 
 .betpanel .add-requirement {
   width: 100%;

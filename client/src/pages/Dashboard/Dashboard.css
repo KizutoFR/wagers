@@ -198,10 +198,20 @@
 .dashboard-content .dashboard-profile .dashboard-profile-footer h3 {
     width: 100%;
     text-align: center;
-    margin-bottom: 10px;
+    margin: 0;
+    margin-top: 10px;
 }
 
-.dashboard-content .dashboard-profile .dashboard-profile-footer p {
+.dashboard-content .dashboard-profile .dashboard-profile-footer .game-username {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: rgb(163, 163, 163, 0.5);
+    font-size: 13px;
+}
+
+.dashboard-content .dashboard-profile .dashboard-profile-footer p:last-child {
     width: 100%;
     font-weight: bold;
     text-align: center;
@@ -444,7 +454,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .dashboard-row > div {
@@ -460,4 +470,10 @@
 .dashboard-row > div:last-child {
     width: 35%;
     margin-left: 40px;
+}
+
+.dashboard-container .shop {
+    background-color: #17152A;
+    height: 100%;
+    width: 100%;
 }

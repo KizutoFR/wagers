@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import Emitter from '../../services/Emitter';
-import { FaPlus, FaCaretLeft } from 'react-icons/fa';
+import { FaPlus, FaCaretLeft, FaTrash } from 'react-icons/fa';
 import { VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import './BetPanel.css';
 import Swal from 'sweetalert2'
 
 import SelectVictoryRequirement from '../SelectVictoryRequirement/SelectVictoryRequirement';
 
-export default function BetPanel({slug, user_data, match_id, setBet, setBetAlreadyExist}) {
+export default function BetPanel({slug, user_data, match_id, setBet}) {
   const [list, setList] = useState([]);
   const [step, setStep] = useState(1);
   const [multiplier, setMultiplier] = useState(1.5);
@@ -57,7 +57,6 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
         })
         .then(async finalbet => {
           setBet(finalbet.data.data);
-          setBetAlreadyExist(true);
           await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: (user_data.coins - stake)})
             .then(() => {
               console.log("Bet created successfully")
@@ -133,7 +132,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
                   </div>
                   <div>
                     <p>{requirement.value === true ? 'Yes' : requirement.value}</p>
-                    <button onClick={() => removeFromList(requirement)}>X</button>
+                    <FaTrash className='remove-icon' onClick={() => removeFromList(requirement)} />
                   </div>
                 </li>
               ))}
@@ -156,7 +155,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
             <div className='stake'>
-              <h1>{stake} <img src="images/PIEPECES.svg"></img></h1>
+              <h1>{stake} <img src="images/PIEPECES.svg" alt="coins icon"></img></h1>
               <input type="range" min="100" max={user_data.coins} value={stake} onChange={(e) => setStake(e.target.value)} />
               <div className='stake-controls'>
                 <p onClick={() => setStake(10)}>Min</p>
@@ -165,7 +164,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
               </div>
               <div className='balance-info'>
                 <p>Current balance:</p>
-                <p>{user_data.coins} <img src="images/PIEPECES.svg"></img></p>
+                <p>{user_data.coins} <img src="images/PIEPECES.svg" alt="coins icon"></img></p>
               </div>
             </div>
             <button className='betpanel-next' onClick={validateStake}>NEXT STEP</button>
@@ -198,17 +197,17 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
                 <li>
                   <p>Current balance</p>
                   <span></span>
-                  <p>{user_data.coins} <img src="images/PIEPECES.svg" /></p>
+                  <p>{user_data.coins} <img src="images/PIEPECES.svg" alt="coins icon" /></p>
                 </li>
                 <li>
                   <p>Stake</p>
                   <span></span>
-                  <p style={{color: "#E16868"}}>-{stake} <img src="images/PIEPECES.svg" /></p>
+                  <p style={{color: "#E16868"}}>-{stake} <img src="images/PIEPECES.svg"  alt="coins icon" /></p>
                 </li>
                 <li>
                   <p>After bet</p>
                   <span></span>
-                  <p>{user_data.coins - stake} <img src="images/PIEPECES.svg" /></p>
+                  <p>{user_data.coins - stake} <img src="images/PIEPECES.svg"  alt="coins icon" /></p>
                 </li>
                 <li>
                   <p>Multiplier</p>
@@ -218,7 +217,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, setBetAlrea
                 <li>
                   <p>Potential gain</p>
                   <span></span>
-                  <p style={{color: "#69DF8C"}}>+{stake * multiplier} <img src="images/PIEPECES.svg"></img></p>
+                  <p style={{color: "#69DF8C"}}>+{stake * multiplier} <img src="images/PIEPECES.svg" alt="coins icon" ></img></p>
                 </li>
               </ul>
             </div>

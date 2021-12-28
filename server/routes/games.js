@@ -16,7 +16,6 @@ router.get('/:game/:user_id/:username', async (req, res) => {
   const game_slug = req.params.game;
   const user_id = req.params.user_id;
   try {
-    console.time('gameinfo')
     const bet = await Bet.findOne({game_name: game_slug, user: user_id, ended: false})
       .populate({
         path: 'requirements',
@@ -26,7 +25,6 @@ router.get('/:game/:user_id/:username', async (req, res) => {
       const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
       const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
       const opgg = await RiotAPI.getOPGGByName(req.params.username, 'EUW');
-      console.timeEnd('gameinfo')
       res.status(200).json({currentMatch, accountInfo, bet, opgg});
   } catch (err) {
     res.status(400).json({success: false, err: err})

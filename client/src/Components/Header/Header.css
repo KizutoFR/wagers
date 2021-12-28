@@ -53,7 +53,8 @@
 	margin-left: 60px;
 }
 .container-left a:hover{
-  background: -webkit-linear-gradient(120deg, #F970FE, #B33CED);
+  background: -webkit-linear-gradient(45deg, #F970FE, #B33CED);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 	margin-left: 60px;
@@ -63,41 +64,41 @@
 	display: flex;
 	flex-direction: row;
 	align-items:center;
-	margin-right: 75px;
+	margin-right: 20px;
 	color:white;
   border: none;
   background-color: #27253B;
   border-radius: 5px;
-  padding: 0px 10px;
-}
-.container-right .coins img{
-  padding-left: 10px;
-  width: 25px;
+  padding: 5px 10px;
+  padding-right: 5px;
 }
 
-.container-right .coins .plus{
-  margin-left:3px;
-  border: none;
-	/* background: linear-gradient(120deg, #F970FE, #B33CED); */
-  border-radius: 1px;
+.container-right .coins .coins-piece {
+  width: 20px;
+  margin-left: 5px;
+}
+
+.container-right .coins div {
+	background: linear-gradient(120deg, #F970FE, #B33CED);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  padding: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.container-right .coins div img {
+  width: 100%;
   height: 100%;
 }
 
-.container-right .coins .plus img{
-  width: 15px;
-  height: auto;
-  padding:5px;
-  padding-left:10px;
-  padding-right:10px;
-  margin: 5px 5px;
-  margin-top:7px;
-  background: linear-gradient(120deg, #F970FE, #B33CED);
-  border-radius: 3px;
-}
-
 .banner-left button {
+  background: linear-gradient(120deg, #F970FE, #B33CED);
 	border: none;
-	background: linear-gradient(120deg, #F970FE, #B33CED);
 	color: #fff;
 	font-weight: bold;
 	font-size: 17px;

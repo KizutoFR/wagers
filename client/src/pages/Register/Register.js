@@ -34,7 +34,7 @@ export default function Register() {
   return (
     <div className="register-container">
       <div className="form-container">
-        <img src="/images/logo.svg"/>
+        <img src="/images/logo.svg" alt="logo"/>
         {errors.length > 0 
           ? errors.map((err, index) => <p className="error-message" key={index}>{err.msg}</p>)
           : ''}

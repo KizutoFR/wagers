@@ -20,23 +20,27 @@ export default function Header({user_data}) {
   return (
 			<div className="container">
 			<div className="container-left">
-				<div className="logo"><img src="/images/logo.svg"></img></div>
-				<div className=""><a href="">Comment ça marche ?</a></div>
-				<div className=""><a href="">Récompenses</a></div>
-				<div className=""><a href="">Contact</a></div>
+				<div className="logo">
+					<img src="/images/logo.svg" alt="logo" />
+				</div>
+				<a href="#">Comment ça marche ?</a>
+				<a href="#">Récompenses</a>
+				<a href="#">Contact</a>
 			{/* {user_data ? (<SearchBar user_data={user_data} />) : ''} */}
 		 	</div>
 		 	<div className="container-right">
-				<div className="banner-left"> <button>PARIER</button></div>
+				<div className="banner-left">
+					<button>PARIER</button>
+				</div>
 				<div className="coins">
 					{coins}
-					<img src="images/PIEPECES.svg"></img>
-					<span className="plus">
-						<a href=""><img src="images/plus-solid.svg"></img></a>
-					</span>
+					<img className="coins-piece" src="images/PIEPECES.svg" alt="coins icon" />
+					<div>
+						<img src="images/plus-solid.svg" alt="plus icon" />
+					</div>
 				</div>
 				<div className="pdp">
-					<a href=""><img src="images/PP.svg"></img></a>
+					<a href="#"><img src="images/PP.svg" alt="profile picture"/></a>
 				</div>
 			</div>
 		</div>
