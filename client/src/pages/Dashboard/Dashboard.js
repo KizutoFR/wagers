@@ -19,7 +19,7 @@ export default function Dashboard({ user_data, setToken }) {
 
     useEffect(async () => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
-        getScoreBoard()
+        await getScoreBoard()
         if(SLUG.includes(slug)){
             if(user_data){
               const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
@@ -140,7 +140,6 @@ export default function Dashboard({ user_data, setToken }) {
                             </div>
                             <div className="dashboard-profile-footer">
                                 <h3>{user_data.username}</h3>
-                                <p className='game-username'>Game username: {linkedUsername}</p>
                                 <p>Level 50</p>
                             </div>
                             <div className="dashboard-profile-xp">
@@ -166,16 +165,15 @@ export default function Dashboard({ user_data, setToken }) {
                                 <li>Mois</li>
                             </ul>
                             <ul className="scoreboard-list">
-                                <li>👑 DYDJX</li>
-                                <li>#2 DREADLINE</li>
-                                <li>#3 NEMESIS</li>
-                                <li>#4 ORAXE</li>
-                                <li>#5 XTECH</li>
-                                <li>#6 WISETHUG</li>
-                                <li>#7 ZEEUS</li>
-                                <li>#8 ZSOCIII</li>
-                                <li>#9 S1MPLE</li>
-                                <li>#10 PASHABICEPS</li>
+                                {scoreboard.map(u => (
+                                    <li>
+                                        <p>{u.username}</p>
+                                        <p>
+                                            {u.coins}
+                                            <img src="images/PIEPECES.svg" alt="coins icon"/>
+                                        </p>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

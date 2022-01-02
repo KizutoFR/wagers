@@ -33,7 +33,7 @@ export default function CurrentBet({current_bet, verifyBetWin}) {
                             </div>
                             <p>Potential gain: <span>{current_bet.coin_put * current_bet.multiplier}<img src="images/PIEPECES.svg" /></span></p>
                         </div>
-                        {!verifying ? <button onClick={verifyBet}>VERIFY BET RESULT</button> : <button>VERIFYING...</button>}
+                        {!verifying ? <button onClick={verifyBet}>VERIFY BET</button> : <button>VERIFYING...</button>}
                     </div>
                     <div className='dashboard-bet-right'>
                         <div className='code-barre'></div>

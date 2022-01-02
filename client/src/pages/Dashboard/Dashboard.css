@@ -1,8 +1,3 @@
-@font-face {
-    font-family: 'Azo';
-    src: url('/fonts/AzoSans-Regular.ttf');
-}
-
 *, *::after, *::before {
     box-sizing: border-box;
 }
@@ -198,20 +193,10 @@
 .dashboard-content .dashboard-profile .dashboard-profile-footer h3 {
     width: 100%;
     text-align: center;
-    margin: 0;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
-.dashboard-content .dashboard-profile .dashboard-profile-footer .game-username {
-    width: 100%;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: rgb(163, 163, 163, 0.5);
-    font-size: 13px;
-}
-
-.dashboard-content .dashboard-profile .dashboard-profile-footer p:last-child {
+.dashboard-content .dashboard-profile .dashboard-profile-footer p {
     width: 100%;
     font-weight: bold;
     text-align: center;
@@ -230,7 +215,9 @@
     color: #F970FE;
     width: 100%;
     text-align: center;
-    font-weight: bold;
+    font-family: 'Akira';
+    font-size: 20px;
+    margin-bottom: 30px;
 }
 
 .dashboard-content .dashboard-scoreboard .scoreboard-filters {
@@ -251,13 +238,15 @@
     font-weight: bold;
     cursor: pointer;
     width: 31%;
-    text-align: center;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .dashboard-content .dashboard-scoreboard .scoreboard-filters li.active {
     background: linear-gradient(120deg, #F970FE, #B33CED);
-    color: #fff;
+    color: #17152A;
     border-color: rgba(255, 255, 255, 0);
 }
 
@@ -275,12 +264,32 @@
     padding: 5px 0;
     width: calc(100% - 60px);
     margin: 0 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-content .dashboard-scoreboard .scoreboard-list li p {
+    margin: 0;
+}
+
+.dashboard-content .dashboard-scoreboard .scoreboard-list li p:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dashboard-content .dashboard-scoreboard .scoreboard-list li p:last-child img {
+    width: 20px;
+    margin-left: 10px;
 }
 
 .dashboard-content .dashboard-scoreboard .scoreboard-list li:first-child {
     background: linear-gradient(120deg, #F970FE, #B33CED);
     margin: 0;
-    padding: 15px 35px;
+    padding: 15px 28px;
     width: 100%;
 }
 
@@ -454,7 +463,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
 }
 
 .dashboard-row > div {
@@ -472,8 +480,10 @@
     margin-left: 40px;
 }
 
-.dashboard-container .shop {
+.dashboard-container .dashboard-shop {
     background-color: #17152A;
-    height: 100%;
+    margin-top: 30px;
+    border-radius: 6px;
+    height: 350px;
     width: 100%;
 }

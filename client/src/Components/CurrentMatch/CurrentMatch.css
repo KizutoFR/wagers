@@ -45,6 +45,21 @@
     background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
 }
 
+.match-container .match-item .champ-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgb(0,0,0);
+    background: -moz-linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+    background: -webkit-linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+    background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+}
+
+
+
 .match-container .match-item:nth-last-child(-n+5),
 .match-container .match-item:nth-last-child(-n+5) .champ-banner {
     flex-direction: row-reverse;
@@ -54,6 +69,12 @@
     background: -moz-linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
     background: -webkit-linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
     background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+}
+
+.match-container .match-item:nth-last-child(-n+5) .champ-banner::before {
+    background: -moz-linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(23,21,42,1) 100%);
 }
 
 .match-container .match-item .summoner-pic {
@@ -109,18 +130,18 @@
 .match-container .match-item .champ-banner p {
     font-size: 40px;
     font-weight: bolder;
-    opacity: 0.6;
+    opacity: 0.3;
     position: absolute;
     text-transform: uppercase;
-    left: 110px;
+    left: 100px;
     margin: 0;
     top: 50%;
     transform: translateY(-50%);
     width: max-content;
+    font-family: 'Akira';
 }
 
 .match-container .match-item:nth-last-child(-n+5) .champ-banner p {
-    right: 110px;
+    right: 100px;
     left: unset;
-    text-align: right;
 }
