@@ -72,6 +72,7 @@ export default function BetPanel({slug, user_data, match_id, setBet}) {
             })
         })
         .catch(err => {
+          console.log(err)
           Swal.fire({
             title: 'Oops :/',
             text: `Someting wrong happened`,

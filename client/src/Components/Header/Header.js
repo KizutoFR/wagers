@@ -30,7 +30,7 @@ export default function Header({user_data}) {
 		 	</div>
 		 	<div className="container-right">
 				<div className="banner-left">
-					<button>PARIER</button>
+					<button>MAKE A BET</button>
 				</div>
 				<div className="coins">
 					{coins}

@@ -14,6 +14,7 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
             {currentMatch.participants.map((part, index) => (
               <div key={index} className={(part.summonerName === linkedUsername ? 'match-item active' : 'match-item')}>
                   <div className="champ-banner" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
+                    <img src="images/rectangle.svg" alt="box shadow svg" class="shadow" />      
                     <div className="summoner-pic">
                       <img src={`http://ddragon.leagueoflegends.com/cdn/11.24.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
                       <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>

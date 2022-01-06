@@ -30,13 +30,13 @@ export default function Dashboard({ user_data, setToken }) {
             window.location.replace('/dashboard')
         }
         return () => {
-            Emitter.off('CLOSE_BET_PANEL')
+            Emitter.off('CLOSE_BET_PANEL');
         }
     }, [user_data, slug]);
 
     async function getCurrentGameInfo(game_slug, user_id, username) {
         return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user_id+'/'+username).then(res => {
-            console.log(res.data)
+            console.log(res.data);
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
@@ -61,7 +61,8 @@ export default function Dashboard({ user_data, setToken }) {
         let valideBet = true;
         const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
         await getCurrentGameInfo(slug, user_data._id, linked.username);
-        if(data.matchDetails) {
+
+        if(data.matchDetails && data.matchDetails.info.gameId === currentBet.match_id) {
           for(const r of currentBet.requirements) {
             switch(r) {
                 case "MATCH_WIN":
@@ -120,7 +121,7 @@ export default function Dashboard({ user_data, setToken }) {
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
-                    <button>PARIER</button>
+                    <button>MAKE A BET</button>
                 </div>
                 <div className='video-banner'>
                     <video autoPlay loop muted>
@@ -161,13 +162,13 @@ export default function Dashboard({ user_data, setToken }) {
                             <h2>LEADERBOARD</h2>
                             <ul className="scoreboard-filters">
                                 <li className="active">Global</li>
-                                <li>Année</li>
-                                <li>Mois</li>
+                                <li>Year</li>
+                                <li>Month</li>
                             </ul>
                             <ul className="scoreboard-list">
-                                {scoreboard.map(u => (
+                                {scoreboard.map((u, index) => (
                                     <li>
-                                        <p>{u.username}</p>
+                                        <p>#{index + 1} {u.username}</p>
                                         <p>
                                             {u.coins}
                                             <img src="images/PIEPECES.svg" alt="coins icon"/>

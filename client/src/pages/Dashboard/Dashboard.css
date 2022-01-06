@@ -487,3 +487,9 @@
     height: 350px;
     width: 100%;
 }
+
+@media only screen and (min-width: 1903px) {
+    .dashboard-banner h1 {
+        font-size: 100px;
+    }
+}

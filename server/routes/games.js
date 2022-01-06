@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 router.get('/:game/:user_id/:username', async (req, res) => {
   const game_slug = req.params.game;
   const user_id = req.params.user_id;
+  console.log(req.params.username);
   try {
     const bet = await Bet.findOne({game_name: game_slug, user: user_id, ended: false})
       .populate({
