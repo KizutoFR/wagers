@@ -12,16 +12,12 @@ const friends = require('./routes/friends');
 
 const app = express();
 
-const cors_options = {
-  origin: true
-}
-
 connectDB();
 
 app.use(express.static('public'))
 
-app.use(cors(cors_options));
-app.options('*', cors(cors_options))
+app.use(cors());
+app.options('*', cors())
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
