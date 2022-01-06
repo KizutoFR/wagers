@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
+import { FaAt,  FaKey} from 'react-icons/fa';
 import axios from 'axios';
 import './Login.css';
 
@@ -25,6 +27,7 @@ export default function Login({setToken}) {
               setErrorMessage(res.data.message);
           }
       } catch (err) {
+        console.error(err.message);
       }
   }
 
@@ -38,16 +41,30 @@ export default function Login({setToken}) {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      {errorMessage !== '' ? <p>{errorMessage}</p> : ''}
-      <form id="login-form">
-        <input type="text" placeholder="Email" value={email} onChange={changeEmail} />
-        <input type="password" placeholder="Password" value={password} onChange={changePassword} />
-        {/* <input type="submit" value="Log-in"/> */}
-       
-        <button data-action="submit" onClick={e => handleSubmit(e)}>Log-in</button>
-      </form>
+    <div className="login-container">
+      <div className="form-container">
+      <img src="/images/logo.svg" alt="logo"/>
+       {errorMessage !== '' ? <p className="error-message">{errorMessage}</p> : ''}
+        <form>
+          <div className="form-element">
+            <input type="text" placeholder="Email" value={email} onChange={changeEmail} />
+            <FaAt className="form-element-icon" />
+          </div>
+          <div className="form-element">
+            <input type="password" placeholder="Password" value={password} onChange={changePassword} />
+            <FaKey className="form-element-icon" />
+          </div>      
+          <div className="form-options">
+            <Link to="/register">Register</Link>
+            <button data-action="submit" onClick={e => handleSubmit(e)}>Log-in</button>
+          </div>
+        </form>
+      </div>
+      <div className="login-video-container">
+        <video autoPlay loop muted>
+          <source src='/videos/leagues.mp4' type="video/mp4" />
+        </video>
+      </div>
     </div>
   )
 }

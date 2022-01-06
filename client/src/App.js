@@ -5,7 +5,6 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 import Login from './pages/Login/Login.js';
-import Game from './pages/Game/Game';
 import Homepage from './pages/Homepage/Homepage.js';
 import Register from './pages/Register/Register.js';
 import Dashboard from './pages/Dashboard/Dashboard.js'
@@ -64,9 +63,6 @@ export default function App() {
             <Switch>
               <Route exact path="/">
                 <Homepage user_data={user}/>
-              </Route>
-              <Route exact path="/dashboard/:slug">
-                {token ? <Game user_data={user} /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/dashboard">
                 {token ? <Dashboard user_data={user} setToken={setToken}/> : <Redirect to="/login" />}
