@@ -21,6 +21,10 @@ connectDB();
 app.use(express.static('public'))
 app.use(cors(cors_options));
 app.options('*', cors(cors_options))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(express.json({ extended: false }));
 
 app.use(
