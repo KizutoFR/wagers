@@ -1,6 +1,7 @@
 {
   "name": "bet-in-game",
   "version": "1.0.0",
+  "proxy": "https://api.wagers.fr",
   "description": "",
   "main": "index.js",
   "scripts": {

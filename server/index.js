@@ -12,10 +12,15 @@ const friends = require('./routes/friends');
 const app = express();
 const cors = require('cors');
 
+const cors_options = {
+  origin: true
+}
+
 connectDB();
 
 app.use(express.static('public'))
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors(cors_options));
+app.options('*', cors(cors_options))
 app.use(express.json({ extended: false }));
 
 app.use(
