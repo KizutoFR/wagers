@@ -47,6 +47,6 @@ app.use('/friends', friends);
 
 
 
-const port = 3030;
+const port = process.env.PORT || 3030;
 
 app.listen(port, () => console.log(`Server running on port http://localhost:${port}`));
