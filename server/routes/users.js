@@ -39,35 +39,24 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
-  let captcha_token = req.body.captcha_token;
 
-  axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_API_SECRET_KEY}&response=${captcha_token}`, {}, {headers: {'content-type': 'application/x-www-form-urlencoded'}})
-    .then(result => {
-      //TODO: Send email if score <= 0.3 to verify identity
-      if(result.data.success && result.data.score > 0) {
-        User.findOne({ email: email })
-          .then(user => {
-            if(!user) {
-              res.status(400).json({ success: false, message: 'Incorrect email or password'})
-              return;
-            }
-            bcrypt.compare(password, user.password, (err, isMatch) => {
-              if(err) throw err;
-              if(isMatch) {
-                const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
-                User.updateOne({_id: user._id}, {$set : {auth_token: token}})
-                    .then(() => res.status(200).json({success: true, user_id: user._id, token}));
-              } else {
-                res.status(200).json({ success: false, message: 'Incorrect email or password' })
-              }
-            })
-          })
-      } else {
-        res.status(200).json({ success: false, message: 'Someting went wrong'})
+  User.findOne({ email: email })
+    .then(user => {
+      if(!user) {
+        res.status(400).json({ success: false, message: 'Incorrect email or password'})
         return;
       }
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if(err) throw err;
+        if(isMatch) {
+          const token = jwt.sign({ user_id: user._id }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
+          User.updateOne({_id: user._id}, {$set : {auth_token: token}})
+              .then(() => res.status(200).json({success: true, user_id: user._id, token}));
+        } else {
+          res.status(200).json({ success: false, message: 'Incorrect email or password' })
+        }
+      })
     })
-    .catch(() => res.status(400).json({ success: false, message: 'Someting went wrong' }));
 })
 
 /**
