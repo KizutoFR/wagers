@@ -33,6 +33,31 @@
     padding: 0 20px;
 }
 
+.match-container .match-item .champ-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgb(23,21,42);
+    background: linear-gradient(to right, rgba(23,21,42,1) 0%, rgba(23,21,42,0.8797268907563025) 18%, rgba(23,21,42,0) 100%);   
+}
+
+.match-container .match-item .champ-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+    background: rgb(23,21,42);
+    background: linear-gradient(to left, rgba(23,21,42,1) 0%, rgba(23,21,42,0.8797268907563025) 18%, rgba(23,21,42,0) 100%);   
+}
+
+
+
 .match-container .match-item:nth-last-child(-n+5),
 .match-container .match-item:nth-last-child(-n+5) .champ-banner {
     flex-direction: row-reverse;
@@ -65,16 +90,6 @@
     transform: translate(30%, -30%);
     width: 40px;
 }
-
-.match-container .match-item .shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 2;
-}
-
 
 .match-container .match-item:nth-last-child(-n+5) .summoner-pic img:last-child {
     left: 0;

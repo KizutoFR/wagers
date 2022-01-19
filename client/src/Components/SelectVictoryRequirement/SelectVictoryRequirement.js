@@ -17,7 +17,7 @@ export default function SelectVictoryRequirement({list, addToList, setStep, step
 
     const handleSelectOption = () => {
         if((selectedRequirement && !selectedRequirement.params) || (selectedRequirement && requirementValue.current.value !== "")) {
-            addToList({identifier: selectedRequirement.identifier, figure: selectedRequirement.figure, value: selectedRequirement.params ? requirementValue.current.value : true, label: selectedRequirement.label})
+            addToList({identifier: selectedRequirement.identifier, figure: selectedRequirement.figure, value: selectedRequirement.params ? requirementValue.current.value : true, label: selectedRequirement.label, min: selectedRequirement.min ? selectedRequirement.min : null, max: selectedRequirement.max ? selectedRequirement.max : null})
             setStep(step + 1);
         }
     }

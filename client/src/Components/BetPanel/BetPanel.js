@@ -8,18 +8,36 @@ import Swal from 'sweetalert2'
 
 import SelectVictoryRequirement from '../SelectVictoryRequirement/SelectVictoryRequirement';
 
-export default function BetPanel({slug, user_data, match_id, setBet}) {
+export default function BetPanel({slug, user_data, match_id, setBet, summonerName}) {
   const [list, setList] = useState([]);
   const [step, setStep] = useState(1);
   const [multiplier, setMultiplier] = useState(1.5);
   const [stake, setStake] = useState(100);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(false);
     document.body.classList.add('remove-scroll');
     return () => {
       document.body.classList.remove('remove-scroll');
     }
   })
+
+  useEffect(() => {
+    if(step === 4) {
+      setLoading(true);
+      calculateMultiplier();
+    }
+  }, [step])
+
+  const calculateMultiplier = async () => {
+    await axios.post(process.env.REACT_APP_API_URL+'/games/bet/multiplier', {requirements: list, summonerName})
+      .then(response => {
+        setMultiplier(response.data.multiplier)
+        setLoading(false);
+        setStep(step + 1)
+      })
+  }
 
   const addToList = (elem) => {
     let arr = list;
@@ -51,7 +69,7 @@ export default function BetPanel({slug, user_data, match_id, setBet}) {
           match_id: match_id ? match_id : 0,
           predefined: false,
           requirements,
-          multiplier: 1.5,
+          multiplier: multiplier,
           coin_put: stake,
           user: user_data._id
         })
@@ -178,6 +196,23 @@ export default function BetPanel({slug, user_data, match_id, setBet}) {
             <div className="betpanel-header">
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
+                <h1>Stake</h1>
+              </div>
+              <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
+            </div>
+            <div className='multiplier-calcul'>
+              <h3>Calculation of the current multiplier</h3>
+              <div className="multiplier-loader"></div>
+            </div>
+          </div>
+        ) : ''}
+
+        {/* STEP 5 */}
+        {step === 5 ? (
+          <div>
+            <div className="betpanel-header">
+              <div>
+                <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
                 <h1>Bet validation</h1>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
@@ -218,7 +253,7 @@ export default function BetPanel({slug, user_data, match_id, setBet}) {
                 <li>
                   <p>Potential gain</p>
                   <span></span>
-                  <p style={{color: "#69DF8C"}}>+{stake * multiplier} <img src="images/PIEPECES.svg" alt="coins icon" ></img></p>
+                  <p style={{color: "#69DF8C"}}>+{Math.ceil(stake * multiplier)} <img src="images/PIEPECES.svg" alt="coins icon" ></img></p>
                 </li>
               </ul>
             </div>

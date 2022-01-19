@@ -171,7 +171,19 @@ router.post('/update', (req, res) => {
 router.post('/update-wallet', (req, res) => {
   const {user_id, new_coins} = req.body;
   User.updateOne({_id: user_id}, {coins: parseInt(new_coins)})
-    .then(() => res.status(200).json({success: true, news_coins: new_coins}))
+    .then(() => res.status(200).json({success: true}))
+    .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
+})
+
+/**
+ @route POST users/update-exp
+ @description update user exp when win/loose a bet
+ @access Public
+ */
+ router.post('/update-exp', (req, res) => {
+  const {user_id, new_exp} = req.body;
+  User.updateOne({_id: user_id}, {exp: parseInt(new_exp)})
+    .then(() => res.status(200).json({success: true}))
     .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
 })
 

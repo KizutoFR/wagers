@@ -5,7 +5,8 @@
         "summonerRank": "league/{version}/entries/by-summoner/{encryptedSummonerId}",
         "summonerMasteries": "champion-mastery/{version}/champion-masteries/by-summoner/{encryptedSummonerId}",
         "currentMatch": "spectator/{version}/active-games/by-summoner/{encryptedSummonerId}",
-        "lastMatchDetails": "match/{version}/matches/{matchId}"
+        "matchDetails": "match/{version}/matches/{matchId}",
+        "matchList": "match/{version}/matches/by-puuid/{puuid}/ids?count={limit}&start={start}&type=ranked"
     },
     "OPGG": {
         "base": "https://{region}op.gg/",

@@ -16,14 +16,18 @@
             "label": "Minimum player killed",
             "figure": "images/tower.svg",
             "params": true,
-            "type": "number"
+            "type": "number",
+            "min": 1,
+            "max": 40
         },
         {
             "identifier": "DESTROYED_TURRET",
             "label": "Minimum destroyed turret",
             "figure": "images/tower.svg",
             "params": true,
-            "type": "number"
+            "type": "number",
+            "min": 1,
+            "max": 11
         }
     ]
 }

@@ -5,6 +5,7 @@ const AccountType = require('../models/AccountType');
 const RiotAPI = require('../lib/RiotAPI.js');
 const VictoryRequirements = require('../models/VictoryRequirements');
 const Bet = require('../models/Bet');
+const { getAverageValues, calculateCote } = require('../config/utils.js');
 
 router.get('/', (req, res) => {
   AccountType.find()
@@ -15,20 +16,20 @@ router.get('/', (req, res) => {
 router.get('/:game/:user_id/:username', async (req, res) => {
   const game_slug = req.params.game;
   const user_id = req.params.user_id;
-  console.log(req.params.username);
+  const username = encodeURIComponent(req.params.username);
   try {
     const bet = await Bet.findOne({game_name: game_slug, user: user_id, ended: false})
       .populate({
         path: 'requirements',
         model: 'VictoryRequirements'
       });
-      const match_id = bet ? bet.match_id : null;
-      const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
-      const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
-      const opgg = await RiotAPI.getOPGGByName(req.params.username, 'EUW');
-      res.status(200).json({currentMatch, accountInfo, bet, opgg});
+    const match_id = bet ? bet.match_id : null;
+    const currentMatch = await RiotAPI.getCurrentMatch(username, match_id, 'EUW');
+    const accountInfo = await RiotAPI.getSummonerOverview(username, 'EUW');
+    const opgg = await RiotAPI.getOPGGByName(username, 'EUW');
+    res.status(200).json({currentMatch, accountInfo, bet, opgg});
   } catch (err) {
-    res.status(400).json({success: false, err: err})
+    res.status(400).json({success: false, error: err})
   }
 });
 
@@ -72,6 +73,31 @@ router.post('/bet/save', (req, res) => {
   Bet.updateOne({_id: bet_id}, {ended: true})
     .then(() => res.status(200).json({success: true}))
     .catch(err => res.status(400).json({success: false, error: err}))
+})
+
+router.post('/bet/multiplier', async (req, res) => {
+  const {requirements, summonerName} = req.body;
+  const matches = await RiotAPI.getMatchHistory(summonerName, 30, 'EUW');
+
+  const averages = getAverageValues(matches);
+  let final_cote = 1;
+
+  requirements.forEach(prop => {
+    switch(prop.identifier) {
+      case 'MATCH_WIN':
+        final_cote = final_cote * (averages.win / 100) + 1;
+      break;
+      case 'KILLS_AMOUNT':
+        final_cote = final_cote * calculateCote(prop, averages.kills);
+      break;
+      case 'DESTROYED_TURRETS':
+      default:
+        final_cote = final_cote * calculateCote(prop, averages.turretKills);
+      break;
+    }
+  })
+
+  res.status(200).json({multiplier: Math.round((final_cote + Number.EPSILON) * 10) / 10});
 })
 
 module.exports = router;

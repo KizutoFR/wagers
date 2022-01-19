@@ -44,11 +44,53 @@ class RiotAPI {
     }
 
     static getMatchDetails (matchId, region) {
-        return get(format(url('API', 'lastMatchDetails'), {
+        return get(format(url('API', 'matchDetails'), {
             region: riotConsts.REGIONS['match_'+region.toUpperCase()],
             version: 'v5',
             matchId
         }))
+    }
+
+    static getMatchesIdList(start, limit, puuid, region){
+        return get(format(url('API', 'matchList'), {
+            region: riotConsts.REGIONS['match_'+region.toUpperCase()],
+            version: 'v5',
+            start,
+            limit,
+            puuid
+        }))
+    }
+
+    static getMatchHistory(summonerName, limit, region) {
+        const BATCH_SIZE = 5;
+        const BATCH_DELAY = 1500;
+        let i = 0;
+
+        return new Promise(async (resolve) => {
+            let matchStatsList = [];
+
+            const summoner = await this.getSummonerByName(summonerName, region)
+            if(summoner) {
+                const matches_id = await this.getMatchesIdList(0, limit, summoner.puuid, region);
+                const queue = setInterval(async () => {
+                    const batch = matches_id.slice(BATCH_SIZE*i, BATCH_SIZE + (BATCH_SIZE * i))
+
+                    if(batch.length < 1) {
+                        clearInterval(queue);
+                        resolve(matchStatsList);
+                    }
+
+                    matchStatsList.push(...await Promise.all(batch.map(async e => {
+                        const match = await this.getMatchDetails(e, region);
+                        const summoner_stats = match.info.participants.find(e => e.puuid === summoner.puuid);
+                        const {kills, win, visionScore, turretKills, pentaKills, goldEarned, assists} = summoner_stats;
+                        return {kills, win, visionScore, turretKills, pentaKills, goldEarned, assists};
+                    })))
+
+                    i++;
+                }, BATCH_DELAY)
+            }
+        })
     }
 
     static getCurrentMatch(summonerName, match_id, region) {
@@ -73,7 +115,9 @@ class RiotAPI {
                                 if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_FLEX && info.queueType === "RANKED_FLEX_SR") {
                                     return info;
                                 }
-                            }).tier;
+                            });
+                            
+                            rank = rank ? rank.tier : null;
                         }
                         return {...p, championName: champ, rank}
                     }))

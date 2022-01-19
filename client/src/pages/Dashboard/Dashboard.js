@@ -16,6 +16,7 @@ export default function Dashboard({ user_data, setToken }) {
     const [slug, setSlug] = useState('league-of-legends')
     const [betPanel, setBetPanel] = useState(false);
     const [linkedUsername, setLinkedUsername] = useState('');
+    const DEFAULT_LOOSE_XP = 25;
 
     useEffect(async () => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
@@ -79,19 +80,23 @@ export default function Dashboard({ user_data, setToken }) {
             }
           }
           if(valideBet){
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + (currentBet.coin_put * currentBet.multiplier)});
-            user_data.coins = user_data.coins + (currentBet.coin_put * currentBet.multiplier);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)});
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + (100 * currentBet.requirements.length)});
+            user_data.exp = user_data.exp + (100 * currentBet.requirements.length);
+            user_data.coins = user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier);
             Emitter.emit('UPDATE_COINS', user_data.coins);
             Swal.fire({
               title: 'You won your bet!',
-              text: `+${currentBet.coin_put * currentBet.multiplier} coins`,
+              text: `+${Math.ceil(currentBet.coin_put * currentBet.multiplier)} coins & +${100 * currentBet.requirements.length}xp`,
               icon: 'success',
               confirmButtonText: 'Ok'
             })
           }else {
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + DEFAULT_LOOSE_XP});
+            user_data.exp = user_data.exp + DEFAULT_LOOSE_XP;
             Swal.fire({
               title: 'You lost your bet :/',
-              text: `-${currentBet.coin_put} coins`,
+              text: `-${currentBet.coin_put} coins & +${DEFAULT_LOOSE_XP}xp`,
               icon: 'error',
               confirmButtonText: 'Ok'
             })
@@ -117,7 +122,7 @@ export default function Dashboard({ user_data, setToken }) {
 
     return (
         <div className="dashboard-container">
-            {betPanel ? <BetPanel slug={slug} user_data={user_data} match_id={data.currentMatch.gameId} setBet={setBet} /> : ""}
+            {betPanel ? <BetPanel slug={slug} user_data={user_data} match_id={data.currentMatch.gameId} setBet={setBet} summonerName={linkedUsername} /> : ""}
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
