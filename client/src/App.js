@@ -7,8 +7,9 @@ import axios from "axios";
 import Login from './pages/Login/Login.js';
 import Homepage from './pages/Homepage/Homepage.js';
 import Register from './pages/Register/Register.js';
-import Dashboard from './pages/Dashboard/Dashboard.js'
-import ProfilUser from './pages/ProfilUser/ProfilUser.js'
+import Dashboard from './pages/Dashboard/Dashboard.js';
+import ProfilUser from './pages/ProfilUser/ProfilUser.js';
+import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 import ModifUser from './pages/ModifUser/ModifUser';
 import Header from './components/Header/Header';
@@ -81,6 +82,9 @@ export default function App() {
               </Route>
               <Route exact path="/update">
                 {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}
+              </Route>
+              <Route exact path="/battlepass">
+                {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
               </Route>
             </Switch>
       </BrowserRouter>

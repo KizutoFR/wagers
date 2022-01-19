@@ -17,27 +17,19 @@ export default function Login({setToken}) {
     setEmail(e.target.value);
   }
 
-  const sendUserCredentials = async (credentials) => {
-      try {
-          const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login', credentials)
-          if (res.data.success) {
-              localStorage.setItem('wagers_auth_token', res.data.token);
-              setToken(res.data.token)
-          } else {
-              setErrorMessage(res.data.message);
-          }
-      } catch (err) {
-        console.error(err.message);
-      }
-  }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    window.grecaptcha.ready(function() {
-      window.grecaptcha.execute('6Lcn2_gcAAAAAPO4_cXw7cDGOiJbIQY4qF_e8PAO', {action: 'submit'}).then(function(token) {
-        sendUserCredentials({email, password, captcha_token: token});
-      });
-    });
+    try {
+      const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login',{email,password});
+      if (res.data.success) {
+          localStorage.setItem('wagers_auth_token', res.data.token);
+          setToken(res.data.token)
+      } else {
+          setErrorMessage(res.data.message);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   return (
