@@ -33,6 +33,26 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "LinkedAccount"
     }],
+    exp: {
+        type: Number,
+        default: 0
+    },
+    battle_pass_level: {
+        type: Number,
+        default: 0,
+    },
+    title: {
+        type: String,
+        default: "",
+    },
+    profile_picture: {
+        type: String,
+        default: 'default.jpg'
+    },
+    profile_banner: {
+        type: String,
+        default: 'default_banner.jpg'
+    },
     registered_at: {
         type: Date,
         default: Date.now

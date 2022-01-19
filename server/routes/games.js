@@ -15,28 +15,28 @@ router.get('/', (req, res) => {
 router.get('/:game/:user_id/:username', async (req, res) => {
   const game_slug = req.params.game;
   const user_id = req.params.user_id;
+  console.log(req.params.username);
   try {
     const bet = await Bet.findOne({game_name: game_slug, user: user_id, ended: false})
       .populate({
         path: 'requirements',
         model: 'VictoryRequirements'
-      })[0];
+      });
       const match_id = bet ? bet.match_id : null;
       const currentMatch = await RiotAPI.getCurrentMatch(req.params.username, match_id, 'EUW');
       const accountInfo = await RiotAPI.getSummonerOverview(req.params.username, 'EUW');
       const opgg = await RiotAPI.getOPGGByName(req.params.username, 'EUW');
-      
-      res.status(200).json({currentMatch, accountInfo, bet,opgg});
+      res.status(200).json({currentMatch, accountInfo, bet, opgg});
   } catch (err) {
-    res.status(400).json({success: false, err: err.message})
+    res.status(400).json({success: false, err: err})
   }
 });
 
 router.post('/requirements/add', (req, res) => {
-  const {label, identifier, value} = req.body;
-
+  const {label, identifier, figure, value} = req.body;
   const requirements = new VictoryRequirements({
     label,
+    figure,
     identifier,
     value
   })

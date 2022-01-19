@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const session = require('express-session')
+const cors = require('cors');
 
 const league = require('./routes/league');
 const users = require('./routes/users');
@@ -10,13 +11,21 @@ const friends = require('./routes/friends');
 
 
 const app = express();
-const cors = require('cors');
 
 connectDB();
 
 app.use(express.static('public'))
-app.use(cors({ origin: true, credentials: true }));
+
 app.use(express.json({ extended: false }));
+
+app.use(cors());
+app.options('*', cors())
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  next();
+});
 
 app.use(
     session({
@@ -38,6 +47,6 @@ app.use('/friends', friends);
 
 
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3030;
 
 app.listen(port, () => console.log(`Server running on port http://localhost:${port}`));

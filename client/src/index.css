@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'Azo';
+  src: url('/fonts/AzoSans-Regular.ttf')
+}
+
+@font-face {
+  font-family: 'Azo Bold';
+  src: url('/fonts/AzoSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Akira';
+  src: url('/fonts/Akira.otf');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,8 +21,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+::-webkit-scrollbar{
+  display: block;
+  overflow: auto;
+  width: 5px;
+  height: 5px;
+  background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(120deg, #F970FE, #B33CED);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+body.remove-scroll {
+  overflow: hidden;
 }

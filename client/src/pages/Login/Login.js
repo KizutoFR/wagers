@@ -43,7 +43,7 @@ export default function Login({setToken}) {
   return (
     <div className="login-container">
       <div className="form-container">
-      <img src="/images/logo.svg"/>
+      <img src="/images/logo.svg" alt="logo"/>
        {errorMessage !== '' ? <p className="error-message">{errorMessage}</p> : ''}
         <form>
           <div className="form-element">

@@ -4,7 +4,11 @@ const VictoryRequirementsSchema = new mongoose.Schema({
     label: {
       type: String,
       required: true
-    },  
+    },
+    figure: {
+      type: String,
+      required: true
+    },
     identifier: {
       type: String,
       required: true

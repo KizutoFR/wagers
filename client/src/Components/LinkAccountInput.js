@@ -74,7 +74,7 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
                     <button onClick={handleSubmit}>Ok</button>
                 )}
             </div>
-            <img src={"images/"+data.thumbnail} alt="" onClick={handleClick}/>
+            <img src={"images/"+data.thumbnail} alt="thumb" onClick={handleClick}/>
         </div>
     );
 }
