@@ -275,7 +275,7 @@ router.post('/battlepass/cells/claim', async (req, res) => {
   await user.save();
 
   newCell.save()
-    .then(() => res.status(200).json({success: true}))
+    .then(() => res.status(200).json({success: true, cell: newCell}))
     .catch(err => res.status(400).json({error: err}));
 
   
