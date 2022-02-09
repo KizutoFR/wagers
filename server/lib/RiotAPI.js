@@ -116,7 +116,6 @@ class RiotAPI {
                                     return info;
                                 }
                             });
-                            
                             rank = rank ? rank.tier : null;
                         }
                         return {...p, championName: champ, rank}

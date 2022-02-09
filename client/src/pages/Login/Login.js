@@ -3,11 +3,14 @@ import {Link} from 'react-router-dom';
 import { FaAt,  FaKey} from 'react-icons/fa';
 import axios from 'axios';
 import './Login.css';
+import { useTranslation } from "react-i18next";
+import Lang from "../../components/Lang/Lang";
 
 export default function Login({setToken}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { t } = useTranslation();
 
   const changePassword = (e) => {
     setPassword(e.target.value);
@@ -47,8 +50,9 @@ export default function Login({setToken}) {
             <FaKey className="form-element-icon" />
           </div>      
           <div className="form-options">
-            <Link to="/register">Register</Link>
-            <button data-action="submit" onClick={e => handleSubmit(e)}>Log-in</button>
+            <Link to="/register">{t('login.register')}</Link>
+            <Lang/>
+            <button data-action="submit" onClick={e => handleSubmit(e)}>{t('login.log-in')}</button>
           </div>
         </form>
       </div>

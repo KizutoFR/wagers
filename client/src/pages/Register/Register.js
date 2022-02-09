@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
+import { useTranslation } from "react-i18next";
+import Lang from "../../components/Lang/Lang";
 
 export default function Register() {
   const email = useRef();
@@ -12,6 +14,7 @@ export default function Register() {
   const confirmPassword = useRef();
   const history = useHistory();
   const [errors, setErrors] = useState([]);
+  const { t } = useTranslation();
 
   const register = async (e) => {
     e.preventDefault();
@@ -62,8 +65,9 @@ export default function Register() {
             <input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
           </div>
           <div className="form-options">
-            <Link to="/login">Log-In</Link>
-            <button onClick={register}>Register</button>
+            <Link to="/login">{t('register.log-in')}</Link>
+            <Lang/>
+            <button onClick={register}>{t('register.register')}</button>
           </div>
         </form>
       </div>

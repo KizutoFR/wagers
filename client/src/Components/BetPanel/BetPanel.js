@@ -5,6 +5,9 @@ import { FaPlus, FaCaretLeft, FaTrash } from 'react-icons/fa';
 import { VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import './BetPanel.css';
 import Swal from 'sweetalert2'
+import { useTranslation } from "react-i18next";
+import Lang from "../Lang/Lang";
+
 
 import SelectVictoryRequirement from '../SelectVictoryRequirement/SelectVictoryRequirement';
 
@@ -13,8 +16,9 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
   const [step, setStep] = useState(1);
   const [multiplier, setMultiplier] = useState(1.5);
   const [stake, setStake] = useState(100);
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     setLoading(false);
     document.body.classList.add('remove-scroll');
@@ -125,7 +129,8 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             <div className="betpanel-header">
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(2)} />
-                <h1>Select option</h1>
+                <h1>{t('betPanel.option')} </h1>
+                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
@@ -138,7 +143,8 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
           <div>
             <div className="betpanel-header">
               <div>
-                <h1>Victory requirements</h1>
+                <h1>{t('betPanel.victoryRequirements')}</h1>
+                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
@@ -159,7 +165,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             {list.length !== VICTORY_REQUIREMENTS.length ? <div className='add-requirement' onClick={() => setStep(1)}>
               <FaPlus />
             </div> : ''}
-            <button className='betpanel-next' onClick={() => validateVictoryRequirements()}>NEXT STEP</button>
+            <button className='betpanel-next' onClick={() => validateVictoryRequirements()}>{t('betPanel.next')}</button>
           </div>
         ) : ''}
 
@@ -169,7 +175,8 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             <div className="betpanel-header">
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
-                <h1>Stake</h1>
+                <h1>{t('betPanel.stake')}</h1>
+                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
@@ -182,11 +189,11 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
                 <p onClick={() => setStake(user_data.coins)}>Max</p>
               </div>
               <div className='balance-info'>
-                <p>Current balance:</p>
+                <p>{t('betPanel.stake')}</p>
                 <p>{user_data.coins} <img src="images/PIEPECES.svg" alt="coins icon"></img></p>
               </div>
             </div>
-            <button className='betpanel-next' onClick={validateStake}>NEXT STEP</button>
+            <button className='betpanel-next' onClick={validateStake}>{t('betPanel.next')}</button>
           </div>
         ) : ''}
 
@@ -196,29 +203,12 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             <div className="betpanel-header">
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
-                <h1>Stake</h1>
-              </div>
-              <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
-            </div>
-            <div className='multiplier-calcul'>
-              <h3>Calculation of the current multiplier</h3>
-              <div className="multiplier-loader"></div>
-            </div>
-          </div>
-        ) : ''}
-
-        {/* STEP 5 */}
-        {step === 5 ? (
-          <div>
-            <div className="betpanel-header">
-              <div>
-                <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
-                <h1>Bet validation</h1>
+                <h1>{t('betPanel.betValidation')}</h1>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
             <div className='betpanel-validation'>
-              <h2>Victory requirements</h2>
+              <h2>{t('betPanel.victoryRequirements2')}</h2>
               <ul>
                 {list.map((requirement, index) => (
                   <li key={index}>
@@ -228,20 +218,20 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
                   </li>
                 ))}
               </ul>
-              <h2>Balance status</h2>
+              <h2>{t('betPanel.balanceStatus')}</h2>
               <ul>
                 <li>
-                  <p>Current balance</p>
+                  <p>{t('betPanel.currentBalence')}</p>
                   <span></span>
                   <p>{user_data.coins} <img src="images/PIEPECES.svg" alt="coins icon" /></p>
                 </li>
                 <li>
-                  <p>Stake</p>
+                  <p>{t('betPanel.stake')}</p>
                   <span></span>
                   <p style={{color: "#E16868"}}>-{stake} <img src="images/PIEPECES.svg"  alt="coins icon" /></p>
                 </li>
                 <li>
-                  <p>After bet</p>
+                  <p>{t('betPanel.afterBet')}</p>
                   <span></span>
                   <p>{user_data.coins - stake} <img src="images/PIEPECES.svg"  alt="coins icon" /></p>
                 </li>
@@ -251,13 +241,13 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
                   <p>{multiplier}</p>
                 </li>
                 <li>
-                  <p>Potential gain</p>
+                  <p>{t('betPanel.potentielGain')}</p>
                   <span></span>
                   <p style={{color: "#69DF8C"}}>+{Math.ceil(stake * multiplier)} <img src="images/PIEPECES.svg" alt="coins icon" ></img></p>
                 </li>
               </ul>
             </div>
-            <button className='betpanel-next' onClick={confirmBetCreation}>Confirm bet</button>
+            <button className='betpanel-next' onClick={confirmBetCreation}>{t('betPanel.confirmBet')}</button>
           </div>
         ) : ''}
       </div>

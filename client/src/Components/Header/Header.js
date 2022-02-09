@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Emitter from '../../services/Emitter';
 import './Header.css';
-
-import SearchBar from "../SearchBar/SearchBar";
+import Lang from "../Lang/Lang";
+import { useTranslation } from "react-i18next";
 
 export default function Header({user_data}) {
   const [coins, setCoins] = useState(0);
+  const { t } = useTranslation();
   
   useEffect(() => {
     if(user_data){
@@ -23,14 +24,16 @@ export default function Header({user_data}) {
 				<div className="logo">
 					<img src="/images/logo.svg" alt="logo" />
 				</div>
-				<a href="#">Comment ça marche ?</a>
-				<a href="#">Récompenses</a>
-				<a href="#">Contact</a>
-			{/* {user_data ? (<SearchBar user_data={user_data} />) : ''} */}
+				<a href="#">{t('header.how-it-works')}</a>
+				<a href="#">{t('header.rewards')}</a>
+				<a href="#">{t('header.contact')}</a>
+				<a href="#">{t('header.make-a-bet')}</a>
 		 	</div>
 		 	<div className="container-right">
-				<div className="banner-left">
-					<button>MAKE A BET</button>
+				<Lang/>
+					<div className="banner-left">
+					<button>{t('header.make-a-bet')}</button>
+					
 				</div>
 				<div className="coins">
 					{coins}

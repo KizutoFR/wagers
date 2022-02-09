@@ -4,6 +4,7 @@ import Emitter from '../../services/Emitter';
 import { SLUG } from '../../utils/config.json'
 import './Dashboard.css';
 import Swal from 'sweetalert2'
+import { useTranslation } from "react-i18next";
 
 import CurrentBet from '../../components/CurrentBet/CurrentBet';
 import CurrentMatch from '../../components/CurrentMatch/CurrentMatch';
@@ -16,6 +17,7 @@ export default function Dashboard({ user_data, setToken }) {
     const [slug, setSlug] = useState('league-of-legends')
     const [betPanel, setBetPanel] = useState(false);
     const [linkedUsername, setLinkedUsername] = useState('');
+    const { t } = useTranslation();
     const DEFAULT_LOOSE_XP = 25;
 
     useEffect(async () => {
@@ -126,7 +128,7 @@ export default function Dashboard({ user_data, setToken }) {
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
-                    <button>MAKE A BET</button>
+                    <button>{t('header.make-a-bet')}</button>
                 </div>
                 <div className='video-banner'>
                     <video autoPlay loop muted>
@@ -141,7 +143,7 @@ export default function Dashboard({ user_data, setToken }) {
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>Parieur incroyable</p>
+                                    <p>{t('header.status')}</p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
@@ -164,11 +166,11 @@ export default function Dashboard({ user_data, setToken }) {
                             </div>
                         </div>
                         <div className="dashboard-scoreboard">
-                            <h2>LEADERBOARD</h2>
+                            <h2>{t('header.leaderboard')}</h2>
                             <ul className="scoreboard-filters">
-                                <li className="active">Global</li>
-                                <li>Year</li>
-                                <li>Month</li>
+                                <li className="active">{t('header.global')}</li>
+                                <li>{t('header.year')}</li>
+                                <li>{t('header.month')}</li>
                             </ul>
                             <ul className="scoreboard-list">
                                 {scoreboard.map((u, index) => (
@@ -198,9 +200,9 @@ export default function Dashboard({ user_data, setToken }) {
                         </div>
 
                         <div className="dashboard-separator">
-                            <h3>current match</h3>
+                            <h3>{t('header.current-match')}</h3>
                             <div className="separator"></div>
-                            {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>Make a bet</button> : <button style={{cursor: "not-allowed"}} disabled>Make a bet</button>}
+                            {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>{t('header.make-a-bet')}</button> : <button style={{cursor: "not-allowed"}} disabled>{t('header.make-a-bet')}</button>}
                         </div>
 
                         <div className="dashboard-match">
@@ -216,14 +218,14 @@ export default function Dashboard({ user_data, setToken }) {
                 <div className="dashboard-row">
                     <div>
                         <div className="dashboard-separator">
-                            <h3>current bet</h3>
+                            <h3>{t('header.current-bet')}</h3>
                             <div className="separator"></div>
                         </div>
                         <CurrentBet current_bet={currentBet} verifyBetWin={verifyBetWin} />
                     </div>
                     <div>
                         <div className="dashboard-separator">
-                            <h3>shop</h3>
+                            <h3>{t('header.shop')}</h3>
                             <div className="separator"></div>
                         </div>
                         <div className="dashboard-shop">
