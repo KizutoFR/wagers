@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const axios = require('axios');
 require('dotenv').config();
 
 const User = require('../models/User');
-const AccountType = require('../models/AccountType');
+const BattlePass = require('../models/BattlePass');
 const LinkedAccount = require('../models/LinkedAccount');
+const AccountType = require('../models/AccountType');
+const BattlePassCell = require('../models/BattlePassCell');
+const ClaimedBattlePassCell = require('../models/ClaimedBattlePassCell')
+
+const ENUM = require('../config/enum.json');
 
 /**
  @route GET users/
@@ -133,7 +137,6 @@ router.post('/update', (req, res) => {
     errors.push({msg: 'Email is not in a valid format'});
   }
   User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email}).then(user=>{
-    console.log(user)
     User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
     .populate({
       path: 'linked_account',
@@ -198,6 +201,102 @@ router.post('/search', (req, res) => {
     .then(users => res.status(200).json({success: true, users: users}))
     .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
 })
+
+router.get('/battlepass', (req, res) => {
+  const userId = req.currentUser._id;
+  BattlePass.findOne().sort({ expire_at: -1 })
+    .populate({
+      path: 'cells',
+      model: 'BattlePassCell',
+      populate: [
+          {
+              path: 'free_reward',
+              model: 'BattlePassReward'
+          },
+          {
+              path: 'premium_reward',
+              model: 'BattlePassReward'
+          }
+      ]
+  })
+  .then(async (pass) => {
+    const claimedCells = await ClaimedBattlePassCell.find({pass_id: pass._id, user_id: userId});
+    res.status(200).json({pass, claimedCells})
+  }) 
+  .catch(err => res.status(400).json({error: err}))
+})
+
+router.post('/battlepass/add', (req, res) => {
+  const { date } = req.body;
+
+  const bp = new BattlePass({
+    cells: [],
+    expire_at: date
+  });
+
+  bp.save()
+    .then(() => {
+      res.json({ success: true })
+    })
+    .catch(err => console.log(err.message));
+});
+
+router.post('/battlepass/cells/claim', async (req, res) => {
+  const {cell_id, pass_id, is_premium, reward} = req.body;
+  const user_id = req.currentUser._id;
+  
+  const newCell = new ClaimedBattlePassCell({
+    pass_id,
+    cell_id,
+    user_id,
+    is_premium
+  })
+
+  const user = await User.findOne({_id: user_id});
+
+  switch(reward.type) {
+    case ENUM.REWARDS_TYPE.TITLE:
+      user.titles.push(reward._id);
+      break;
+    case ENUM.REWARDS_TYPE.BADGE:
+      user.badges.push(reward._id);
+      break;
+    case ENUM.REWARDS_TYPE.COINS:
+      user.coins += parseInt(reward.value);
+      break;
+    case ENUM.REWARDS_TYPE.BANNER:
+      user.banners.push(reward._id);
+      break;
+    default:
+      console.log("REWARD TYPE NOT FOUND");
+      break;
+  }
+
+  await user.save();
+
+  newCell.save()
+    .then(() => res.status(200).json({success: true}))
+    .catch(err => res.status(400).json({error: err}));
+
+  
+})
+
+router.post('/battlepass/cells/add', (req, res) => {
+  const { free_id, premium_id, battlepass_id } = req.body;
+  try {
+    const cell = new BattlePassCell({
+      free_reward: free_id === '' ? null : free_id,
+      premium_reward: premium_id === '' ? null : premium_id
+    })
+
+    cell.save()
+      .then(() => BattlePass.findOneAndUpdate({_id: battlepass_id}, {$push: { cells: cell._id } }));
+    res.status(200).json({success: true})
+  } catch(err) {
+    res.status(400).json({success: false, err})
+  }
+  
+});
 
 /**
  @route GET users/:id

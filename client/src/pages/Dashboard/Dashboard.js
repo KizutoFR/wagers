@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import Emitter from '../../services/Emitter';
 import { SLUG } from '../../utils/config.json'
 import './Dashboard.css';

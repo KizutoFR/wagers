@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../utils/axios';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 

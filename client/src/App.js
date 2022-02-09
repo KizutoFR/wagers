@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from './utils/axios';
 
 import Login from './pages/Login/Login.js';
 import Homepage from './pages/Homepage/Homepage.js';
@@ -83,7 +83,7 @@ export default function App() {
               <Route exact path="/update">
                 {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}
               </Route>
-              <Route exact path="/battlepass">
+              <Route exact path="/pass">
                 {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
               </Route>
             </Switch>

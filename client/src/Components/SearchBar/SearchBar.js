@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../../utils/axios';
 import React, { useEffect, useRef, useState } from "react";
 import './SearchBar.css';
 

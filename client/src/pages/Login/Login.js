@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 import { FaAt,  FaKey} from 'react-icons/fa';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import './Login.css';
 import { useTranslation } from "react-i18next";
 import Lang from "../../components/Lang/Lang";

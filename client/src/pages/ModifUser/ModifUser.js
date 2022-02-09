@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import { Link } from 'react-router-dom';
 import {ProfilUser} from '../ProfilUser/ProfilUser.js';
 

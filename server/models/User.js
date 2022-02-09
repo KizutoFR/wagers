@@ -37,25 +37,25 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    battle_pass_level: {
-        type: Number,
-        default: 0,
-    },
     premium: {
         type: Boolean,
         default:false
     },
-    title: {
-        type: String,
-        default: "",
-    },
+    titles: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BattlePassReward'
+    }],
+    banners: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BattlePassReward'
+    }],
+    badges: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BattlePassReward'
+    }],
     profile_picture: {
         type: String,
         default: 'default.jpg'
-    },
-    profile_banner: {
-        type: String,
-        default: 'default_banner.jpg'
     },
     registered_at: {
         type: Date,
