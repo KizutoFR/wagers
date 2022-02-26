@@ -4,10 +4,6 @@
     margin-bottom: 30px;
 }
 
-.battlepass-container > * {
-    user-select: none;
-}
-
 .battlepass-container .battlepass-categories {
     display: flex;
     flex-direction: column;
@@ -67,7 +63,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    scroll-snap-align: start;
 }
 
 .battlepass-wrapper {
