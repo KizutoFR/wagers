@@ -9,14 +9,12 @@
   position: relative;
 }
 .container-left{
-  width: 40%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   position: relative;
 }
 .container-right{
-  width: 40%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -50,14 +48,14 @@
 .container-left a{
 	color:white;
 	text-decoration:none;
-	margin-left: 60px;
+	margin-left: 40px;
+  white-space: nowrap;
 }
 .container-left a:hover{
   background: -webkit-linear-gradient(45deg, #F970FE, #B33CED);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-	margin-left: 60px;
 }
 
 .container-right .coins{

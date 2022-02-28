@@ -24,10 +24,11 @@ export default function Header({user_data}) {
 				<div className="logo">
 					<img src="/images/logo.svg" alt="logo" />
 				</div>
-				<a href="#">{t('header.how-it-works')}</a>
-				<a href="#">{t('header.rewards')}</a>
-				<a href="#">{t('header.contact')}</a>
-				<a href="#">{t('header.make-a-bet')}</a>
+				<a href="/dashboard">{t('header.dashboard')}</a>
+				<a href="/pass">{t('header.battlepass')}</a>
+				<a href="/shop">{t('header.shop')}</a>
+				<a href="/about">{t('header.how-it-works')}</a>
+				<a href="/contact">{t('header.contact')}</a>
 		 	</div>
 		 	<div className="container-right">
 				<Lang/>
@@ -37,13 +38,13 @@ export default function Header({user_data}) {
 				</div>
 				<div className="coins">
 					{coins}
-					<img className="coins-piece" src="images/PIEPECES.svg" alt="coins icon" />
+					<img className="coins-piece" src="/images/PIEPECES.svg" alt="coins icon" />
 					<div>
-						<img src="images/plus-solid.svg" alt="plus icon" />
+						<img src="/images/plus-solid.svg" alt="plus icon" />
 					</div>
 				</div>
 				<div className="pdp">
-					<a href="#"><img src="images/PP.svg" alt="profile picture"/></a>
+					<a href={`/profil`}><img src="/images/PP.svg" alt="profile picture"/></a>
 				</div>
 			</div>
 		</div>

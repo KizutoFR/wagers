@@ -14,8 +14,8 @@ export default function ProfilGlobal({ logged_user }){
   useEffect(() => {
     getUserData(id)
     if(logged_user) {
-      if(logged_user._id === id) {
-        history.push('/dashboard')
+      if(logged_user._id !== id) {
+        history.push('/profil')
       }
       isAlreadyRequested(logged_user._id, id);
     }
@@ -30,7 +30,6 @@ export default function ProfilGlobal({ logged_user }){
   async function isAlreadyRequested(from, to) {
     return await axios.get(process.env.REACT_APP_API_URL+'/friends/requested/' + from + '/' + to).then(res => {
       setIsSender(res.data.sender === logged_user._id)
-      console.log(isSender)
       setAlreadyRequested(res.data.requested);
       setAlreadyFriend(res.data.accepted);
     })
@@ -70,7 +69,7 @@ export default function ProfilGlobal({ logged_user }){
 
   return (
     (userData ? (
-      <div>
+      <div style={{color: '#fff'}}>
         <h1>Profil</h1>
         <p>{userData.firstname}</p>
         <p>{userData.lastname}</p>

@@ -1,17 +1,17 @@
 {
     "header": {
         "how-it-works": "How it works",
-        "rewards": "Rewards",
         "contact": "Contact",
+        "dashboard": "Dashboard",
+        "battlepass": "Battlepass",
         "make-a-bet": "MAKE A BET",
         "current-match": "CURRENT MATCH",
         "global": "Global",
         "year": "Year",
         "month": "Month",
         "current-bet": "CURRENT BET",
-        "shop": "SHOP",
+        "shop": "Shop",
         "challenges": "CHALLENGES",
-        "status": "incredible bettor",
         "leaderboard": "LEASERBOARD"
     },
     "login": {

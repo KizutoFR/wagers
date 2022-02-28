@@ -19,7 +19,7 @@ export default function ProfilUser({user_data}){
     }
 
     return (
-        <div>
+        <div style={{color: '#fff'}}>
             {user_data ? (
                 <div>
                     <h1>Profil</h1>

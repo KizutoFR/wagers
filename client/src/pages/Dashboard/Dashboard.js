@@ -174,7 +174,7 @@ export default function Dashboard({ user_data, setToken }) {
                             </ul>
                             <ul className="scoreboard-list">
                                 {scoreboard.map((u, index) => (
-                                    <li>
+                                    <li key={u._id}>
                                         <p>#{index + 1} {u.username}</p>
                                         <p>
                                             {u.coins}

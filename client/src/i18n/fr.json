@@ -1,17 +1,17 @@
 {
     "header": {
         "how-it-works": "Comment ca marche ?",
-        "rewards": "Récompenses",
         "contact": "Contact",
         "make-a-bet": "PARIER",
+        "dashboard": "Tableau de bord",
+        "battlepass": "Pass de combat",
         "current-match": "MATCH EN COURS",
         "global": "Géneral",
         "year": "Année",
         "month": "Mois",
         "current-bet": "PARI EN COURS",
-        "shop": "BOUTIQUE",
+        "shop": "Boutique",
         "challenges": "CHALLENGES",
-        "status": "Parieur incroyable",
         "leaderboard": "CLASSEMENT"
         
     },
