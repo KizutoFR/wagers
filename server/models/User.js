@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
+    auth_token: {
+        type: String,
+        required: true
+    },
     titles: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'BattlePassReward'
