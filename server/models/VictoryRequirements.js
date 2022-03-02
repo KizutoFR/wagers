@@ -15,7 +15,7 @@ const VictoryRequirementsSchema = new mongoose.Schema({
     },
     value: {
       type: mongoose.Schema.Types.Mixed,
-      require: true
+      required: true
     }
 });
 

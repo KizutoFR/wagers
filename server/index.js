@@ -8,6 +8,7 @@ const league = require('./routes/league');
 const users = require('./routes/users');
 const games = require('./routes/games');
 const accounts = require('./routes/accounts');
+const challenges = require('./routes/challenges');
 const friends = require('./routes/friends');
 const admin = require('./routes/admin');
 
@@ -41,13 +42,12 @@ app.use(
     })
   );
 
-app.use(isAuthenticated);
-
-app.use('/league', league);
-app.use('/users', users);
-app.use('/games', games);
-app.use('/accounts', accounts);
-app.use('/friends', friends);
+app.use('/league', isAuthenticated, league);
+app.use('/users', isAuthenticated, users);
+app.use('/games', isAuthenticated, games);
+app.use('/accounts', isAuthenticated, accounts);
+app.use('/friends', isAuthenticated, friends);
+app.use('/challenges', isAuthenticated, challenges);
 app.use('/admin', admin);
 
 

@@ -9,11 +9,13 @@ import { useTranslation } from "react-i18next";
 import CurrentBet from '../../components/CurrentBet/CurrentBet';
 import CurrentMatch from '../../components/CurrentMatch/CurrentMatch';
 import BetPanel from '../../components/BetPanel/BetPanel';
+import Challenge from '../../components/Challenge/Challenge';
 
 export default function Dashboard({ user_data, setToken }) {
     const [data, setData] = useState({});
     const [currentBet, setBet] = useState();
     const [scoreboard, setScoreboard] = useState([]);
+    const [challenges, setChallenges] = useState([]);
     const [slug, setSlug] = useState('league-of-legends')
     const [betPanel, setBetPanel] = useState(false);
     const [linkedUsername, setLinkedUsername] = useState('');
@@ -27,6 +29,7 @@ export default function Dashboard({ user_data, setToken }) {
             if(user_data){
               const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
               setLinkedUsername(linked.username);
+              getChallenges(slug);
               await getCurrentGameInfo(slug, user_data._id, linked.username);
             }
         } else {
@@ -37,9 +40,15 @@ export default function Dashboard({ user_data, setToken }) {
         }
     }, [user_data, slug]);
 
+    const getChallenges = (slug) => {
+        axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug).then(res => {
+            console.log(res.data.challenges);
+            setChallenges(res.data.challenges);
+        })
+    }
+
     async function getCurrentGameInfo(game_slug, user_id, username) {
         return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user_id+'/'+username).then(res => {
-            console.log(res.data);
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
@@ -60,26 +69,57 @@ export default function Dashboard({ user_data, setToken }) {
     //     setToken(null)
     // }
 
+    const updateChallengesProgress = (id, value) => {
+        axios.post(process.env.REACT_APP_API_URL+'/challenges/progress', {challenge_id: id, value});
+        const newChallenges = challenges.map(chall => {
+            chall.progress = (chall.progress || 0) + value;
+            return chall;
+        })
+        console.log(newChallenges);
+        setChallenges(newChallenges);
+    }
+
+    const checkChallengeProgress = (stats) => {
+        for(const challenge of challenges) {
+            console.log(challenge);
+            switch(challenge.type) {
+                case "MATCH_WIN":
+                    updateChallengesProgress(challenge.id, 1);
+                    break;
+                case "DESTROYED_TURRET":
+                    // updateChallengesProgress(challenge.id, stats.kills);
+                    break;
+                case "KILLS_AMOUNT":
+                    updateChallengesProgress(challenge.id, stats.kills);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     const verifyBetWin = async () => {
         let valideBet = true;
         const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
         await getCurrentGameInfo(slug, user_data._id, linked.username);
 
         if(data.matchDetails && data.matchDetails.info.gameId === currentBet.match_id) {
-          for(const r of currentBet.requirements) {
-            switch(r) {
-                case "MATCH_WIN":
-                    if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
-                    break;
-                case "DESTROYED_TURRET":
-                    break;
-                case "KILLS_AMOUNT":
-                    if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
-                    break;
-                default:
-                    valideBet = false;
-                    break;
-            }
+            checkChallengeProgress(data.matchDetails.info.participants);
+            console.log(data.matchDetails.info.participants);
+            for(const r of currentBet.requirements) {
+                switch(r) {
+                    case "MATCH_WIN":
+                        if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
+                        break;
+                    case "DESTROYED_TURRET":
+                        break;
+                    case "KILLS_AMOUNT":
+                        if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
+                        break;
+                    default:
+                        valideBet = false;
+                        break;
+                }
           }
           if(valideBet){
             await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)});
@@ -143,7 +183,7 @@ export default function Dashboard({ user_data, setToken }) {
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>{t('header.status')}</p>
+                                    <p>user_data.current_title</p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
@@ -189,14 +229,16 @@ export default function Dashboard({ user_data, setToken }) {
                         <div className="dashboard-separator">
                             <h3>challenges</h3>
                             <div className="separator separator-little"></div>
-                            <p>win x2</p>
+                            <p>durée limitée</p>
                         </div>
 
                         {/* TODO: Faire un composant pour les challenges quand implentés */}
                         <div className="challenges">
-                            <div className="challenge"></div>
-                            <div className="challenge"></div>
-                            <div className="challenge"></div>
+                        {challenges.length > 0 ? challenges.map((challenge, index) => (
+                            <Challenge challenge={challenge} key={index} />
+                        )) : (
+                            <p>Aucun challenges disponible...</p>
+                        )}
                         </div>
 
                         <div className="dashboard-separator">

@@ -203,6 +203,23 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             <div className="betpanel-header">
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
+                <h1>Stake</h1>
+              </div>
+              <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
+            </div>
+            <div className='multiplier-calcul'>
+              <h3>Calculation of the current multiplier</h3>
+              <div className="multiplier-loader"></div>
+            </div>
+          </div>
+        ) : ''}
+
+        {/* STEP 5 */}
+        {step === 5 ? (
+          <div>
+            <div className="betpanel-header">
+              <div>
+                <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
                 <h1>{t('betPanel.betValidation')}</h1>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>

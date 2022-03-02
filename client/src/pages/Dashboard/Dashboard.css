@@ -107,7 +107,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .dashboard-content > div:first-child {
@@ -342,21 +342,18 @@
     white-space: nowrap;
     padding-bottom: 10px;
     margin-bottom: 30px;
+    min-height: 300px;
+    width: 100%;
+    position: relative;
 }
 
-.challenge {
-    width: 300px;
-    height: 300px;
-    background-color: #17152A;
-    display: inline-block;
-    border-radius: 6px;
-    vertical-align:top;
-    margin:30px 30px 0 0;
-    white-space:normal;
-}
 
-.challenge:last-child {
-    margin-right: 0;
+.challenges > p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#47445d
 }
 
 .dashboard-match {
