@@ -13,8 +13,10 @@ export default function BattlePass({ user_data }) {
     let pos = { left: 0, x: 0 };
 
     useEffect(() => {
-        getCurrentBattlePass();
-    }, [])
+        if (user_data) {
+            getCurrentBattlePass();
+        }
+    }, [user_data])
 
     useEffect(() => {
         Emitter.on('CLAIM_REWARD', data => claimReward(data));
