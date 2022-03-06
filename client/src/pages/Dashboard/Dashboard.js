@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import axios from '../../utils/axios';
+import axios from 'axios';
 import Emitter from '../../services/Emitter';
 import { SLUG } from '../../utils/config.json'
 import './Dashboard.css';
@@ -24,16 +24,16 @@ export default function Dashboard({ user_data, setToken }) {
 
     useEffect(async () => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
-        await getScoreBoard()
         if(SLUG.includes(slug)){
             if(user_data){
-              const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
-              setLinkedUsername(linked.username);
-              getChallenges(slug);
-              await getCurrentGameInfo(slug, user_data._id, linked.username);
+                await getScoreBoard()
+                const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+                setLinkedUsername(linked.username);
+                getChallenges(slug);
+                await getCurrentGameInfo(slug, linked.username);
             }
         } else {
-            window.location.replace('/dashboard')
+            setSlug('league-of-legends');
         }
         return () => {
             Emitter.off('CLOSE_BET_PANEL');
@@ -47,8 +47,8 @@ export default function Dashboard({ user_data, setToken }) {
         })
     }
 
-    async function getCurrentGameInfo(game_slug, user_id, username) {
-        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user_id+'/'+username).then(res => {
+    async function getCurrentGameInfo(game_slug, username) {
+        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username).then(res => {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
@@ -75,22 +75,20 @@ export default function Dashboard({ user_data, setToken }) {
             chall.progress = (chall.progress || 0) + value;
             return chall;
         })
-        console.log(newChallenges);
         setChallenges(newChallenges);
     }
 
     const checkChallengeProgress = (stats) => {
         for(const challenge of challenges) {
-            console.log(challenge);
             switch(challenge.type) {
                 case "MATCH_WIN":
-                    updateChallengesProgress(challenge.id, 1);
+                    updateChallengesProgress(challenge._id, 1);
                     break;
                 case "DESTROYED_TURRET":
-                    // updateChallengesProgress(challenge.id, stats.kills);
+                    // updateChallengesProgress(challenge._id, stats.kills);
                     break;
                 case "KILLS_AMOUNT":
-                    updateChallengesProgress(challenge.id, stats.kills);
+                    updateChallengesProgress(challenge._id, stats.kills);
                     break;
                 default:
                     break;
@@ -101,26 +99,30 @@ export default function Dashboard({ user_data, setToken }) {
     const verifyBetWin = async () => {
         let valideBet = true;
         const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
-        await getCurrentGameInfo(slug, user_data._id, linked.username);
-
+        await getCurrentGameInfo(slug, linked.username);
+        console.log(data.matchDetails)
         if(data.matchDetails && data.matchDetails.info.gameId === currentBet.match_id) {
-            checkChallengeProgress(data.matchDetails.info.participants);
-            console.log(data.matchDetails.info.participants);
-            for(const r of currentBet.requirements) {
-                switch(r) {
-                    case "MATCH_WIN":
-                        if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
-                        break;
-                    case "DESTROYED_TURRET":
-                        break;
-                    case "KILLS_AMOUNT":
-                        if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
-                        break;
-                    default:
-                        valideBet = false;
-                        break;
+            console.log(currentBet.account_id, linked.value);
+            if(currentBet.account_id === linked.value) {
+                checkChallengeProgress(data.matchDetails.info.participants);
+                for(const r of currentBet.requirements) {
+                    switch(r) {
+                        case "MATCH_WIN":
+                            if(r.value !== data.matchDetails.info.participants.win) valideBet = false;
+                            break;
+                        case "DESTROYED_TURRET":
+                            break;
+                        case "KILLS_AMOUNT":
+                            if(r.value > data.matchDetails.info.participants.kills) valideBet = false;
+                            break;
+                        default:
+                            valideBet = false;
+                            break;
+                    }
                 }
-          }
+            } else {
+                valideBet = false;
+            }
           if(valideBet){
             await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)});
             await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + (100 * currentBet.requirements.length)});
@@ -133,7 +135,7 @@ export default function Dashboard({ user_data, setToken }) {
               icon: 'success',
               confirmButtonText: 'Ok'
             })
-          }else {
+          } else {
             await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + DEFAULT_LOOSE_XP});
             user_data.exp = user_data.exp + DEFAULT_LOOSE_XP;
             Swal.fire({

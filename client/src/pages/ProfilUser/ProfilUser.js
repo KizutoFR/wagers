@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../utils/axios';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import Lang from "../../components/Lang/Lang";

@@ -11,9 +11,7 @@ router.get('/:game', async (req, res) => {
         let challenges = await Challenge.find({game: game_name, end_date : {$gt: Date.now()}});
         const progress = await ChallengeProgress.find({user_id: user._id});
         challenges = challenges.map((chall) => {
-            const prog = progress.find(p => {
-                return p.challenge_id.equals(chall._id)
-            });
+            const prog = progress.find(p => p.challenge_id.equals(chall._id));
             if(prog) {
                 chall.set('progress', prog.progress, {strict: false});
             }
@@ -29,10 +27,8 @@ router.get('/:game', async (req, res) => {
 router.post('/progress', async (req, res) => {
     const {challenge_id, value} = req.body;
     const user = req.currentUser;
-
     try {
         let challProgress = await ChallengeProgress.findOne({challenge_id: challenge_id, user_id: user._id});
-        console.log(challProgress);
         if (challProgress) {
             challProgress.progress += value;
         } else {

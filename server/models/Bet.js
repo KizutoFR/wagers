@@ -27,6 +27,10 @@ const BetSchema = new mongoose.Schema({
         required: true,
         max: 100000
     },
+    account_id: {
+        type: String,
+        required: true,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,

@@ -79,7 +79,6 @@ class RiotAPI {
                         clearInterval(queue);
                         resolve(matchStatsList);
                     }
-
                     matchStatsList.push(...await Promise.all(batch.map(async e => {
                         const match = await this.getMatchDetails(e, region);
                         const summoner_stats = match.info.participants.find(e => e.puuid === summoner.puuid);
@@ -130,7 +129,7 @@ class RiotAPI {
                     if(matchDetails){
                         matchDetails.info.participants = matchDetails.info.participants.find(player => player.puuid === summoner.puuid);
                     }
-                    currentMatch.matchDetails = matchDetails ? matchDetails : null;
+                    currentMatch.matchDetails = matchDetails || null;
                 }
             }
             resolve(currentMatch);

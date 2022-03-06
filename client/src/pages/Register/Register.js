@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import axios from '../../utils/axios';
+import axios from 'axios';
 import './Register.css';
 import { useTranslation } from "react-i18next";
 import Lang from "../../components/Lang/Lang";

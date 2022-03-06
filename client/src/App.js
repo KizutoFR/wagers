@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import jwt_decode from "jwt-decode";
-import axios from './utils/axios';
+import axios from 'axios';
 
 import Login from './pages/Login/Login.js';
 import Homepage from './pages/Homepage/Homepage.js';
@@ -23,6 +23,10 @@ export default function App() {
   }
 
   useEffect(() => {
+    axios.interceptors.request.use(config => {
+      config.headers['Authorization'] = localStorage.getItem('wagers_auth_token');
+      return config;
+    });
     if(token){
       try {
         const decryptedToken = jwt_decode(token);

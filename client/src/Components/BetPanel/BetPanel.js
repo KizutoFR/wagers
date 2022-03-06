@@ -1,4 +1,4 @@
-import axios from '../../utils/axios';
+import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import Emitter from '../../services/Emitter';
 import { FaPlus, FaCaretLeft, FaTrash } from 'react-icons/fa';
@@ -75,6 +75,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
           requirements,
           multiplier: multiplier,
           coin_put: stake,
+          account_id: user_data.linked_account.find((acc) => acc.account_type.type === slug),
           user: user_data._id
         })
         .then(async finalbet => {

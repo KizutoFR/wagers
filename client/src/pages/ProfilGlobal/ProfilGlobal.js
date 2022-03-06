@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useParams, useHistory } from 'react-router-dom';
-import axios from '../../utils/axios';
+import axios from 'axios';
 
 export default function ProfilGlobal({ logged_user }){
   const { id } = useParams();

@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from "react";
 import Emitter from '../../services/Emitter';
 import {useParams} from 'react-router-dom';
-import axios from '../../utils/axios';
+import axios from 'axios';
 import { SLUG, VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import './Game.css'
 import Swal from 'sweetalert2'

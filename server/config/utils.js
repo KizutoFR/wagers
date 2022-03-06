@@ -28,13 +28,13 @@ module.exports.getAverageValues = (arr) => {
         for(const name in stats) {
             if(!result[name])
                 result[name] = 0;
-        
             if(typeof stats[name] === 'number') {
                 result[name] += stats[name];
-            }else {
-                result[name] += 1;
+            }else if(typeof stats[name] === 'boolean') {
+                if(stats[name]) {
+                    result[name] += 1;
+                }
             }
-
             if(index === arr.length - 1){
                 result[name] = result[name] / arr.length;
             }
