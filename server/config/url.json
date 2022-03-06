@@ -1,0 +1,108 @@
+{
+    "API": {
+        "base": "https://{region}.api.riotgames.com/lol/",
+        "summonerByName": "summoner/{version}/summoners/by-name/{username}",
+        "summonerRank": "league/{version}/entries/by-summoner/{encryptedSummonerId}",
+        "summonerMasteries": "champion-mastery/{version}/champion-masteries/by-summoner/{encryptedSummonerId}",
+        "currentMatch": "spectator/{version}/active-games/by-summoner/{encryptedSummonerId}",
+        "matchDetails": "match/{version}/matches/{matchId}",
+        "matchList": "match/{version}/matches/by-puuid/{puuid}/ids?count={limit}&start={start}&type=ranked"
+    },
+    "OPGG": {
+        "base": "https://{region}op.gg/",
+        "summonerByName": "summoner/userName={username}"
+    },
+    "DDRAGON": {
+        "base": "http://ddragon.leagueoflegends.com/cdn/",
+        "champions": "{patch}/data/{lang}/champion.json",
+        "championsFull": "{patch}/data/{lang}/championFull.json"
+    },
+
+    "staticRiot": {
+        "base": "http://static.developer.riotgames.com/docs/",
+        "url": {
+            "queues": "lol/queues.json",
+            "maps": "lol/maps.json",
+            "gameModes": "lol/gameModes.json"
+        }
+    },
+
+    "staticDdragon": {
+        "base": "https://ddragon.leagueoflegends.com/",
+        "url": {
+            "versioning": "api/versions.json",
+            "languages": "cdn/languages.json",
+            "realms": "realms/{region}.json"
+        }
+    },
+
+    "VERSIONS": {
+        "dd": "11.20.1",
+        "rune": "7.23.1",
+        "rotation": "3",
+        "summoner": "4",
+        "mastery": "4",
+        "league": "4",
+        "match": "4",
+        "spectator": "4"
+    },
+
+    "REGIONS": {
+        "match_EUW": "europe",
+        "EUW": "euw1",
+        "EUN": "eun1",
+        "NA": "na1",
+        "KR": "kr",
+        "JP": "jp1",
+        "RU": "ru",
+        "LA": "la1",
+        "LA2": "la2",
+        "OC": "oc1",
+        "TR": "tr1",
+        "BR": "br1"
+    },
+    "REGIONSOPGG": {
+        "EUW": "euw.",
+        "EUN": "eune.",
+        "NA": "na.",
+        "KR": "",
+        "JP": "jp.",
+        "RU": "ru.",
+        "LAN": "lan.",
+        "LAS": "las.",
+        "OC": "oce.",
+        "TR": "tr.",
+        "BR": "br."
+    },
+
+    "LANGS": {
+        "us": "en_US",
+        "en": "en_GB",
+        "fr": "fr_FR",
+        "cz": "cs_CZ",
+        "gr": "el_GR",
+        "pl": "pl_PL",
+        "ro": "ro_RO",
+        "hu": "hu_HU",
+        "de": "de_DE",
+        "es": "es_ES",
+        "it": "it_IT",
+        "jp": "ja_JP",
+        "kr": "ko_KR",
+        "mx": "es_MX",
+        "ar": "es_AR",
+        "br": "pt_BR",
+        "au": "en_AU",
+        "ru": "ru_RU",
+        "tr": "tr_TR",
+        "my": "ms_MY",
+        "ph": "en_PH",
+        "sg": "en_SG",
+        "th": "th_TH",
+        "vn": "vn_VN",
+        "id": "id_ID",
+        "zh": "zh_MY",
+        "cn": "zh_CN",
+        "tw": "zh_TW"
+    }
+}

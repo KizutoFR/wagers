@@ -1,0 +1,91 @@
+.battlepass-cell {
+    width: 270px;
+    height: 340px;
+    border-radius: 8px;
+    margin: 0 25px;
+    background-color: #17152A;
+    position: relative;
+    overflow: hidden;
+}
+
+.battlepass-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    transition: opacity 0.35s;
+    opacity: 0;
+}
+
+.battlepass-claim-overlay {
+    background: linear-gradient(to bottom, #ba41eec2 -50%, rgba(255, 255, 255, 0) 80%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    overflow: hidden;
+}
+
+.battlepass-free .battlepass-claim-overlay {
+    background: linear-gradient(to top, #ba41eec2 -50%, rgba(255, 255, 255, 0) 80%);
+}
+
+.battlepass-empty {
+    background: none;
+}
+
+.battlepass-cell img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+.battlepass-cell .battlepass-overlay div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    transform: translateY(100px);
+    transition: transform 0.20s;
+}
+
+.battlepass-cell .battlepass-overlay div h4 {
+    margin: 0 0 5px 0;
+}
+
+.battlepass-cell .battlepass-overlay div p {
+    margin: 0 0 10px 0;
+}
+
+.battlepass-cell .battlepass-overlay div button {
+    width: 100%;
+    background: linear-gradient(to bottom right, #F970FE, #B33CED);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.battlepass-cell .battlepass-overlay:not(.hide-overlay):hover {
+    opacity: 1;
+}
+
+.battlepass-cell .battlepass-overlay:not(.hide-overlay):hover div {
+    transform: translateY(0);
+}

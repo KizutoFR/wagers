@@ -1,0 +1,59 @@
+#betpanel-select {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    margin-top: 50px;
+}
+
+#betpanel-select .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #343056;
+}
+  
+#betpanel-select select {
+    width: 100%;
+    background-color: #17152A;
+    font-size: inherit;
+    padding: 1em;
+    padding-right: 2.5em;	
+    margin: 0;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    text-overflow: '';
+    -moz-appearance: none;
+    -webkit-appearance:none;
+    appearance: none;
+    border: 1px solid #343056;
+    cursor: pointer;
+    color: #9390B2;
+    font-weight: bold;
+}
+  
+#betpanel-select select option {
+  font-weight: bold;
+}
+  
+#betpanel-select select:focus,
+#betpanel-input:focus {
+    outline: none;
+}
+  
+/*Hiding the select arrow for IE10*/
+#betpanel-select select::-ms-expand {
+    display: none;
+}
+
+#betpanel-input {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 3px;
+    background-color: #08061A;
+    border: none;
+    color: #312D51;
+    font-weight: bold;
+}  

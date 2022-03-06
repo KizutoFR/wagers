@@ -1,0 +1,54 @@
+{
+    "header": {
+        "how-it-works": "Comment ca marche ?",
+        "contact": "Contact",
+        "make-a-bet": "PARIER",
+        "dashboard": "Tableau de bord",
+        "battlepass": "Pass de combat",
+        "current-match": "MATCH EN COURS",
+        "global": "Géneral",
+        "year": "Année",
+        "month": "Mois",
+        "current-bet": "PARI EN COURS",
+        "shop": "Boutique",
+        "challenges": "CHALLENGES",
+        "leaderboard": "CLASSEMENT"
+        
+    },
+    "login": {
+        "register": "Enregistrez vous",
+        "log-in": "Connection"
+
+    },
+    "register": {
+        "register": "Enregistrez vous",
+        "log-in": "Connection"
+    },
+    "profilUser": {
+        "friendslist": "Liste d'amis",
+        "profil": "Profil",
+        "requestlist": "Demande d'amis",
+        "friendsRequest": "Pas de demande d'amis",
+        "friendsLists": "Pas d'amis ici",
+        "firstname": "Prénom",
+        "lastname": "Nom",
+        "username": "Pseudo",
+        "email": "Email",
+        "coin": "Coins"
+    },
+    "betPanel": {
+        "option": "Sélectionner l'option",
+        "next": "Etape suivante",
+        "victoryRequirements": "Exigences de victoire",
+        "stake": "Pari",
+        "currentBalance": "Solde actuel",
+        "betValidation": "Validation du pari",
+        "potentielGain": "Gain potentiel",
+        "victoryRequirements2": "Conditions de victoire",
+        "balanceStatus": "État du solde",
+        "currentBalence": "Solde actuel",
+        "stake2": "Pari",
+        "afterBet": "Après pari",
+        "confirmBet": "Confirmer le pari"
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "header": {
+        "how-it-works": "How it works",
+        "contact": "Contact",
+        "dashboard": "Dashboard",
+        "battlepass": "Battlepass",
+        "make-a-bet": "MAKE A BET",
+        "current-match": "CURRENT MATCH",
+        "global": "Global",
+        "year": "Year",
+        "month": "Month",
+        "current-bet": "CURRENT BET",
+        "shop": "Shop",
+        "challenges": "CHALLENGES",
+        "leaderboard": "LEASERBOARD"
+    },
+    "login": {
+        "register": "Register",
+        "log-in": "Log-in"
+
+    },
+    "register": {
+        "register": "Register",
+        "log-in": "Log-in"
+    },
+    "profilUser": {
+        "friendslist": "Friends list",
+        "profil": "Profil",
+        "requestlist": "Request list",
+        "friendsRequest": "No friends request",
+        "friendsLists": "No friends here",
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "coin": "Coins"
+    },
+    "betPanel": {
+        "option": "Select option",
+        "next": "Next step",
+        "victoryRequirements": "Victory requirements",
+        "stake": "Stake",
+        "currentBalance": "Current balance",
+        "betValidation": "Bet validation",
+        "potentielGain": "Potential gain",
+        "victoryRequirements2": "Victory requirements",
+        "balanceStatus": "Balance Status",
+        "currentBalence": "Current balence",
+        "stake2": "Stake",
+        "afterBet": "After bet",
+        "confirmBet": "Confirm bet"
+        }
+}

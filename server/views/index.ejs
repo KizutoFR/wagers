@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wagers | Admin panel</title>
+</head>
+<body>
+    <h2>Create battlepass</h2>
+    <form id="addbattlepass">
+        <label for="battlepassdata">End date</label>
+        <input type="date" id="battlepassdata" name="battlepassdata">
+        <input type="submit" value="Create">
+    </form>
+    <h2>All created battlepass</h2>
+    <% allBattlePass.forEach((element, index) => { %>
+        <a href="admin/battlepass/<%= element._id %>">#<%= index %></a>
+    <% }); %>
+    <script src="/js/index.js"></script>
+</body>
+</html>

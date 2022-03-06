@@ -1,0 +1,8 @@
+{
+    "REWARDS_TYPE": {
+        "COINS": "COINS",
+        "BANNER": "BANNER",
+        "TITLE": "TITLE",
+        "BADGE": "BADGE"
+    }
+}
