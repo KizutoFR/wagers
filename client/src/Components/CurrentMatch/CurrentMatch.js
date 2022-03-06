@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import './CurrentMatch.css'
 
 export default function CurrentMatch({currentMatch, linkedUsername}) {

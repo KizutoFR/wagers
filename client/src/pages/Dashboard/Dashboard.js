@@ -42,7 +42,6 @@ export default function Dashboard({ user_data, setToken }) {
 
     const getChallenges = (slug) => {
         axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug).then(res => {
-            console.log(res.data.challenges);
             setChallenges(res.data.challenges);
         })
     }

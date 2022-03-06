@@ -55,12 +55,6 @@ export default function App() {
     }
   }, [token])
 
-  useEffect(() => {
-    if(user){
-      console.log("user updated", user);
-    }
-  }, [user])
-
   return (
     <div>
       {token && <Header user_data={user} /> }
