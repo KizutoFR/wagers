@@ -131,7 +131,6 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(2)} />
                 <h1>{t('betPanel.option')} </h1>
-                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
@@ -145,7 +144,6 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             <div className="betpanel-header">
               <div>
                 <h1>{t('betPanel.victoryRequirements')}</h1>
-                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>
@@ -177,7 +175,6 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
               <div>
                 <FaCaretLeft className="betpanel-back-icon" onClick={() => setStep(step - 1)} />
                 <h1>{t('betPanel.stake')}</h1>
-                <Lang/>
               </div>
               <button className="betpanel-close" onClick={() => Emitter.emit('CLOSE_BET_PANEL')}>X</button>
             </div>

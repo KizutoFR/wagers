@@ -169,7 +169,7 @@ export default function Dashboard({ user_data, setToken }) {
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
-                    <button>{t('header.make-a-bet')}</button>
+                    {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>{t('header.make-a-bet')}</button> : <button style={{cursor: "not-allowed"}} disabled>{t('header.make-a-bet')}</button>}
                 </div>
                 <div className='video-banner'>
                     <video autoPlay loop muted>
