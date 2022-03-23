@@ -490,3 +490,39 @@
         font-size: 100px;
     }
 }
+
+@media (max-width: 1000px) {
+    
+    .dashboard-scoreboard,.dashboard-game-selector,.dashboard-profile{
+        display: none;
+    }
+    .dashboard-separator .separator.separator-little {
+    
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.158);
+        margin: 0 15px;
+        flex-grow: 3;
+          
+    }
+    
+    /* .dashboard-content > div:last-child {
+        width: calc(100% - 350px);
+      }
+     */
+    .dashboard-content{
+        flex-direction: column;
+    }
+    .dashboard-content > div:last-child {
+        width: 100%;
+      }
+    
+    .dashboard-row{
+        flex-direction: column;
+    }
+    .dashboard-row > div:first-child,.dashboard-row > div:last-child {
+        width: 100%;
+        margin: 0;
+        margin-bottom: 50px;
+    }
+    
+}
