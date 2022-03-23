@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
+import Swal from 'sweetalert2'
 
 
 export default function LinkAccountInput({ data, available, linked_list, user_id }) {
@@ -33,7 +34,12 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
         }
         if(res.data.success) {
             //TODO: Afficher une jolie notif avec le message
-            console.log(res.data.message)
+            Swal.fire({
+                title: 'Account linked successfully !',
+                text: `${modifiedName} is now your account linked for one month`,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
         } else {
             console.error(res.data.message);
         }
@@ -41,13 +47,10 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
 
     useEffect(() => {
         if (linked_list && available) {
-            let linkedAccount = linked_list.find(elem => {
-                console.log(data.type, elem.account_type)
-                
+            let linkedAccount = linked_list.find(elem => {               
                 return elem.account_type.type === data.type;
             });
             if(linkedAccount && !loaded) {
-                console.log(linkedAccount._id,linkedAccount.username,linked_list);
                 setLinkedId(linkedAccount._id);
                 setAccountName(linkedAccount.username);
                 setModifiedName(linkedAccount.username);

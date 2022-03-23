@@ -99,9 +99,7 @@ export default function Dashboard({ user_data, setToken }) {
         let valideBet = true;
         const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
         await getCurrentGameInfo(slug, linked.username);
-        console.log(data.matchDetails)
         if(data.matchDetails && data.matchDetails.info.gameId === currentBet.match_id) {
-            console.log(currentBet.account_id, linked.value);
             if(currentBet.account_id === linked.value) {
                 checkChallengeProgress(data.matchDetails.info.participants);
                 for(const r of currentBet.requirements) {

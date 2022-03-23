@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard/Dashboard.js';
 import ProfilUser from './pages/ProfilUser/ProfilUser.js';
 import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
-import ModifUser from './pages/ModifUser/ModifUser';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
@@ -78,10 +77,7 @@ export default function App() {
                 {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
               </Route>
               <Route exact path="/profil">
-                {token ? <ProfilUser user_data={user} setToken={setToken}/> : <Redirect to ='/login' />}
-              </Route>
-              <Route exact path="/update">
-                {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}
+                {token ? <ProfilUser user_data={user} setToken={setToken} setUser={setUser}/> : <Redirect to ='/login' />}
               </Route>
               <Route exact path="/pass">
                 {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
