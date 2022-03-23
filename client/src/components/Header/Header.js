@@ -8,6 +8,10 @@ export default function Header({user_data}) {
   const [coins, setCoins] = useState(0);
   const { t } = useTranslation();
   
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
   useEffect(() => {
     if(user_data){
       setCoins(user_data.coins)
@@ -16,41 +20,65 @@ export default function Header({user_data}) {
     return () => {
       Emitter.off('UPDATE_COINS')
     }
-  }, [user_data])
+  }, [user_data]);
 
   return (
-			<div className="container">
-				<div className="container-left">
-					<div className="logo">
-						<img src="/images/logo.svg" alt="logo" />
-					</div>
-					<div className="links">
-						<a href="/dashboard">{t('header.dashboard')}</a>
-						<a href="/pass">{t('header.battlepass')}</a>
-						<a href="/shop">{t('header.shop')}</a>
-						<a href="/about">{t('header.how-it-works')}</a>
-						<a href="/contact">{t('header.contact')}</a>
-					</div>
-					{/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-						<path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/>
-					</svg> */}
+	<div className={click ?"header fixed" : "header"}>
+		<div className="logo-nav">
+			<div className="logo-container">
+				<a href="/dashboard">
+					<img src="images/logo.svg" className="logo-header" />
+				</a>
+			</div>
+
+			<div className={click ? "nav-options active" : "nav-options"}>
+				<div className="option" onClick={closeMobileMenu}>
+					<a href="/dashboard">{t('header.dashboard')}</a>
+				</div>
+				<div className="option" onClick={closeMobileMenu}>
+					<a href="/pass">{t('header.battlepass')}</a>
+				</div>
+				<div className="option" onClick={closeMobileMenu}>
+					<a href="/shop">{t('header.shop')}</a>
+				</div>
+				<div className="option" onClick={closeMobileMenu}>
+					<a href="/about">{t('header.how-it-works')}</a>
+				</div>
+				<div className="option" onClick={closeMobileMenu}>
+					<a href="/contact">{t('header.contact')}</a>
 				</div>
 				<div className="container-right">
-					<Lang/>
-					<div className="banner-left">
-						<button>{t('header.make-a-bet')}</button>
-					</div>
-					<div className="coins">
-						{coins}
-						<img className="coins-piece" src="/images/PIEPECES.svg" alt="coins icon" />
-						<div>
-							<img src="/images/plus-solid.svg" alt="plus icon" />
+					{/* <div className="container-right"> */}
+						<Lang/>
+						<div className="banner-left" onClick={closeMobileMenu}>
+							<button>{t('header.make-a-bet')}</button>
 						</div>
-					</div>
-					<div className="pdp">
-						<a href={`/profil`}><img src="/images/PP.svg" alt="profile picture"/></a>
-					</div>
+						<div className="coins">
+							{coins}
+							<img className="coins-piece" src="/images/PIEPECES.svg" alt="coins icon" />
+							<div onClick={closeMobileMenu}>
+								<img src="/images/plus-solid.svg" alt="plus icon" />
+							</div>
+						</div>
+						<div className="pdp" onClick={closeMobileMenu}>
+							<a href={`/profil`}><img src="/images/PP.svg" alt="profile picture"/></a>
+						</div>
+					{/* </div> */}
 				</div>
 			</div>
+
+		</div>
+		
+		
+		
+		<div className="mobile-menu" onClick={handleClick}>
+			{click ? (
+				<img src="/images/x.svg" className="menu-icon" />
+			) : (
+				<img src="/images/menu.svg" className="menu-icon" />
+			)}
+		</div>
+	</div>
+
 		)
 	}

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './ModifUser.css';
 import {ProfilUser} from '../ProfilUser/ProfilUser.js';
+import { useTranslation } from "react-i18next";
 import LinkAccountInput from '../../components/LinkAccountInput';
 
 export default function ModifUser({user_data,setUser}) {
@@ -18,6 +19,7 @@ export default function ModifUser({user_data,setUser}) {
   const [errors, setErrors] = useState([]);
   const [changePass, setChangePass] = useState(false);
   const [games, setGames] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(()=>{
     getGames();
@@ -65,35 +67,35 @@ return (
         <form onSubmit={update}>
           <div className='edit-first-line'>
             <div className='edit-group-duo'>
-              <label htmlFor="firstname">Prenom</label>
-              <input type="text" placeholder= "firstname" name='firstname' className='edit-firstname' defaultValue={user_data.firstname} ref={firstname} />
+              <label htmlFor="firstname">{t('modifUser.firstname')}</label>
+              <input type="text" placeholder={t('modifUser.firstname')} name='firstname' className='edit-firstname' defaultValue={user_data.firstname} ref={firstname} />
             </div>
             <div className='edit-group-duo'>
-              <label htmlFor="lastname">Nom</label>
-              <input type="text" placeholder="lastname" name='lastname' className='edit-lastname' defaultValue={user_data.lastname} ref={lastname} />
+              <label htmlFor="lastname">{t('modifUser.lastname')}</label>
+              <input type="text" placeholder={t('modifUser.lastname')} name='lastname' className='edit-lastname' defaultValue={user_data.lastname} ref={lastname} />
             </div>
           </div>
           <div className='edit-group'>
-            <label htmlFor="email">Email</label>
-            <input type="text" placeholder="Email" name='email' className='edit-email' defaultValue={user_data.email} ref={email} />
+            <label htmlFor="email">{t('modifUser.email')}</label>
+            <input type="text" placeholder={t('modifUser.email')} name='email' className='edit-email' defaultValue={user_data.email} ref={email} />
           </div>
           <div className='edit-group'>
-            <label htmlFor="pseudo">Pseudo</label>
-            <input type="text" placeholder="username" name='pseudo' className='edit-username' defaultValue={user_data.username} ref={username} />
+            <label htmlFor="pseudo">{t('modifUser.username')}</label>
+            <input type="text" placeholder={t('modifUser.username')} name='pseudo' className='edit-username' defaultValue={user_data.username} ref={username} />
           </div>
 
           <div className='edit-password-group' style={{display: changePass ? 'block' : 'none'}}>
-            <label htmlFor="password">Nouveau Mot de passe</label>
-            <input type="password" placeholder="New password" name='password' className='edit-username' ref={password} />
+            <label htmlFor="password">{t('modifUser.new_password')}</label>
+            <input type="password" placeholder={t('modifUser.new_password')} name='password' className='edit-username' ref={password} />
           </div>
           <div className='edit-password-group' style={{display: changePass ? 'block' : 'none'}}>
-            <label htmlFor="confirmPassword">Confirmer votre mot de passe</label>
-            <input type="password" placeholder="Confirm password" name='confirmPassword' className='edit-username' ref={confirmPassword} />
+            <label htmlFor="confirmPassword">{t('modifUser.confirm_password')}</label>
+            <input type="password" placeholder={t('modifUser.confirm_password')} name='confirmPassword' className='edit-username' ref={confirmPassword} />
           </div>
 
           <div className='edit-button'>
-            <input type="button" className='edit-mdp' value="Modifier votre mot de passe" onClick={() => setChangePass(!changePass)}/>
-            <input type="submit" className='edit-submit' value="valider vos modifications"/>
+            <input type="button" className='edit-mdp' value={t('modifUser.update_password')} onClick={() => setChangePass(!changePass)}/>
+            <input type="submit" className='edit-submit' value={t('modifUser.commit_change')}/>
           </div>
         </form>
       </section>

@@ -56,7 +56,7 @@ export default function Login({setToken}) {
             <button data-action="submit" onClick={e => handleSubmit(e)}>{t('login.log-in')}</button>
           </div>
         </form>
-        <Lang/>
+        <Lang className="login-lang" />
       </div>
       <div className="login-video-container">
         <video autoPlay loop muted>

@@ -1,4 +1,5 @@
-.container {
+/*Desktop View*/
+.header {
   background: rgb(8,6,26);
   background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
   width: 100%;
@@ -7,62 +8,60 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  
 }
-.container-left{
+.logo-nav {
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  position: relative;
+  justify-content: space-evenly;
+  width: 100%;
 }
-.container-right{
+.logo-container {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  margin-left: 50px ;
 }
-
-.container-left .logo {
-  border-radius: 50%;
-  height: 50px;
-  width: 65px;
-  min-width: 40px;
-  margin-left: 50px;
+.logo-header {
+  width: 45px;
+  height: 45px;
 }
-
-.container p {
-  margin-right: 10px;
-  color: #fff;
+.nav-options {
+  padding-left: 25px;
+  gap: 25px;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center  
 }
-
-.container .pdp {
-
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  min-width: 40px;
-  margin-left: 10px;
-	margin-right: 35px;
-  margin-top:7px;
+.mobile-option {
+  display: none;
 }
-
-.container-left a{
-	color:white;
+.option a{
+  color:white;
 	text-decoration:none;
-	margin-left: 40px;
   white-space: nowrap;
 }
-.container-left a:hover{
-  background: -webkit-linear-gradient(45deg, #F970FE, #B33CED);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.option :hover {
+  color: white;
 }
 
+
+.container-right{
+  display: flex;
+	flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 25px;
+  gap: 25px;
+}
 .container-right .coins{
 	display: flex;
 	flex-direction: row;
 	align-items:center;
-	margin-right: 20px;
 	color:white;
   border: none;
   background-color: #27253B;
@@ -96,87 +95,97 @@
 
 .banner-left button {
   background: linear-gradient(120deg, #F970FE, #B33CED);
-	border: none;
+  border: none;
   color: #fff;
   font-weight: bold;
-	font-size: 13px;
-	cursor: pointer;
-	border-radius: 6px;
-	margin-right: 60px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 6px;
   padding: 8px 25px;
 }
 
-.language{
-  margin-right: 15px;
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  right: 50px;
 }
 
-@media screen and (max-width:1350px){
-
-  .container{
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content:center;
+@media (max-width: 1220px) {
+  .nav-options {
+    margin-right: 25px;
+    justify-content: flex-end;
   }
 
-  .container-left{
-    width: 50%;
+}
+
+@media (max-width: 800px) {
+  /*Mobile View | old value: 648px*/
+  .header {
+    padding: 0px 10px;
+  }
+  .header.fixed {
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+  }
+  .logo-nav {
+    justify-content: flex-start;
+  }
+  .logo-header {
+    width: 45px;
+    height: 45px;
+  }
+  .logo-container{
+    margin-left: 25px;
+  }
+
+  .nav-options {
+    background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
     display: flex;
-    align-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    flex-direction: column;
+    grid-gap: 0px;
+    justify-content: flex-start;
+    
+  }
+  
+  .nav-options.active {
+    left: 0;
+    transition: all 0.5s linear 0s;
+    align-content: center;  
+  }
+
+  .menu-icon {
+    width: 45px;
+    height: 45px;
+  }
+  .option {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: stretch;
+    height: 10vw;
+    padding: 30px 0px;
   }
-
-  .container-left .logo{
-    max-width: 20%;
-  }
-  .container-left .links{
-    width: 80%;
-    display: flex;
-    align-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-  }
-
+  
   .container-right{
-    width: 50%;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 25px;
+    align-items: center;
   }
+  .banner-left button{
+    margin: 0px;
+  }
+  .container-right .coins{
+    margin: 0px;
+  }
+
 }
-
-@media screen and (max-width:1150px){
-
-  .container-left .logo{
-    max-width: 20%;
-  }
-  .container-left .links{
-  }
-  .container-left a svg{
-    fill: white;
-  }
-
-  .container{
-  }
-  
-  .container-left{
-  }
-  
-  .container-right{
-  }
-}
-
-@media screen and (max-width:850px){
-
-  .container{
-  }
-  
-  .container-left{
-  }
-  
-  .container-right{
-  }
+.mobile-menu {
+  display: block;
 }
