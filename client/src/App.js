@@ -13,6 +13,7 @@ import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 import ModifUser from './pages/ModifUser/ModifUser';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -85,6 +86,7 @@ export default function App() {
                 {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
               </Route>
             </Switch>
+            <Footer/>
       </BrowserRouter>
     </div>
   )
