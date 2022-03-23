@@ -4,6 +4,7 @@ import './App.css';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
 
+import Contact from './pages/Contact/Contact.js'
 import Login from './pages/Login/Login.js';
 import Homepage from './pages/Homepage/Homepage.js';
 import Register from './pages/Register/Register.js';
@@ -84,6 +85,9 @@ export default function App() {
               </Route>
               <Route exact path="/pass">
                 {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
+              </Route>
+              <Route exact path="/contact">
+                {token ? <Contact user_data={user}/> : <Redirect to="/login" />}
               </Route>
             </Switch>
             <Footer/>
