@@ -46,29 +46,6 @@
     transform: translate(-50%,-50%);
 }
 
-/* .game-card p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-weight: bold;
-    font-size: 30px;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-} */
-
-/* .game-card .inputContainer {
-    display: none;
-    flex-direction: row;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    justify-content: center;
-    background-color: #201E36;
-} */
-
 .game-card .inputContainer.displayInput {
     display: flex;
     width: 100%;

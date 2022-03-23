@@ -139,13 +139,10 @@ router.post('/update', async (req, res) => {
 
   /* TODO : if password == '' alors password = current.user.password */
   if (password.length < 6 && password != '') {
-    console.log(password);
     errors.push({ msg: 'Password must be at least 8 characters' });
   }
 
   if(password != confirmPassword){
-    console.log(password);
-    console.log(confirmPassword);
     errors.push({ msg: 'Password and Confirm Password are different' });
   }
 
@@ -153,80 +150,44 @@ router.post('/update', async (req, res) => {
     res.send({ success: false, errors: errors })
   } else {
 
-    if (password!='') {
-      const newpassword = await new Promise((resolve,reject)=>{
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            if (err) reject(err);
-            resolve(hash);
-          });
-        });
-      })
-      
-      console.log(newpassword);
-    
-      User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email,password:newpassword}).then(user=>{
-        console.log(user)
-        User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
-        .populate({
-          path: 'linked_account',
-          model: 'LinkedAccount',
-          populate: {
-            path: 'account_type',
-            model: 'AccountType'
-          },
-        })
-        .populate({
-          path: 'friends',
-          model: 'FriendShip',
-          populate: [
-            {
-              path: 'from',
-              model: 'User'
-            },
-            {
-              path: 'to',
-              model: 'User'
-            }
-          ]
-        })
-        .then(u =>res.status(200).json({success: true,user:u}))
-        .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
-        
-      }).catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
-    } else {
-      console.log("PAS DE NOUVEAU MOT DE PASSE");
-      User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email}).then(user=>{
-        User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
-        .populate({
-          path: 'linked_account',
-          model: 'LinkedAccount',
-          populate: {
-            path: 'account_type',
-            model: 'AccountType'
-          },
-        })
-        .populate({
-          path: 'friends',
-          model: 'FriendShip',
-          populate: [
-            {
-              path: 'from',
-              model: 'User'
-            },
-            {
-              path: 'to',
-              model: 'User'
-            }
-          ]
-        })
-        .then(u =>res.status(200).json({success: true,user:u}))
-        .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
-        
-      }).catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
-    }
+  const newpassword = await new Promise((resolve,reject)=>{
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) reject(err);
+        resolve(hash);
+      });
+    });
+  })
   
-  }
+  User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email,password:newpassword}).then(user=>{
+    User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
+    .populate({
+      path: 'linked_account',
+      model: 'LinkedAccount',
+      populate: {
+        path: 'account_type',
+        model: 'AccountType'
+      },
+    })
+    .populate({
+      path: 'friends',
+      model: 'FriendShip',
+      populate: [
+        {
+          path: 'from',
+          model: 'User'
+        },
+        {
+          path: 'to',
+          model: 'User'
+        }
+      ]
+    })
+    .then(u =>res.status(200).json({success: true,user:u}))
+    .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
+    
+  }).catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
+}
 })
 
 /**
