@@ -4,14 +4,35 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import Lang from "../../components/Lang/Lang";
 import './ProfilUser.css';
+import {Chart as Stat} from 'react-chartjs-2';
+import Chart from 'chart.js/auto'
 import ProfilContent from './parts/ProfilContent';
 import ProfilUpdate from './parts/ProfilUpdate';
-
 
 export default function ProfilUser({user_data, setToken, setUser}){
     const [requestList, setRequestList] = useState([]);
     const [modifying, setModifying] = useState(false);
     const { t } = useTranslation();
+    
+    const [token, setToken] = useState(localStorage.getItem('wagers_auth_token'));
+    const [user, setUser] = useState(null);
+    const categories = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const state = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+        datasets: [
+          {
+            label: 'Coins',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: '#B33CED',
+            borderColor: '#F970FE',
+            borderWidth: 3,
+            data: [65, 59, 160, 56, 52, 46, 1, 90, 43, 12, 120, 86]
+            
+          }
+        ]
+      }
 
     useEffect(() => {
         if (user_data) {
