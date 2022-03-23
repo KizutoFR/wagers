@@ -1,7 +1,25 @@
 import React from 'react';
+import {Chart as Stat} from 'react-chartjs-2';
+import Chart from 'chart.js/auto'
 import './ProfilContent.css'
 
 export default function ProfilContent({user_data}) {
+    const state = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+        datasets: [
+          {
+            label: 'Coins',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: '#B33CED',
+            borderColor: '#F970FE',
+            borderWidth: 3,
+            data: [65, 59, 160, 56, 52, 46, 1, 90, 43, 12, 120, 86]
+            
+          }
+        ]
+      }
+
     return (
         <>
             <div className="profile-separator">
@@ -32,8 +50,22 @@ export default function ProfilContent({user_data}) {
                     </div>
                 </div>
                 <div className="statsdroit">
-                        <h3>Balance Evolution</h3>
+                    <h3>Balance Evolution</h3>
+                    <div className='graph'>
+                        <Stat 
+                            type="line"
+                            data={state}
+                            options={{
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                }
+                            }}
+                        />
                     </div>
+                </div>
             </div>
             <div className="profile-separator">
                 <h3>BET HISTORY</h3>

@@ -49,7 +49,6 @@
 .bethistory table tbody tr.loose td:last-child {
     color: red;
 }
-
     
 .stats{
     display:flex;
@@ -198,6 +197,12 @@
 .stats .statsdroit h3{
     padding-left: 20px;
     text-align: left;
+}
+
+.statsdroit .graph {
+    margin: 0 auto;
+    height: 85% !important;
+    width: 95% !important;
 }
 
 .profile-separator {
