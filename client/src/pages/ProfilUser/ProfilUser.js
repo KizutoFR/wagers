@@ -60,7 +60,7 @@ export default function ProfilUser({user_data}){
                     <div className="containerProfilInfo">
                         <h2><p>{user_data.username}</p></h2>
                         <div className="containerProfilInfo1">
-                            <a href="./ModifUser">Edit Profil</a>
+                            <a href="/update">Edit Profil</a>
                         </div>
                     </div>
                     <div className="statsfirst">
