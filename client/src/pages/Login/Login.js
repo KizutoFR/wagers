@@ -23,7 +23,7 @@ export default function Login({setToken}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login',{email,password});
+      const res = await axios.post(process.env.REACT_APP_API_URL+'/auth/login',{email,password});
       if (res.data.success) {
           localStorage.setItem('wagers_auth_token', res.data.token);
           setToken(res.data.token)

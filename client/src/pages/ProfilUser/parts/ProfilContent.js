@@ -90,14 +90,14 @@ export default function ProfilContent({user_data}) {
                         <td>x1.5</td>
                         <td>Win</td>
                     </tr>
-                    <tr class="loose">
+                    <tr className="loose">
                         <td>09/02/2022</td>
                         <td>League of Legends</td>
                         <td>750</td>
                         <td>x1.75</td>
                         <td>Loose</td>
                     </tr>
-                    <tr class="loose">
+                    <tr className="loose">
                         <td>09/02/2022</td>
                         <td>League of Legends</td>
                         <td>750</td>

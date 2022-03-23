@@ -34,7 +34,7 @@ export default function App() {
         const currentDate = new Date();
         const expDate = new Date(decryptedToken.exp * 1000);
         if (currentDate <= expDate) {
-          fetchUserData(decryptedToken.user_id)
+          fetchUserData(decryptedToken.user._id)
               .then(res => {
                 setUser(res);
               })
@@ -86,8 +86,8 @@ export default function App() {
                 {token ? <Contact user_data={user}/> : <Redirect to="/login" />}
               </Route>
             </Switch>
-            <Footer/>
       </BrowserRouter>
+      {token && <Footer/>}
     </div>
   )
 }
