@@ -1,15 +1,12 @@
 
-.body {
+.wrapperProfil {
     text-align: center;
     background-color: #08061a;
-    align-items: center;
-    background-position: 0%;
-    position: relative;
 }
 .containerProfil{
     display:flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center; 
 }
 .banniere{
@@ -20,107 +17,100 @@
     width: 100%;
     height: 300px;
     position:relative;
+    margin-bottom: 115px;
 }
 .banniere .bannierefondu{
-    background: linear-gradient(to top, #f970fe 0%,transparent);
+    background: linear-gradient(to top, #f970fe 0%,transparent 70%);
     width: 100%;
     height: 50px;
     bottom: 0;
     position:absolute;
-    display: flex;
 }
-.barredexperience{
+
+.banniere .barredexperience{
     width: 100%;
     height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     background: linear-gradient(120deg, #F970FE 0%, #B33CED 75%, white 25%);
 }
 .imageprofilrelative{
-    position: relative;
-    display:flex;
-    width: 250px;
-    height: 250px;
-    transform:translateY(-50%);
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
 }
 .imageprofilabsolute{
-    border:6px solid #08061a;
+    border:6px solid #17152A;
     border-radius: 50%;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    position: relative;
 }
+
 .imageprofilabsolute img{
-    width: 100%;
-    height: 100%;    
-}
-.niveaurelative{
     position: absolute;
-    border:4px solid #08061a;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 100%;
+    min-height: 100%;    
+    max-width: 130%;
+    max-width: 130%;
+}
+.niveaurelative {
+    position: absolute;
+    border:4px solid #17152A;
     border-radius: 50%;
     bottom:10px;
-    right:0;
-    width: 65px;
-    height: 65px;
+    right:10px;
+    width: 60px;
+    height: 60px;
     overflow: hidden;
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    color: #fff;
 }
-.niveaurelative img{
-    width: 100%;
-    height: 100%;
+
+.niveaurelative p {
+    margin: 0;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.3rem;
 }
+
 .containerProfilInfo {
     color: white;
-    margin-top: -5%;
     font-family: 'Azo';
-    font-size: X-large;
+    font-size: 1.6rem;
+    margin-bottom: 40px;
 }
+
+.containerProfilInfo h2 {
+    margin: 0;
+    margin-top: 20px;
+}
+
 .containerProfilInfo1 a{
     text-decoration: none;
     color: grey;
     font-size: small;
 }
-.betfirst{
-    display:flex;
-    flex-direction:row;
-    color:white;
-    width: 100%;
-    justify-content:center;
-    align-items:initial;
-    height: 60px;
-}
-.bet{
-    font-family: "Akira";
-    font-size: 12px;
-    text-align: left;
-    color:white;
-    flex-direction:column;
-    padding: 0 0px 40px;
-    width: 10%;
-    display: inline-block;
-    margin-left: 40px;
-}
 
-.betfirst .bet h3{
-    font-variant: small-caps;
-}
-.betline{
-    border-top: 1px solid;
-    border-color: grey;
-    flex-direction:column;
-    display: inline-block;
-    vertical-align: top;
-    width: 80%;
-    margin-top: 20px;
-    margin-right: 30px;
-    flex-grow:3;
-}
 .bethistory {
-    width: 95%; 
-    background-color: #17152a;
+    width: 100%; 
     display: inline-block;
     border-radius: 6px;
+    padding: 0 40px;
     margin-bottom: 50px;
     text-align: center;
     vertical-align: top;
-    
 }  
 .bethistory table{
     width: 100%;
@@ -129,6 +119,7 @@
     border-radius: 6px;
     font-family: 'Azo';
     overflow: hidden;
+    background-color: #17152a;
 }
 .bethistory table thead{
     
@@ -159,6 +150,10 @@
     color:green;
 }
 
+.bethistory table tbody tr.loose td:last-child {
+    color: red;
+}
+
     
 .stats{
     display:flex;
@@ -166,19 +161,20 @@
     color:white;
     margin-bottom: 20px;
     width:100%;
-    justify-content: left;
-    align-items:initial;
+    justify-content: center;
+    align-items: flex-start;
 }
 .stats .statsgauche{
+    display: flex;
     flex-direction:column;
-    text-align: center;
-    padding: 0  40px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 40px;
     width: 500px; 
+    height: 100%;
 }
 .stats .statsgauche .statsgauchehaut{
-    
-    width: 300px;
-    height: calc(50% - 18px);
+    height: 242px;
     background-color: #17152a;
     display: flex;
     border-radius: 6px;
@@ -186,22 +182,21 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-   overflow: hidden;
+    overflow: hidden;
 }
 .stats .statsgauche .statsgauchehaut1{
     position:relative;
     display:flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 220px;
+    height: 220px;
     background: linear-gradient(120deg, #F970FE 0%, #B33CED 65%, white 35%);
     border-radius: 50%;
     margin-top: 38px;
     
 }
 .stats .statsgauche .statsgauchehaut1rond{
-  
     width: 80%;
     height: 80%;
     background-color:#17152a;
@@ -218,14 +213,14 @@
     left:50%;
     transform: translate(-50%,-50%);
     margin-bottom: 5px;
-    
 }
+
 .stats .statsgauche .statsgauchehaut h3 span{
     text-align: center;
     color:white;
     margin-bottom:0 ;
     margin-top:15px;
-    font-size: small;
+    font-size: 1rem;
     font-family: 'Azo';
     
 }
@@ -233,27 +228,24 @@
     text-align: center;
     color:white;
     margin-bottom:0 ;
-    margin-top:15px;
-    font-size:x-large;
+    margin-top:20px;
+    font-size: 3rem;
 }
 .stats .statsgauche .statsgauchehaut h4{
     text-align: center;
     color:white;
     margin-bottom:0 ;
-    margin-top:10px;
+    margin-top: 0px;
     font-family: 'Azo Bold';
-    font-size: x-small;
+    font-size: 1.5rem;
 }
 .stats .statsgauchebas{
     position:relative;
-    width: 300px;
-    height: calc(50% - 18px);
+    height: 242px;
     background-color: #17152a;
-    display: inline-block;
     border-radius: 6px;
     vertical-align: top;
     margin-top:36px;
-    white-space: normal;
     width: 100%;
     margin-bottom: 0;
     overflow: hidden;
@@ -277,79 +269,138 @@
     align-items: center;
 }
 .stats .statsgauchebas1 img{
-width: 60px;
-height: 60px;
-
-margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
 }
 .stats .statsgauchebas1 .statsgauchebas2{
     display:flex;
     flex-direction: column;
-    
-   justify-content: center;
-   align-items: flex-start;
-   margin-left: 10px;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 10px;
 }
 .stats .statsgauchebas1 .statsgauchebas2 h2{
-   font-size:50px;
-   margin: 0;
-   text-align: left;
-   line-height: 1;
+    font-size:50px;
+    margin: 0;
+    text-align: left;
+    line-height: 1;
 
-   
 }
 .stats .statsgauchebas1 .statsgauchebas2 p{
     font-size:30px;
     margin: 0;
-    text-align: left;
  }
 .stats .statsdroit{
-    text-align: left;
-    width: 660px;
-    height: 570px;
+    height: 520px;
     background-color: #17152a;
-    display: inline-block;
     border-radius: 6px;
-    vertical-align: top;
     margin: 0px 30px 0 0;
-    white-space: normal;
     width: 100%;
 }
 .stats .statsdroit h3{
-    margin-left: 5%;
-}
-.statsfirst{
-    display:flex;
-    flex-direction:row;
-    color:white;
-    width: 100%;
-    justify-content:center;
-    align-items:initial;
-    height:60px;
-}
-.statsf{
-    font-family: "Akira";
-    font-size: 12px;
+    padding-left: 20px;
     text-align: left;
-    color:white;
-    flex-direction:column;
-    padding: 0 0px 40px;
-    width: 10%;
-    display: inline-block;
-    margin-left: 40px;  
-}
-.statsfirst .statsf h3{
-    font-variant: small-caps;
-}
-.statsline{
-    border-top: 1px solid;
-    border-color: grey;
-    flex-direction:column;
-    display: inline-block;
-    vertical-align: top;
-    width: 80%;
-    margin-top: 20px;
-    margin-right: 30px;
-    flex-grow:3;
 }
 
+.profile-separator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+    padding: 0 40px;
+    margin: 40px 0 10px 0;
+}
+
+
+.profile-separator * {
+    margin: 0;
+}
+
+.profile-separator .separator {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.158);
+    margin-left: 15px;
+    flex-grow: 3;
+}
+
+.profile-separator h3 {
+    font-variant: small-caps;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .stats {
+      flex-direction: column;
+    }
+  
+    .stats .statsgauche {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-evenly;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .stats .statsgauche .statsgauchehaut {
+        height: 240px;
+        margin-top: 0;
+    }
+
+    .stats .statsgauche .statsgauchebas {
+        height: 240px;
+        margin-top: 0;
+    }
+
+    .stats .statsdroit {
+        margin: 0 40px;
+        width: calc(100% - 80px);
+    }
+
+    .stats .statsdroit h3 {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .stats .statsgauche {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .stats .statsgauche .statsgauchehaut {
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+
+    .stats .statsgauche .statsgauchehaut,
+    .stats .statsgauche .statsgauchebas {
+        width: 100%;
+    }
+
+    .stats .statsdroit {
+        margin: 0 20px;
+        width: calc(100% - 40px);
+    }
+
+    .bethistory {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .bethistory table thead tr th:nth-child(4),
+    .bethistory table tbody tr td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .bethistory table thead tr th:nth-child(2),
+    .bethistory table tbody tr td:nth-child(2) {
+        display: none;
+    }
+}

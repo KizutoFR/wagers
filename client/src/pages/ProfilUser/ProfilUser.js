@@ -37,49 +37,39 @@ export default function ProfilUser({user_data}){
     }
 
     return (
-        <div className="body">
+        <div className="wrapperProfil">
             {user_data ? (
                 <div className="containerProfil">
                     <div className="banniere">
-                    
-                        <div className='bannierefondu'>
+                        <div className='bannierefondu'></div>
+                        <div className='barredexperience'></div>
+                        <div className="imageprofilrelative">
+                            <div className="imageprofilabsolute">
+                                <img src="/images/rl_thumbnail.jpg"/>
+                            </div>
+                            <div className="niveaurelative">
+                                <p>99</p>
+                            </div> 
                         </div>
                     </div> 
-                        <div className='barredexperience'>
-                    
-                        </div>
-                    <div className="imageprofilrelative">
-                        <div className="imageprofilabsolute">
-                            <img src="/images/rl_thumbnail.jpg"/>
-                        </div>
-                        <div className="niveaurelative">
-                            <img src="/images/rl_thumbnail.jpg"/>
-                        </div>
-                        
-                    </div>
                     <div className="containerProfilInfo">
-                        <h2><p>{user_data.username}</p></h2>
+                        <h2>{user_data.username}</h2>
                         <div className="containerProfilInfo1">
                             <a href="/update">Edit Profil</a>
                         </div>
                     </div>
-                    <div className="statsfirst">
-                        <div className="statsf">
-                            <h3>STATISTIQUES</h3>
-                        </div>
-                        <div className="statsline">
-                        </div>
+                    <div className="profile-separator">
+                        <h3>STATISTICS</h3>
+                        <div className="separator"></div>
                     </div>
                     <div className="stats">
                         <div className="statsgauche">
                             <div className="statsgauchehaut">
-                            
                                 <div className="statsgauchehaut1">
                                     <div className="statsgauchehaut1rond">
                                         <h3>65<span>%</span></h3>
                                         <h4>de victoire </h4>
-                                        <div className="statsgauchehaut1carré">
-                                        </div>
+                                        <div className="statsgauchehaut1carré"></div>
                                      </div>
                                 </div>
 
@@ -92,7 +82,6 @@ export default function ProfilUser({user_data}){
                                         <h2>100</h2>
                                         <p>Total Wins</p>
                                     </div>
-                                   
                                 </div>
                             </div>
                         </div>
@@ -100,17 +89,12 @@ export default function ProfilUser({user_data}){
                              <h3>Balance Evolution</h3>
                          </div>
                     </div>
-                    <div className="betfirst">
-                        <div className="bet">
-                            <h3>BET HISTORY</h3>
-                        
-                        </div>
-                        <div className="betline">
-                        </div>
+                    <div className="profile-separator">
+                        <h3>BET HISTORY</h3>
+                        <div className="separator"></div>
                     </div>
                     <div className="bethistory"> 
-                      
-                      <table cellspacing="0" cellpadding="0">
+                      <table cellSpacing="0" cellPadding="0">
                           <thead>
 	                        <tr>
                                 <th>Date</th>
@@ -128,14 +112,14 @@ export default function ProfilUser({user_data}){
                                 <td>x1.5</td>
                                 <td>Win</td>
 	                        </tr>
-                            <tr>
+                            <tr class="loose">
                                 <td>09/02/2022</td>
 		                        <td>League of Legends</td>
                                 <td>750</td>
                                 <td>x1.75</td>
                                 <td>Loose</td>
 	                        </tr>
-                            <tr>
+                            <tr class="loose">
                                 <td>09/02/2022</td>
 		                        <td>League of Legends</td>
                                 <td>750</td>

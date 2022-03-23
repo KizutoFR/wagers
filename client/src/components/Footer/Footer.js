@@ -8,7 +8,7 @@ export default function Footer() {
     <div className="footer-container">
         <div className="footer">
             <div className="footer-col">
-                <h3>INFORMARTIONS</h3>
+                <h3>INFORMATIONS</h3>
                 <ul>
                     <li><a href="">Mentions légales</a></li>
                     <li><a href="">Cookies</a></li>
