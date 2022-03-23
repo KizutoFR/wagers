@@ -32,20 +32,22 @@ export default function Header({user_data}) {
 			</div>
 
 			<div className={click ? "nav-options active" : "nav-options"}>
-				<div className="option" onClick={closeMobileMenu}>
-					<a href="/dashboard">{t('header.dashboard')}</a>
-				</div>
-				<div className="option" onClick={closeMobileMenu}>
-					<a href="/pass">{t('header.battlepass')}</a>
-				</div>
-				<div className="option" onClick={closeMobileMenu}>
-					<a href="/shop">{t('header.shop')}</a>
-				</div>
-				<div className="option" onClick={closeMobileMenu}>
-					<a href="/about">{t('header.how-it-works')}</a>
-				</div>
-				<div className="option" onClick={closeMobileMenu}>
-					<a href="/contact">{t('header.contact')}</a>
+				<div className="container-left">
+					<div className="option" onClick={closeMobileMenu}>
+						<a href="/dashboard">{t('header.dashboard')}</a>
+					</div>
+					<div className="option" onClick={closeMobileMenu}>
+						<a href="/pass">{t('header.battlepass')}</a>
+					</div>
+					<div className="option" onClick={closeMobileMenu}>
+						<a href="/shop">{t('header.shop')}</a>
+					</div>
+					<div className="option" onClick={closeMobileMenu}>
+						<a href="/about">{t('header.how-it-works')}</a>
+					</div>
+					<div className="option" onClick={closeMobileMenu}>
+						<a href="/contact">{t('header.contact')}</a>
+					</div>
 				</div>
 				<div className="container-right">
 					{/* <div className="container-right"> */}
@@ -63,7 +65,6 @@ export default function Header({user_data}) {
 						<div className="pdp" onClick={closeMobileMenu}>
 							<a href={`/profil`}><img src="/images/PP.svg" alt="profile picture"/></a>
 						</div>
-					{/* </div> */}
 				</div>
 			</div>
 
