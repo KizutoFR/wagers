@@ -3,15 +3,31 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './ModifUser.css';
 import {ProfilUser} from '../ProfilUser/ProfilUser.js';
+import LinkAccountInput from '../../components/LinkAccountInput';
 
 export default function ModifUser({user_data,setUser}) {
   const firstname = useRef();
   const lastname = useRef();
   const username = useRef();
   const email = useRef();
+  const password = useRef();
+  const confirmPassword= useRef();
   const history = useHistory();
   const [errors, setErrors] = useState([]);
+  const [changePass, setChangePass] = useState(false);
+  const [games, setGames] = useState([]);
+
+  useEffect(()=>{
+    getGames();
+  },[user_data])
+
+  const getGames = async () => {
+    const gameInfo = await axios.get(process.env.REACT_APP_API_URL+'/games');
+    setGames(gameInfo.data.games);
+  }
+
   const update = async (e) => {
     e.preventDefault();
     const data = {
@@ -20,8 +36,10 @@ export default function ModifUser({user_data,setUser}) {
       username: username.current.value, 
       email: email.current.value, 
       id: user_data._id,
-
+      password: password.current.value,
+      confirmPassword: confirmPassword.current.value,
     };
+
     const result = await axios.post(process.env.REACT_APP_API_URL+'/users/update', data);
     if (result.data.success) {
       setUser(result.data.user)
@@ -30,25 +48,73 @@ export default function ModifUser({user_data,setUser}) {
       setErrors(result.data.errors)
     }
   }
+
 return (
-  <div>
+  <div className="edit-profil-container">
     {user_data ? (
-      <div>
-      <h1>Profil</h1>
+      <div className="edit-body">
        {errors.length > 0 
         ? errors.map((err, index) => <p key={index}>{err.msg}</p>)
         : ''
       }
-      <form onSubmit={update}>
-      <input type="text" placeholder= "firstname" defaultValue={user_data.firstname} ref={firstname} />
-      <input type="text" placeholder="lastname" defaultValue={user_data.lastname} ref={lastname} />
-      <input type="text" placeholder="username" defaultValue={user_data.username} ref={username} />
-      <input type="text" placeholder="Email" defaultValue={user_data.email} ref={email} />
-      <input type="submit" value="Envoyé vos modifications"/>
-      </form>
-      <Link to="/dashboard">Dashboard</Link>
+      <section className='edit-formulaire'>
+      <div className="edit-separator">
+          <h2>informations</h2>
+          <div className="separator"></div>
+      </div>
+        <form onSubmit={update}>
+          <div className='edit-first-line'>
+            <div className='edit-group-duo'>
+              <label htmlFor="firstname">Prenom</label>
+              <input type="text" placeholder= "firstname" name='firstname' className='edit-firstname' defaultValue={user_data.firstname} ref={firstname} />
+            </div>
+            <div className='edit-group-duo'>
+              <label htmlFor="lastname">Nom</label>
+              <input type="text" placeholder="lastname" name='lastname' className='edit-lastname' defaultValue={user_data.lastname} ref={lastname} />
+            </div>
+          </div>
+          <div className='edit-group'>
+            <label htmlFor="email">Email</label>
+            <input type="text" placeholder="Email" name='email' className='edit-email' defaultValue={user_data.email} ref={email} />
+          </div>
+          <div className='edit-group'>
+            <label htmlFor="pseudo">Pseudo</label>
+            <input type="text" placeholder="username" name='pseudo' className='edit-username' defaultValue={user_data.username} ref={username} />
+          </div>
+
+          <div className='edit-password-group' style={{display: changePass ? 'block' : 'none'}}>
+            <label htmlFor="password">Nouveau Mot de passe</label>
+            <input type="password" placeholder="New password" name='password' className='edit-username' ref={password} />
+          </div>
+          <div className='edit-password-group' style={{display: changePass ? 'block' : 'none'}}>
+            <label htmlFor="confirmPassword">Confirmer votre mot de passe</label>
+            <input type="password" placeholder="Confirm password" name='confirmPassword' className='edit-username' ref={confirmPassword} />
+          </div>
+
+          <div className='edit-button'>
+            <input type="button" className='edit-mdp' value="Modifier votre mot de passe" onClick={() => setChangePass(!changePass)}/>
+            <input type="submit" className='edit-submit' value="valider vos modifications"/>
+          </div>
+        </form>
+      </section>
+
+      <section className='edit-pseudo'>
+      <div className="edit-separator">
+          <h2>pseudo</h2>
+          {/* {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>Make a bet</button> : <button style={{cursor: "not-allowed"}} disabled>Make a bet</button>} */}
+          {/* BONUS */}
+          {/* <p>ADD</p> */}
+          <div className="separator"></div>
+        </div>
+        <div className="gameGroup">
+          {games.map((game,index)=>(
+            <LinkAccountInput key={index} data={game} available={true} linked_list={user_data.linked_account} user_id={user_data._id}/>
+          ))}
+        </div>
+      </section>
+
+      <Link to="/profil">Revenir au profil</Link>
       <br />
-      <Link to="">Accueil</Link>
       </div>
     ): ''}
   </div>

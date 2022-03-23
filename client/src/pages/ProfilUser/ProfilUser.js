@@ -7,12 +7,28 @@ import Lang from "../../components/Lang/Lang";
 export default function ProfilUser({user_data}){
     const [requestList, setRequestList] = useState([]);
     const { t } = useTranslation();
+    
+    const [token, setToken] = useState(localStorage.getItem('wagers_auth_token'));
+    const [user, setUser] = useState(null);
+
+
+    function _logout(){
+        if (token){
+            setUser(null);
+            setToken(null);
+            localStorage.removeItem('wagers_auth_token');
+            console.log("Log out");
+            window.location.reload();
+        } else {
+            console.log("Vous ne pouvez pas vous déconnecter car vous n'êtes même pas connecté");
+        }
+    }
 
     useEffect(() => {
         if (user_data) {
             getPendingRequest(user_data._id)
         }
-    }, [user_data])
+    }, [user_data],_logout)
 
     async function getPendingRequest(id) {
         await axios.get(process.env.REACT_APP_API_URL+'/friends/requests/list/'+id).then(res => setRequestList(res.data.list))
@@ -55,6 +71,8 @@ export default function ProfilUser({user_data}){
                     <Link to="/update">Modification</Link>
                     <br />
                     <Link to="/dashboard">Dashboard</Link>
+                    <br />
+                    <Link to="/login" onClick={_logout}>Log Out</Link>
                     </footer>
                </div>
             ) : (

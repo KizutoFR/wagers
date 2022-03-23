@@ -76,7 +76,7 @@ export default function App() {
                 {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
               </Route>
               <Route exact path="/profil">
-                {token ? <ProfilUser user_data={user}/> : <Redirect to ='/login' />}
+                {token ? <ProfilUser user_data={user} setToken={setToken}/> : <Redirect to ='/login' />}
               </Route>
               <Route exact path="/update">
                 {token ? <ModifUser user_data={user} setUser={setUser}/> : <Redirect to ='/login' />}

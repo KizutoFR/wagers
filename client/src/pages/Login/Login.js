@@ -38,7 +38,9 @@ export default function Login({setToken}) {
   return (
     <div className="login-container">
       <div className="form-container">
-      <img src="/images/logo.svg" alt="logo"/>
+        <div className='logo'>
+          <img src="/images/logo.svg" alt="logo"/>
+        </div>
        {errorMessage !== '' ? <p className="error-message">{errorMessage}</p> : ''}
         <form>
           <div className="form-element">
@@ -51,10 +53,10 @@ export default function Login({setToken}) {
           </div>      
           <div className="form-options">
             <Link to="/register">{t('login.register')}</Link>
-            <Lang/>
             <button data-action="submit" onClick={e => handleSubmit(e)}>{t('login.log-in')}</button>
           </div>
         </form>
+        <Lang/>
       </div>
       <div className="login-video-container">
         <video autoPlay loop muted>

@@ -4,11 +4,15 @@ const RiotAPI = require('../lib/RiotAPI.js');
 const LinkedAccount = require('../models/LinkedAccount');
 
 router.post('/linked/modify', async (req, res) => {
+  console.log(req.body);
   let name = req.body.name;
   let linked_id = req.body.linked_id;
   let region = req.body.account_region;
   let account_details = await RiotAPI.getSummonerByName(name, region);
   if(account_details) {
+    console.log("name", req.body.name);
+    console.log("linked_id", req.body.linked_id);
+    console.log("account_details", account_details);
     LinkedAccount.updateOne({_id: linked_id}, {$set: {username: name, value: account_details.id}})
     .then(() => res.status(200).json({success: true, message: "Account's username updated successfully"}))
     .catch(err => res.status(400).json({success: false, message: err.message}))
@@ -25,6 +29,7 @@ router.post('/linked/create', async (req, res) => {
   
   try {
     let account_details = await RiotAPI.getSummonerByName(username, region);
+    console.log(account_details.id);
     let value = account_details.id;
     const newLinkedAccount = new LinkedAccount({
       user,
