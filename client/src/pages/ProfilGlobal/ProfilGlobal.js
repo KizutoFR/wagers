@@ -37,10 +37,6 @@ export default function ProfilGlobal({ logged_user }){
 
   async function sendFriendRequest() {
     return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/create', {from: logged_user._id, to: id}).then(res => {
-<<<<<<< HEAD
-      console.log(res.data.message)
-=======
->>>>>>> dev
       setIsSender(true)
       setAlreadyRequested(true);
     })
@@ -48,10 +44,6 @@ export default function ProfilGlobal({ logged_user }){
 
   async function removeFromFriends() {
     return await axios.post(process.env.REACT_APP_API_URL+'/friends/remove', {from: logged_user._id, to: id}).then(res => {
-<<<<<<< HEAD
-      console.log(res.data.message)
-=======
->>>>>>> dev
       setAlreadyFriend(false);
       setAlreadyRequested(false);
     })
@@ -59,10 +51,6 @@ export default function ProfilGlobal({ logged_user }){
 
   async function acceptFriendRequest() {
     return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: true}).then(res => {
-<<<<<<< HEAD
-      console.log(res.data.message)
-=======
->>>>>>> dev
       setAlreadyFriend(true);
       setAlreadyRequested(false);
     })
@@ -70,10 +58,6 @@ export default function ProfilGlobal({ logged_user }){
 
   async function declineFriendRequest() {
     return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: false}).then(res => {
-<<<<<<< HEAD
-      console.log(res.data.message)
-=======
->>>>>>> dev
       setAlreadyFriend(true);
       setAlreadyRequested(false);
     })

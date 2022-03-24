@@ -11,15 +11,6 @@
     align-items: center;
 }
 
-<<<<<<< HEAD
-.login-container .form-container {
-    background-color: #08061a;
-    width: 35%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-=======
 
 .login-container .form-container {
     background-color: #08061a;
@@ -28,21 +19,13 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
->>>>>>> dev
     align-items: center;
     box-shadow: 10px 0 4px 4px rgba(0,0,0,0.2);
 }
 
 .login-container .form-container img {
-<<<<<<< HEAD
-    width: 50px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-=======
     width: 175px;
     margin-bottom: 75px;
->>>>>>> dev
 }
 
 .login-container .form-container form {
@@ -68,11 +51,7 @@
 }
 
 .login-container .form-container form input {
-<<<<<<< HEAD
-    width: calc(100% - 50px);
-=======
     width: 100%;
->>>>>>> dev
     margin-bottom: 20px;
     padding: 15px 0 15px 50px;
     border-radius: 10px;
@@ -144,8 +123,6 @@
 
 .error-message {
     color: red;
-<<<<<<< HEAD
-=======
 }
 .login-video-container::after{
     position: absolute;
@@ -239,5 +216,4 @@
         width: 100px;
         transform: translateX(-50%);
     }
->>>>>>> dev
 }

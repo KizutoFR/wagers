@@ -23,11 +23,7 @@ export default function Login({setToken}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD
-      const res = await axios.post(process.env.REACT_APP_API_URL+'/users/login',{email,password});
-=======
       const res = await axios.post(process.env.REACT_APP_API_URL+'/auth/login',{email,password});
->>>>>>> dev
       if (res.data.success) {
           localStorage.setItem('wagers_auth_token', res.data.token);
           setToken(res.data.token)
@@ -42,13 +38,9 @@ export default function Login({setToken}) {
   return (
     <div className="login-container">
       <div className="form-container">
-<<<<<<< HEAD
-      <img src="/images/logo.svg" alt="logo"/>
-=======
         <div className='logo'>
           <img src="/images/logo.svg" alt="logo"/>
         </div>
->>>>>>> dev
        {errorMessage !== '' ? <p className="error-message">{errorMessage}</p> : ''}
         <form>
           <div className="form-element">
@@ -61,17 +53,10 @@ export default function Login({setToken}) {
           </div>      
           <div className="form-options">
             <Link to="/register">{t('login.register')}</Link>
-<<<<<<< HEAD
-            <Lang/>
-            <button data-action="submit" onClick={e => handleSubmit(e)}>{t('login.log-in')}</button>
-          </div>
-        </form>
-=======
             <button data-action="submit" onClick={e => handleSubmit(e)}>{t('login.log-in')}</button>
           </div>
         </form>
         <Lang className="login-lang" />
->>>>>>> dev
       </div>
       <div className="login-video-container">
         <video autoPlay loop muted>
