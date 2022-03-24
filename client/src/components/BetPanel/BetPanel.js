@@ -82,7 +82,6 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
           setBet(finalbet.data.data);
           await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: (user_data.coins - stake)})
             .then(() => {
-              console.log("Bet created successfully")
               user_data.coins = user_data.coins - stake;
               Emitter.emit('CLOSE_BET_PANEL');
               Emitter.emit('UPDATE_COINS', user_data.coins);
@@ -95,7 +94,7 @@ export default function BetPanel({slug, user_data, match_id, setBet, summonerNam
             })
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
           Swal.fire({
             title: 'Oops :/',
             text: `Someting wrong happened`,

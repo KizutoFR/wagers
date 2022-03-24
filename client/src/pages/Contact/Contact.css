@@ -1,0 +1,215 @@
+@font-face {
+    font-family: 'Azo';
+    src: url('/fonts/AzoSans-Regular.ttf')
+  }
+  
+  @font-face {
+    font-family: 'Azo Bold';
+    src: url('/fonts/AzoSans-Bold.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Akira';
+    src: url('/fonts/Akira.otf');
+  }
+
+body {
+    background-color: #08061a;
+}
+.contact-container {
+    background-color: #08061a;
+    height: calc(100vh - 122px);
+    display: flex;
+    flex-direction: row;
+}
+/* .options_select {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+    height: 5%;
+    border: none;
+    border-radius:8px;
+    background-color: #17152a;
+    color: grey;
+} */
+/* 
+.options_select option{
+   font-size: 18px;
+} */
+
+
+.contact-container .form-contact-container {
+    display: flex;
+    align-items: center;
+    background-color: #08061a;
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    /* box-shadow: 10px 0 4px 4px rgba(0,0,0,0.2); */
+}
+
+
+.contact-container .form-contact-container form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    font-family: "Azo", sans-serif;
+}
+
+.text-ticket{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+font-family: "Azo", sans-serif;
+}
+
+.ticket-message{
+    /* border: 2px solid gold; */
+    resize: none;
+    border:0px;
+    display: flex;
+    border-radius: 8px;
+    background-color: #17152A;
+    color:gray;
+    margin-top: 50px;
+    font-family: "Azo", sans-serif;
+    width: 90%;
+    padding: 15px;
+    transition: 0.35s;
+}
+.contact-select{
+    display: flex;
+    justify-content: center;
+}
+
+.contact-select .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #343056;
+}
+
+.contact-select select{
+    width: 90%;
+    background-color: #17152A;
+    font-size: inherit;
+    padding: 1em;
+    padding-right: 2.5em;	
+    margin-top: 30px;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    text-overflow: '';
+    -moz-appearance: none;
+    -webkit-appearance:none;
+    appearance: none;
+    border: 1px solid #343056;
+    cursor: pointer;
+    color: #9390B2;
+    font-weight: bold;
+}
+
+.contact-select:focus {
+    outline: none;
+}
+.contact-select select::-ms-expand {
+    display: none;
+}
+.ticket-message:focus{
+
+    outline: none;
+    border:2px solid #B33CED;
+   
+}
+
+.ticket-message::placeholder{
+    text-align: left;
+    color:gray;
+}
+.request-button{
+    margin-top: 30px;
+    display:flex;
+    justify-content: center;
+    top: 80%;
+    height: 40px;
+    width: 100%;
+}
+
+.request-button button {
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    color: #fff;
+    border-radius: 8px;
+    width: 70%;
+    height: 40px;
+    border: none;
+    transition: 0.35s;
+}
+
+.request-button button:hover{
+    /* border: 2px solid #B33CED; */
+    cursor: pointer;
+}
+.gradient{
+    z-index: 5;
+    position: absolute;
+    height: 100%;
+    width:40%;
+    background: rgb(8,6,26);
+    background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(8,6,26,0) 100%);
+}
+
+
+
+.contact-video-container {
+    width: 65%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-video-container video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.error-message {
+    color: red;
+}
+
+@media  screen and (max-width: 1100px) {
+    .contact-video-container {
+        display: none;
+    }
+    .gradient{
+        display: none;
+    }
+    .contact-container .form-contact-container{
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding-bottom: 30px;
+    }
+    .form-contact-container{
+        height: 100%;
+    }
+    .ticket-message{
+        margin-top:20px ;
+    }
+    .request-button{
+        margin-top: 20px;
+        min-height: 40px;
+    }
+    .request-button button{
+        width: 30%;
+        height: 100%;
+    }
+}

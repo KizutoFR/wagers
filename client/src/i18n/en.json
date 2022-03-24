@@ -35,6 +35,16 @@
         "email": "Email",
         "coin": "Coins"
     },
+    "modifUser": {
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "email": "Email",        
+        "username": "Username",
+        "update_password":"Update your password",
+        "new_password":"Enter your new password",
+        "confirm_password":"Confirm your new password",
+        "commit_change":"Commit your changes"
+    },
     "betPanel": {
         "option": "Select option",
         "next": "Next step",

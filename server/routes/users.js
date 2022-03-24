@@ -36,6 +36,7 @@ router.get('/', (req, res) => {
 })
 
 /**
+<<<<<<< HEAD
  @route POST users/login
  @description login user
  @access Public
@@ -121,12 +122,19 @@ router.post('/register', (req, res) => {
 })
 
 /**
+=======
+>>>>>>> dev
  @route POST users/update
  @description update user informations from modification page
  @access Public
  */
+<<<<<<< HEAD
 router.post('/update', (req, res) => {
   let { firstname, lastname, username, email, id } = req.body;
+=======
+router.post('/update', async (req, res) => {
+  let { firstname, lastname, username, email, id, password, confirmPassword} = req.body;
+>>>>>>> dev
   let errors = [];
 
   if (!firstname || !lastname || !username || !email) {
@@ -136,7 +144,34 @@ router.post('/update', (req, res) => {
   if(!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
     errors.push({msg: 'Email is not in a valid format'});
   }
+<<<<<<< HEAD
   User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email}).then(user=>{
+=======
+
+  /* TODO : if password == '' alors password = current.user.password */
+  if (password.length < 6 && password != '') {
+    errors.push({ msg: 'Password must be at least 8 characters' });
+  }
+
+  if(password != confirmPassword){
+    errors.push({ msg: 'Password and Confirm Password are different' });
+  }
+
+  if (errors.length > 0) {
+    res.send({ success: false, errors: errors })
+  } else {
+
+  const newpassword = await new Promise((resolve,reject)=>{
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) reject(err);
+        resolve(hash);
+      });
+    });
+  })
+  
+  User.updateOne({_id: id }, {firstname:firstname,lastname:lastname,username:username,email:email,password:newpassword}).then(user=>{
+>>>>>>> dev
     User.findOne({_id : id}, {password: 0, updated_date: 0, registered_at: 0})
     .populate({
       path: 'linked_account',
@@ -164,6 +199,10 @@ router.post('/update', (req, res) => {
     .catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
     
   }).catch(err => res.status(400).json({success: false, error: "Someting went wrong : " + err}))
+<<<<<<< HEAD
+=======
+}
+>>>>>>> dev
 })
 
 /**

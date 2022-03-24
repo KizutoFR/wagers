@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useTranslation } from 'react-i18next';
 import { Language } from '../../utils/Language.json';
+import './Lang.css'
 
 export default function Lang(){
     const { i18n } = useTranslation();
@@ -23,8 +24,8 @@ export default function Lang(){
 
     return (
         <div>
-            <div>
-                <select value={lang} name="language" onChange={changeLanguage}>
+            <div className="Lang">
+                <select value={lang} id="language" name="language" onChange={changeLanguage}>
                     <option value={Language.FR}>FR</option>
                     <option value={Language.EN}>EN</option>
                 </select>

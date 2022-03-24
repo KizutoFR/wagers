@@ -1,0 +1,187 @@
+.edit-profil-container{
+    background-color: #08061A;
+    font-family: Akira;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+
+.edit-body {
+    padding: 0px 40px 40px 40px;
+    width: 100%;
+}
+
+.edit-body h2{
+    font-variant: small-caps;
+}
+
+.edit-separator {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 25px;
+}
+
+
+.edit-separator * {
+    margin: 0;
+}
+
+.edit-separator .separator {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.158);
+    margin: 0 15px;
+    flex-grow: 3;
+}
+
+.edit-separator .separator.separator-little {
+    width: 200px;
+    flex-grow: 0;
+}
+
+.edit-separator h2 {
+    font-variant: small-caps;
+}
+
+.edit-separator p {
+	background: linear-gradient(120deg, #F970FE, #B33CED);
+	border: none;
+	color: #fff;
+	margin-left: 14px;
+	font-weight: bold;
+	font-size: 11px;
+	cursor: pointer;
+	border-radius: 6px;
+	padding: 5px 15px;
+
+}
+
+.edit-separator button {
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    cursor: pointer;
+    padding: 5px 15px;
+}
+
+input{
+    background-color: #17152A;
+    color: white;
+    border : 0px;
+    border-radius: 10px;
+    height: 50px;
+    margin: 10px auto;
+    width: 100%;
+    font-size: large;
+    text-align: justify;
+    padding-left: 25px;
+}
+
+.edit-group-duo input{
+    margin: 10px auto;
+}
+
+.edit-first-line{
+    display: flex;
+    align-content: space-between;
+    justify-content: space-between;
+    padding:0;
+    margin: 0;
+}
+
+.edit-group-duo{
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+    margin-top: 20px;
+}
+
+.edit-group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.edit-firstname{
+    margin: 0;
+    margin-bottom:10px;
+}
+
+
+.edit-lastname{
+    margin: 0;
+    margin-bottom:10px;
+}
+
+label{
+    color: #ffffff27;
+    font-family: Azo;
+    font-weight: bold;
+}
+
+.edit-submit{
+    width: fit-content;
+    color: #F970FE;
+    margin-top: 10px;
+    background-color: transparent;
+    padding-right: 25px;
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+	border: none;
+	color: #fff;
+	margin-left: 14px;
+	font-weight: bold;
+	font-size: 11px;
+	cursor: pointer;
+	border-radius: 6px;
+	padding: 5px 15px;
+    font-variant: small-caps;
+    font-size:large;
+    margin:0;
+}
+
+.edit-mdp{
+    width: fit-content;
+    color: #F970FE;
+    margin-top: 10px;
+    background-color: transparent;
+    margin:0;
+    padding: 0;
+}
+
+.edit-button{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+
+
+
+.gameGroup{
+    margin: 50px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.game-card{
+    max-width: 400px;
+    flex-grow: 1;
+}
+
+.game-card img{
+    min-width: 100%;
+}

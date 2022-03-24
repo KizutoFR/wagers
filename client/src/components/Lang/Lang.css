@@ -1,0 +1,11 @@
+.Lang #language {
+    color: white;
+    background: #100e22;
+    border: none;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.Lang #language option{
+    background-color: #08061a;
+}

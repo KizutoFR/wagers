@@ -10,6 +10,10 @@ const games = require('./routes/games');
 const accounts = require('./routes/accounts');
 const challenges = require('./routes/challenges');
 const friends = require('./routes/friends');
+<<<<<<< HEAD
+=======
+const auth = require('./routes/auth');
+>>>>>>> dev
 const admin = require('./routes/admin');
 
 
@@ -48,6 +52,10 @@ app.use('/games', isAuthenticated, games);
 app.use('/accounts', isAuthenticated, accounts);
 app.use('/friends', isAuthenticated, friends);
 app.use('/challenges', isAuthenticated, challenges);
+<<<<<<< HEAD
+=======
+app.use('/auth', auth);
+>>>>>>> dev
 app.use('/admin', admin);
 
 

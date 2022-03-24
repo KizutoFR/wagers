@@ -11,6 +11,7 @@
     align-items: center;
 }
 
+<<<<<<< HEAD
 .login-container .form-container {
     background-color: #08061a;
     width: 35%;
@@ -18,15 +19,30 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+=======
+
+.login-container .form-container {
+    background-color: #08061a;
+    width: 35%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+>>>>>>> dev
     align-items: center;
     box-shadow: 10px 0 4px 4px rgba(0,0,0,0.2);
 }
 
 .login-container .form-container img {
+<<<<<<< HEAD
     width: 50px;
     position: absolute;
     top: 20px;
     left: 20px;
+=======
+    width: 175px;
+    margin-bottom: 75px;
+>>>>>>> dev
 }
 
 .login-container .form-container form {
@@ -52,7 +68,11 @@
 }
 
 .login-container .form-container form input {
+<<<<<<< HEAD
     width: calc(100% - 50px);
+=======
+    width: 100%;
+>>>>>>> dev
     margin-bottom: 20px;
     padding: 15px 0 15px 50px;
     border-radius: 10px;
@@ -124,4 +144,100 @@
 
 .error-message {
     color: red;
+<<<<<<< HEAD
+=======
+}
+.login-video-container::after{
+    position: absolute;
+    content:"";
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    opacity: 100%;
+    background: linear-gradient(to right,#08061a,65%,#08061a27);
+}
+
+.login-lang{
+    position: absolute;
+    left: 50px;
+    bottom: 50px;
+}
+
+@media screen and (min-width:801px) and (max-width:1000px){
+    .login-video-container{
+        width: 50%;
+    }
+
+    .login-container form{
+        height: 100%;
+    }
+
+    
+
+    .login-container .form-container{
+        width: 50%;
+    }
+}
+
+@media screen and (min-width:601px) and (max-width:800px){
+    .login-video-container{
+        width: 40%;
+    }
+
+    .login-container form{
+        height: 100%;
+    }
+
+    
+
+    .login-container .form-container{
+        width: 60%;
+    }
+}
+
+@media screen and (min-width:501px) and (max-width:600px){
+    .login-video-container{
+        width: 30%;
+    }
+
+    .login-container form{
+        height: 100%;
+    }
+
+    
+
+    .login-container .form-container{
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width:500px) {
+    .login-video-container{
+        display: none;
+    }
+
+    .login-container{
+        display: block;
+    }
+
+    .login-container form{
+        height: 100%;
+    }
+
+    .login-container .form-container{
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .form-container .logo img{
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        width: 100px;
+        transform: translateX(-50%);
+    }
+>>>>>>> dev
 }

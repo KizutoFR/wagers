@@ -1,0 +1,108 @@
+
+.wrapperProfil {
+    background-color: #08061a;
+}
+.containerProfil{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; 
+}
+.banniere{
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat ;
+    background-image: url("/images/imgprofil.svg");
+    width: 100%;
+    height: 300px;
+    position:relative;
+    margin-bottom: 115px;
+}
+.banniere .bannierefondu{
+    background: linear-gradient(to top, #f970fe 0%,transparent 70%);
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    position:absolute;
+}
+
+.banniere .barredexperience{
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(120deg, #F970FE 0%, #B33CED 75%, white 25%);
+}
+.imageprofilrelative{
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+.imageprofilabsolute{
+    border:6px solid #17152A;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.imageprofilabsolute img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 100%;
+    min-height: 100%;    
+    max-width: 130%;
+    max-width: 130%;
+}
+.niveaurelative {
+    position: absolute;
+    border:4px solid #17152A;
+    border-radius: 50%;
+    bottom:10px;
+    right:10px;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    color: #fff;
+}
+
+.niveaurelative p {
+    margin: 0;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.3rem;
+}
+
+.containerProfilInfo {
+    color: white;
+    font-family: 'Azo';
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+}
+
+.containerProfilInfo h2 {
+    margin: 0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.containerProfilInfo1 button {
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-left: 15px;
+    cursor: pointer;
+}
