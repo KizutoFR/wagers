@@ -85,6 +85,7 @@
     line-height: 1;
     margin: 0 0 20px 0;
     text-transform: uppercase;
+    font-family: "Azo Bold";
 }
 
 .dashboard-banner button {
@@ -524,5 +525,27 @@
         margin: 0;
         margin-bottom: 50px;
     }
-    
+    .dashboard-banner h1 {
+        font-size: 3.5em;
+        text-align: center;
+    }
+    .dashboard-banner .banner-left {
+        width: 100%;
+        padding: 0;
+    }
+    .dashboard-banner .banner-left {
+        width: 100%;
+        padding: 0;
+    }
+    .banner-left button {
+        margin-top: 50px!important;
+        margin-left:auto!important;
+        margin-right:auto!important;
+    }
+    .dashboard-banner .video-banner {
+        width: 100%;
+    }
+    .dashboard-banner .video-banner video {
+        transform: translate(-50%,-50%);
+    }
 }

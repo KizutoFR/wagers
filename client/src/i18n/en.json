@@ -21,7 +21,13 @@
     },
     "register": {
         "register": "Register",
-        "log-in": "Log-in"
+        "log-in": "Log-in",
+        "firstname":"Firstname",
+        "lastname":"Lastname",
+        "username":"Username",
+        "email":"Email",
+        "password":"Password",
+        "confirmPassword":"Confirm password"
     },
     "profilUser": {
         "friendslist": "Friends list",

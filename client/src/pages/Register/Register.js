@@ -3,6 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
 import { useTranslation } from "react-i18next";
+import { FaAt,  FaKey} from 'react-icons/fa';
 import Lang from "../../components/Lang/Lang";
 
 export default function Register() {
@@ -44,32 +45,37 @@ export default function Register() {
         <form>
           <div className="form-row">
             <div className="form-element">
-              <input type="text" placeholder="Firstname" ref={firstname} />
+              <input type="text" placeholder={t('register.firstname')} ref={firstname} />
             </div>
             <div className="form-element">
-              <input type="text" placeholder="Lastname" ref={lastname}/>
+              <input type="text" placeholder={t('register.lastname')} ref={lastname}/>
             </div>
           </div>
           <div className="form-row">
             <div className="form-element">
-              <input type="text" placeholder="Username" ref={username}/>
+              <input type="text" placeholder={t('register.username')} ref={username}/>
             </div>
             <div className="form-element">
-              <input type="text" placeholder="Email" ref={email}/>
+              <input type="text" placeholder={t('register.email')} ref={email}/>
+              <FaAt className="form-element-icon" />
             </div>
           </div>
-          <div className="form-element">
-            <input type="password" placeholder="Password" ref={password}/>
+          <div className="form-element pass">
+            <input type="password" placeholder={t('register.password')} ref={password}/>
+            <FaKey className="form-element-icon" />
           </div>
-          <div className="form-element">
-            <input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
+          <div className="form-element pass">
+            <input type="password" placeholder={t('register.confirmPassword')} ref={confirmPassword}/>
+            <FaKey className="form-element-icon" />
           </div>
           <div className="form-options">
             <Link to="/login">{t('register.log-in')}</Link>
-            <Lang/>
             <button onClick={register}>{t('register.register')}</button>
           </div>
         </form>
+        <div className='register-lang'>
+          <Lang/>
+        </div>
       </div>
       <div className="login-video-container">
         <video autoPlay loop muted>
