@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Massilia";
-    src: url("/fonts/Massilia-Medium.otf") format("opentype");
+    src: url("../../assets/fonts/Massilia-Medium.otf") format("opentype");
 }
 
 .register-container {
@@ -13,9 +13,10 @@
 
 .register-container .form-container {
     background-color: #08061a;
-    width: 45%;
+    width: 50%;
     height: 100%;
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -34,7 +35,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 90%;
     font-family: "Massilia", sans-serif;
 }
 
@@ -63,11 +64,15 @@
     width: calc(100% - 50px);
     margin-bottom: 20px;
     padding: 15px 0 15px 50px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #08061a;
-    color: #757575;
+    color: rgb(228, 228, 228);
     font-weight: bold;
     border: 2px solid #17152a;
+    font-size: 1em;
+}
+.register-container .form-container form .pass input{
+    letter-spacing: 0.3em;
 }
 
 .register-container .form-container form .form-row .form-element:first-child {
@@ -79,7 +84,7 @@
     color: #fff;
     border: none;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.35s;
@@ -98,8 +103,8 @@
 
 .register-container .form-container form input::placeholder {
     color: #757575;
+    letter-spacing: 0em;
 }
-
 .register-container .form-container form .form-element {
     width: 100%;
     position: relative;
@@ -107,7 +112,7 @@
 
 .register-container .form-container form .form-element .form-element-icon {
     position: absolute;
-    top: calc(50% - 10px);
+    top: calc(50% - 5px);
     font-size: 18px;
     left: 25px;
     color: #757575;
@@ -136,4 +141,11 @@
 
 .error-message {
     color: red;
+}
+
+.register-lang{
+    position: absolute;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
 }

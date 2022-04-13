@@ -3,24 +3,24 @@ import Emitter from '../../services/Emitter';
 import './Header.css';
 import Lang from "../Lang/Lang";
 import { useTranslation } from "react-i18next";
+import { useAuthState } from "../../context/Auth";
 
-export default function Header({user_data}) {
+export default function Header() {
   const [coins, setCoins] = useState(0);
   const { t } = useTranslation();
   
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const auth = useAuthState();
 
   useEffect(() => {
-    if(user_data){
-      setCoins(user_data.coins)
-      Emitter.on('UPDATE_COINS', (val) => setCoins(val));
-    }
+	setCoins(auth.user.coins)
+	Emitter.on('UPDATE_COINS', (val) => setCoins(val));
     return () => {
       Emitter.off('UPDATE_COINS')
     }
-  }, [user_data]);
+  }, []);
 
   return (
 	<div className={click ?"header fixed" : "header"}>

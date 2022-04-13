@@ -13,7 +13,29 @@ require('dotenv').config();
     let email = req.body.email;
     let password = req.body.password;
   
-    User.findOne({ email: email })
+    User.findOne({ email: email }, {auth_token: 0})
+      .populate({
+        path: 'linked_account',
+        model: 'LinkedAccount',
+        populate: {
+          path: 'account_type',
+          model: 'AccountType'
+        },
+      })
+      .populate({
+        path: 'friends',
+        model: 'FriendShip',
+        populate: [
+          {
+            path: 'from',
+            model: 'User'
+          },
+          {
+            path: 'to',
+            model: 'User'
+          }
+        ]
+      }) 
       .then(user => {
         if(!user) {
           res.status(400).json({ success: false, message: 'Incorrect email or password'})
@@ -22,9 +44,13 @@ require('dotenv').config();
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if(err) throw err;
           if(isMatch) {
-            const token = jwt.sign({ user: user }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
+            const {password, ...rest} = user.toObject();
+            const token = jwt.sign({ user: rest }, process.env.AUTH_SECRET_TOKEN, {expiresIn: 172800});
             User.updateOne({_id: user._id}, {$set : {auth_token: token}})
-                .then(() => res.status(200).json({success: true, user_id: user._id, token}));
+              .then(() => {
+                user.auth_token = token;
+                res.status(200).json({success: true, user, accessToken: token})
+              });
           } else {
             res.status(200).json({ success: false, message: 'Incorrect email or password' })
           }

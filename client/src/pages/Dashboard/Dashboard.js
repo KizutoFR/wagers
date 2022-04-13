@@ -1,17 +1,20 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuthState } from "../../context/Auth";
 import Emitter from '../../services/Emitter';
-import { SLUG } from '../../utils/config.json'
+import { SLUG } from '../../utils/config'
 import './Dashboard.css';
 import Swal from 'sweetalert2'
 import { useTranslation } from "react-i18next";
+import { headers } from '../../utils/config';
 
 import CurrentBet from '../../components/CurrentBet/CurrentBet';
 import CurrentMatch from '../../components/CurrentMatch/CurrentMatch';
 import BetPanel from '../../components/BetPanel/BetPanel';
 import Challenge from '../../components/Challenge/Challenge';
 
-export default function Dashboard({ user_data, setToken }) {
+export default function Dashboard() {
+    const auth = useAuthState();
     const [data, setData] = useState({});
     const [currentBet, setBet] = useState();
     const [scoreboard, setScoreboard] = useState([]);
@@ -25,9 +28,9 @@ export default function Dashboard({ user_data, setToken }) {
     useEffect(async () => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
         if(SLUG.includes(slug)){
-            if(user_data){
+            if(auth.user){
                 await getScoreBoard()
-                const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+                const linked = auth.user.linked_account.find(element => element.account_type.slug === slug)
                 setLinkedUsername(linked.username);
                 getChallenges(slug);
                 await getCurrentGameInfo(slug, linked.username);
@@ -38,16 +41,16 @@ export default function Dashboard({ user_data, setToken }) {
         return () => {
             Emitter.off('CLOSE_BET_PANEL');
         }
-    }, [user_data, slug]);
+    }, [auth.user, slug]);
 
     const getChallenges = (slug) => {
-        axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug).then(res => {
+        axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug, headers).then(res => {
             setChallenges(res.data.challenges);
         })
     }
 
     async function getCurrentGameInfo(game_slug, username) {
-        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username).then(res => {
+        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username, headers).then(res => {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
@@ -57,19 +60,13 @@ export default function Dashboard({ user_data, setToken }) {
     }
 
     async function getScoreBoard(){
-        return await axios.get(process.env.REACT_APP_API_URL+'/users/scoreboard').then(res => {
+        return await axios.get(process.env.REACT_APP_API_URL+'/users/scoreboard', headers).then(res => {
             setScoreboard(res.data.users)
         })
     }
 
-    // const handleLogout = (e) => {
-    //     e.preventDefault();
-    //     localStorage.removeItem('wagers_auth_token')
-    //     setToken(null)
-    // }
-
     const updateChallengesProgress = (id, value) => {
-        axios.post(process.env.REACT_APP_API_URL+'/challenges/progress', {challenge_id: id, value});
+        axios.post(process.env.REACT_APP_API_URL+'/challenges/progress', {challenge_id: id, value}, headers);
         const newChallenges = challenges.map(chall => {
             chall.progress = (chall.progress || 0) + value;
             return chall;
@@ -97,7 +94,7 @@ export default function Dashboard({ user_data, setToken }) {
 
     const verifyBetWin = async () => {
         let valideBet = true;
-        const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+        const linked = auth.user.linked_account.find(element => element.account_type.slug === slug)
         await getCurrentGameInfo(slug, linked.username);
         if(data.matchDetails && data.matchDetails.info.gameId === currentBet.match_id) {
             if(currentBet.account_id === linked.value) {
@@ -121,11 +118,11 @@ export default function Dashboard({ user_data, setToken }) {
                 valideBet = false;
             }
           if(valideBet){
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)});
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + (100 * currentBet.requirements.length)});
-            user_data.exp = user_data.exp + (100 * currentBet.requirements.length);
-            user_data.coins = user_data.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier);
-            Emitter.emit('UPDATE_COINS', user_data.coins);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: auth.user.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)}, headers);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + (100 * currentBet.requirements.length)}, headers);
+            auth.user.exp = auth.user.exp + (100 * currentBet.requirements.length);
+            auth.user.coins = auth.user.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier);
+            Emitter.emit('UPDATE_COINS', auth.user.coins);
             Swal.fire({
               title: 'You won your bet!',
               text: `+${Math.ceil(currentBet.coin_put * currentBet.multiplier)} coins & +${100 * currentBet.requirements.length}xp`,
@@ -133,8 +130,8 @@ export default function Dashboard({ user_data, setToken }) {
               confirmButtonText: 'Ok'
             })
           } else {
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: user_data._id, new_exp: user_data.exp + DEFAULT_LOOSE_XP});
-            user_data.exp = user_data.exp + DEFAULT_LOOSE_XP;
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + DEFAULT_LOOSE_XP}, headers);
+            auth.user.exp = auth.user.exp + DEFAULT_LOOSE_XP;
             Swal.fire({
               title: 'You lost your bet :/',
               text: `-${currentBet.coin_put} coins & +${DEFAULT_LOOSE_XP}xp`,
@@ -142,7 +139,7 @@ export default function Dashboard({ user_data, setToken }) {
               confirmButtonText: 'Ok'
             })
           }
-          await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id});
+          await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, headers);
           setBet(null);
         } else {
           Swal.fire({
@@ -155,7 +152,7 @@ export default function Dashboard({ user_data, setToken }) {
       }
 
     // TODO: Mettre le loader
-    if(!user_data || !scoreboard || !data) {
+    if(!auth.user || !scoreboard || !data) {
         return (
             <div>loading</div>
         )
@@ -163,7 +160,7 @@ export default function Dashboard({ user_data, setToken }) {
 
     return (
         <div className="dashboard-container">
-            {betPanel ? <BetPanel slug={slug} user_data={user_data} match_id={data.currentMatch.gameId} setBet={setBet} summonerName={linkedUsername} /> : ""}
+            {betPanel ? <BetPanel slug={slug} match_id={data.currentMatch.gameId} setBet={setBet} summonerName={linkedUsername} /> : ""}
             <div className="dashboard-banner">
                 <div className="banner-left">
                     <h1>{slug.split('-').join(' ')}</h1>
@@ -177,16 +174,16 @@ export default function Dashboard({ user_data, setToken }) {
             </div>
             <div className="dashboard-body">
                 <div className="dashboard-content">
-                    <div>
+                    <div className='dashboard-firstpart'>
                         <div className="dashboard-profile">
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>user_data.current_title</p>
+                                    <p>auth.user.current_title</p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
-                                <h3>{user_data.username}</h3>
+                                <h3>{auth.user.username}</h3>
                                 <p>Level 50</p>
                             </div>
                             <div className="dashboard-profile-xp">

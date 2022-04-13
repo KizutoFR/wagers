@@ -85,6 +85,7 @@
     line-height: 1;
     margin: 0 0 20px 0;
     text-transform: uppercase;
+    font-family: "Azo Bold";
 }
 
 .dashboard-banner button {
@@ -313,8 +314,11 @@
 }
 
 .dashboard-separator .separator.separator-little {
-    width: 200px;
     flex-grow: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.158);
+    margin: 0 15px;
+    flex-grow: 3;
 }
 
 .dashboard-separator h3 {
@@ -485,30 +489,43 @@
     width: 100%;
 }
 
-@media only screen and (min-width: 1903px) {
+@media only screen and (max-width: 1200px) {
     .dashboard-banner h1 {
-        font-size: 100px;
+        font-size: 5em;
+        width: 100%;
+    }
+    .dashboard-banner .banner-left{
+        width: 60%;
+    }
+    .video-banner{
+        width: 40%;
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
     
     .dashboard-scoreboard,.dashboard-game-selector,.dashboard-profile{
-        display: none;
-    }
-    .dashboard-separator .separator.separator-little {
-    
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.158);
-        margin: 0 15px;
-        flex-grow: 3;
-          
+        /* display: none; */
     }
     
     /* .dashboard-content > div:last-child {
         width: calc(100% - 350px);
       }
      */
+
+    .dashboard-firstpart{
+        display: flex;
+        flex-direction: column;
+        margin-top:15px;
+        margin-bottom: 30px;
+    }
+
+    .dashboard-content > div:first-child {
+        width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .dashboard-content{
         flex-direction: column;
     }
@@ -524,5 +541,36 @@
         margin: 0;
         margin-bottom: 50px;
     }
-    
+    .dashboard-banner h1 {
+        font-size: 3.5em;
+        text-align: center;
+        width: 100%;
+        padding: 0 0 40 0;
+    }
+    .dashboard-banner .banner-left {
+        width: 100%;
+        padding: 0;
+    }
+    .dashboard-banner .banner-left {
+        width: 100%;
+        padding: 0;
+    }
+    .banner-left button {
+        margin-top: 50px!important;
+        margin-left:auto!important;
+        margin-right:auto!important;
+    }
+    .dashboard-banner .video-banner {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+    .dashboard-content > div:first-child {
+        width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

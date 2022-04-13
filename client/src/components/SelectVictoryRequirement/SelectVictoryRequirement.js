@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { VICTORY_REQUIREMENTS } from '../../utils/config.json'
+import { VICTORY_REQUIREMENTS } from '../../utils/config'
 import { FaCaretDown } from 'react-icons/fa';
 import './SelectVictoryRequirement.css'
 

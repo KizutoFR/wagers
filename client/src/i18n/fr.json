@@ -21,8 +21,14 @@
 
     },
     "register": {
-        "register": "Enregistrez vous",
-        "log-in": "Connection"
+        "register": "Enregistrez-vous",
+        "log-in": "Connexion",
+        "firstname":"Prénom",
+        "lastname":"Nom",
+        "username":"Pseudo",
+        "email":"Email",
+        "password":"Mot de passe",
+        "confirmPassword":"Confirmer le mot de passe"
     },
     "profilUser": {
         "friendslist": "Liste d'amis",

@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'Azo';
-  src: url('/fonts/AzoSans-Regular.ttf')
+  src: url('./assets/fonts/AzoSans-Regular.ttf')
 }
 
 @font-face {
   font-family: 'Azo Bold';
-  src: url('/fonts/AzoSans-Bold.ttf');
+  src: url('./assets/fonts/AzoSans-Bold.ttf');
 }
 
 @font-face {
   font-family: 'Akira';
-  src: url('/fonts/Akira.otf');
+  src: url('./assets/fonts/Akira.otf');
 }
 
 body {

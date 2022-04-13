@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
 import { useTranslation } from "react-i18next";
+import { FaAt,  FaKey} from 'react-icons/fa';
 import Lang from "../../components/Lang/Lang";
+import { headers } from '../../utils/config';
 
 export default function Register() {
   const email = useRef();
@@ -12,7 +14,7 @@ export default function Register() {
   const lastname = useRef();
   const username = useRef();
   const confirmPassword = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
   const { t } = useTranslation();
 
@@ -26,9 +28,9 @@ export default function Register() {
       password: password.current.value, 
       confirmPassword: confirmPassword.current.value
     };
-    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data);
+    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data, headers);
     if (result.data.success) {
-      history.push('/login');
+      navigate('/login');
     } else {
       setErrors(result.data.errors)
     }
@@ -44,32 +46,37 @@ export default function Register() {
         <form>
           <div className="form-row">
             <div className="form-element">
-              <input type="text" placeholder="Firstname" ref={firstname} />
+              <input type="text" placeholder={t('register.firstname')} ref={firstname} />
             </div>
             <div className="form-element">
-              <input type="text" placeholder="Lastname" ref={lastname}/>
+              <input type="text" placeholder={t('register.lastname')} ref={lastname}/>
             </div>
           </div>
           <div className="form-row">
             <div className="form-element">
-              <input type="text" placeholder="Username" ref={username}/>
+              <input type="text" placeholder={t('register.username')} ref={username}/>
             </div>
             <div className="form-element">
-              <input type="text" placeholder="Email" ref={email}/>
+              <input type="text" placeholder={t('register.email')} ref={email}/>
+              <FaAt className="form-element-icon" />
             </div>
           </div>
-          <div className="form-element">
-            <input type="password" placeholder="Password" ref={password}/>
+          <div className="form-element pass">
+            <input type="password" placeholder={t('register.password')} ref={password}/>
+            <FaKey className="form-element-icon" />
           </div>
-          <div className="form-element">
-            <input type="password" placeholder="Confirm Password" ref={confirmPassword}/>
+          <div className="form-element pass">
+            <input type="password" placeholder={t('register.confirmPassword')} ref={confirmPassword}/>
+            <FaKey className="form-element-icon" />
           </div>
           <div className="form-options">
             <Link to="/login">{t('register.log-in')}</Link>
-            <Lang/>
             <button onClick={register}>{t('register.register')}</button>
           </div>
         </form>
+        <div className='register-lang'>
+          <Lang/>
+        </div>
       </div>
       <div className="login-video-container">
         <video autoPlay loop muted>

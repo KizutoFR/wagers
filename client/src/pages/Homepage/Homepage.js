@@ -1,18 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthState } from '../../context/Auth';
 import './Homepage.css';
 
-export default function Homepage({ user_data }) {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        setUser(user_data)
-    }, [user_data])
+export default function Homepage() {
+    const auth = useAuthState();
 
     return (
         <div>
             <h1>Homepage</h1>
-            { user ? (
+            { auth.user ? (
                 <div>
                     <Link to="/dashboard">Dashboard</Link>
                     <br />

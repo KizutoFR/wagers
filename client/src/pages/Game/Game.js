@@ -2,32 +2,32 @@ import React, {useEffect,useState} from "react";
 import Emitter from '../../services/Emitter';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
+import { headers } from "../../utils/config";
 import { SLUG, VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import './Game.css'
 import Swal from 'sweetalert2'
 import BetPanel from '../../components/BetPanel/BetPanel'
 
-export default function Game({user_data}) {
+export default function Game() {
   const [data, setData] = useState({});
   const [currentBet, setBet] = useState();
   const [betPanel, setBetPanel] = useState(false);
   const [betAlreadyExist, setBetAlreadyExist] = useState(false);
   const [verifying, setVerifying] = useState(false)
   const {slug} = useParams();
+  const {user} = useAuthState();
 
   useEffect(() => {
     if(SLUG.includes(slug)){
-      if(user_data){
-        const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
-        getCurrentGameInfo(slug, linked.username);
-      }
+      const linked = user.linked_account.find(element => element.account_type.slug === slug)
+      getCurrentGameInfo(slug, linked.username);
     } else {
       window.location.replace('/dashboard')
     }
-  }, [user_data, slug])
+  }, [slug])
 
   const getCurrentGameInfo = async (game_slug, username) => {
-    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user_data._id+'/'+username)
+    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user._id+'/'+username, headers)
       .then(res => {
         setData({currentMatch: res.data.match.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.match.matchDetails})
         if(res.data.bet){
@@ -40,15 +40,15 @@ export default function Game({user_data}) {
 
   const createBet = async (data) => {
     setBet(data);
-    await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: (user_data.coins - data.coin_put)});
-    user_data.coins = user_data.coins - data.coin_put;
-    Emitter.emit('UPDATE_COINS', user_data.coins);
+    await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (user.coins - data.coin_put)}, headers);
+    user.coins = user.coins - data.coin_put;
+    Emitter.emit('UPDATE_COINS', user.coins);
   }
 
   const verifyBetWin = async () => {
     setVerifying(true)
     let valideBet = true;
-    const linked = user_data.linked_account.find(element => element.account_type.slug === slug)
+    const linked = user.linked_account.find(element => element.account_type.slug === slug)
     await getCurrentGameInfo(slug, linked.username);
     if(data.matchDetails) {
       currentBet.requirements.map(r => {
@@ -62,9 +62,9 @@ export default function Game({user_data}) {
         }
       })
       if(valideBet){
-        await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user_data._id, new_coins: (currentBet.coin_put * currentBet.multiplier)});
-        user_data.coins = currentBet.coin_put * currentBet.multiplier;
-        Emitter.emit('UPDATE_COINS', user_data.coins);
+        await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (currentBet.coin_put * currentBet.multiplier)}, headers);
+        user.coins = currentBet.coin_put * currentBet.multiplier;
+        Emitter.emit('UPDATE_COINS', user.coins);
         Swal.fire({
           title: 'You won your bet!',
           text: `+${currentBet.coin_put * currentBet.multiplier} coins`,
@@ -79,7 +79,7 @@ export default function Game({user_data}) {
           confirmButtonText: 'Ok'
         })
       }
-      await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id});
+      await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, headers);
       setBet(null);
     } else {
       Swal.fire({
@@ -112,7 +112,7 @@ export default function Game({user_data}) {
               <div>
                 <button onClick={() => {setBetPanel(!betPanel)}}>Bet on this match</button>
                 {betPanel ? (
-                  <BetPanel slug={slug} user_id={user_data._id} user_coins={user_data.coins} match_id={data.currentMatch.gameId} setBet={createBet} setBetAlreadyExist={setBetAlreadyExist} />
+                  <BetPanel slug={slug} user_id={user._id} user_coins={user.coins} match_id={data.currentMatch.gameId} setBet={createBet} setBetAlreadyExist={setBetAlreadyExist} />
 
                 ) : ''}
               </div>

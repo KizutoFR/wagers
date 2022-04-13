@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Contact.css';
 
 
-export default function Contact({user_data}) {
+export default function Contact() {
   const [errorMessage, setErrorMessage] = useState('');
   const [messageSubject,setMessageSubject] = useState('');
 
