@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useTranslation } from 'react-i18next';
-import { Language } from '../../utils/Language.json';
+import { Language } from '../../utils/language';
 import './Lang.css'
 
 export default function Lang(){

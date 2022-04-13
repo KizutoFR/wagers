@@ -50,7 +50,6 @@ router.post('/requirements/add', (req, res) => {
 
 router.post('/bet/add', (req, res) => {
   const {game_name, match_id, predefined, requirements, multiplier, coin_put, account_id, user} = req.body;
-  console.log(account_id);
   const bet = new Bet({
     game_name,
     match_id,
@@ -83,11 +82,9 @@ router.post('/bet/multiplier', async (req, res) => {
 
   const averages = getAverageValues(matches);
   let final_cote = 1;
-  console.log(averages);
   requirements.forEach(prop => {
     switch(prop.identifier) {
       case 'MATCH_WIN':
-        console.log(prop);
         final_cote = final_cote * averages.win + 1;
       break;
       case 'KILLS_AMOUNT':

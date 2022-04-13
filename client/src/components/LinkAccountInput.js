@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 import Swal from 'sweetalert2'
+import { headers } from '../utils/config';
 
 
 export default function LinkAccountInput({ data, available, linked_list, user_id }) {
@@ -24,12 +25,12 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
         if(accountName !== '') {
             //TODO: put <select> to choose account_region
             // modifyAccountName(modifiedName, linkedId, 'EUW');
-            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: modifiedName, linked_id:linkedId, account_region:'EUW' });
+            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: modifiedName, linked_id:linkedId, account_region:'EUW' }, headers);
 
         } else {
             //TODO: put <select> to choose account_region
             // createLinkedAccount(modifiedName, data._id, user_id, 'EUW');
-            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id:data._id, user_id, account_region:'EUW' });
+            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id:data._id, user_id, account_region:'EUW' }, headers);
 
         }
         if(res.data.success) {

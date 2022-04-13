@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
 import { useTranslation } from "react-i18next";
 import { FaAt,  FaKey} from 'react-icons/fa';
 import Lang from "../../components/Lang/Lang";
+import { headers } from '../../utils/config';
 
 export default function Register() {
   const email = useRef();
@@ -13,7 +14,7 @@ export default function Register() {
   const lastname = useRef();
   const username = useRef();
   const confirmPassword = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
   const { t } = useTranslation();
 
@@ -27,9 +28,9 @@ export default function Register() {
       password: password.current.value, 
       confirmPassword: confirmPassword.current.value
     };
-    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data);
+    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data, headers);
     if (result.data.success) {
-      history.push('/login');
+      navigate('/login');
     } else {
       setErrors(result.data.errors)
     }

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { FaAt,  FaKey} from 'react-icons/fa';
 import axios from 'axios';
 import './Login.css';
+import { login, useAuthState, useAuthDispatch } from '../../context/Auth';
 import { useTranslation } from "react-i18next";
 import Lang from "../../components/Lang/Lang";
 
 export default function Login({setToken}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useAuthDispatch()
+  const { loading, errorMessage } = useAuthState()
 
   const changePassword = (e) => {
     setPassword(e.target.value);
@@ -22,16 +25,13 @@ export default function Login({setToken}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const payload = { email, password };
     try {
-      const res = await axios.post(process.env.REACT_APP_API_URL+'/auth/login',{email,password});
-      if (res.data.success) {
-          localStorage.setItem('wagers_auth_token', res.data.token);
-          setToken(res.data.token)
-      } else {
-          setErrorMessage(res.data.message);
-      }
-    } catch (err) {
-      console.error(err.message);
+        const res = await login(dispatch, payload);
+        if (!res) return;
+        navigate('/dashboard');
+    } catch(err) {
+        console.error(err);
     }
   }
 

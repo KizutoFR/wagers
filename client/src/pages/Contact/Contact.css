@@ -1,18 +1,3 @@
-@font-face {
-    font-family: 'Azo';
-    src: url('/fonts/AzoSans-Regular.ttf')
-  }
-  
-  @font-face {
-    font-family: 'Azo Bold';
-    src: url('/fonts/AzoSans-Bold.ttf');
-  }
-  
-  @font-face {
-    font-family: 'Akira';
-    src: url('/fonts/Akira.otf');
-  }
-
 body {
     background-color: #08061a;
 }

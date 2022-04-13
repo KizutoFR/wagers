@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useAuthState } from "./context/Auth";
 import './App.css';
-import jwt_decode from "jwt-decode";
-import axios from 'axios';
 
 import Contact from './pages/Contact/Contact.js'
 import Login from './pages/Login/Login.js';
@@ -13,81 +12,35 @@ import ProfilUser from './pages/ProfilUser/ProfilUser.js';
 import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 import Header from './components/Header/Header';
+import axios from 'axios';
 import Footer from './components/Footer/Footer';
 
+import AuthRoute from './components/Route/AuthRoute';
+import UnAuthRoute from './components/Route/UnAuthRoute';
+
 export default function App() {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('wagers_auth_token'));
-
-  async function fetchUserData(user_id) {
-    return await axios.get(process.env.REACT_APP_API_URL+'/users/'+user_id).then(res => res.data.user);
-  }
-
-  useEffect(() => {
-    axios.interceptors.request.use(config => {
-      config.headers['Authorization'] = localStorage.getItem('wagers_auth_token');
-      return config;
-    });
-    if(token){
-      try {
-        const decryptedToken = jwt_decode(token);
-        const currentDate = new Date();
-        const expDate = new Date(decryptedToken.exp * 1000);
-        if (currentDate <= expDate) {
-          fetchUserData(decryptedToken.user._id)
-              .then(res => {
-                setUser(res);
-              })
-              .catch(() => {
-                setUser(null)
-                setToken(null);
-                localStorage.removeItem('wagers_auth_token');
-              })
-        } else {
-          setUser(null)
-          setToken(null);
-          localStorage.removeItem('wagers_auth_token');
-        }
-      } catch(err) {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem('wagers_auth_token');
-      }
-    }
-  }, [token])
+  const auth = useAuthState();
 
   return (
     <div>
-      {token && <Header user_data={user} /> }
+      {auth.auth_token && <Header /> }
       <BrowserRouter>
-            <Switch>
-              <Route exact path="/">
-                <Homepage user_data={user}/>
-              </Route>
-              <Route exact path="/dashboard">
-                {token ? <Dashboard user_data={user} setToken={setToken}/> : <Redirect to="/login" />}
-              </Route>
-              <Route exact path="/login">
-                {token ? <Redirect to="/" user_data={user}/> : <Login setToken={setToken} />}
-              </Route>
-              <Route exact path="/register">
-                {token ? <Redirect to="/" user_data={user}/> : <Register />}
-              </Route>
-              <Route exact path="/profil/:id">
-                {token ? <ProfilGlobal logged_user={user} /> : <Redirect to ='/login'/>}
-              </Route>
-              <Route exact path="/profil">
-                {token ? <ProfilUser user_data={user} setToken={setToken} setUser={setUser}/> : <Redirect to ='/login' />}
-              </Route>
-              <Route exact path="/pass">
-                {token ? <BattlePass user_data={user} /> : <Redirect to="/login" />}
-              </Route>
-              <Route exact path="/contact">
-                {token ? <Contact user_data={user}/> : <Redirect to="/login" />}
-              </Route>
-            </Switch>
+        <Routes>
+          <Route element={<AuthRoute redirect="/login" />}>
+            <Route exact path="/" element={<Homepage />} />
+            <Route exact path='/dashboard' element={<Dashboard />} />
+            <Route exact path="/profil/:id" element={<ProfilGlobal />} />
+            <Route exact path="/profil" element={<ProfilUser />} />
+            <Route exact path="/pass" element={<BattlePass />} />
+            <Route exact path="/contact" element={<Contact />} />
+          </Route>
+          <Route element={<UnAuthRoute redirect="/" />}>
+            <Route exact path='/login' element={<Login/>} />
+            <Route exact path='/register' element={<Register/>} />
+          </Route>
+        </Routes>
       </BrowserRouter>
-      {token && <Footer/>}
+      {auth.auth_token && <Footer/>}
     </div>
   )
 }

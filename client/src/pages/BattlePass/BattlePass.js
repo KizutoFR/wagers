@@ -1,22 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import './BattlePass.css';
-
+import { headers } from '../../utils/config';
 import BattlePassCell from '../../components/BattlePassCell/BattlePassCell';
 import Emitter from '../../services/Emitter';
+import { useAuthState } from '../../context/Auth';
 
-export default function BattlePass({ user_data }) {
+export default function BattlePass() {
     const [pass, setPass] = useState();
     const [claimedCells, setClaimedCells] = useState([]);
     const cells = useRef([]);
     const battlepass = useRef();
     let pos = { left: 0, x: 0 };
+    const { user } = useAuthState();
 
     useEffect(() => {
-        if (user_data) {
-            getCurrentBattlePass();
-        }
-    }, [user_data])
+        getCurrentBattlePass();
+    }, [])
 
     useEffect(() => {
         Emitter.on('CLAIM_REWARD', data => claimReward(data));
@@ -25,16 +25,16 @@ export default function BattlePass({ user_data }) {
             Emitter.off('CLAIM_REWARD');
             cells.current.forEach(element => element.removeEventListener('mousedown', handleMouseDown));
         }
-    }, [cells, user_data, pass])
+    }, [cells, pass])
 
     const claimReward = (data) => {
-        axios.post(process.env.REACT_APP_API_URL+'/users/battlepass/cells/claim', {...data, pass_id: pass._id})
+        axios.post(process.env.REACT_APP_API_URL+'/users/battlepass/cells/claim', {...data, pass_id: pass._id}, headers)
             .then((response) => setClaimedCells((prevState) => [...prevState, response.data.cell]))
             .catch(err => console.error(err));
     }
 
     const getCurrentBattlePass = async () => {
-        const currentPass = await axios.get(process.env.REACT_APP_API_URL+'/users/battlepass');
+        const currentPass = await axios.get(process.env.REACT_APP_API_URL+'/users/battlepass', headers);
         setPass(currentPass.data.pass);
         setClaimedCells(currentPass.data.claimedCells);
     }
@@ -51,7 +51,7 @@ export default function BattlePass({ user_data }) {
     }
 
     const getUserPassLevel = () => {
-        return Math.floor(user_data.exp / pass.step_exp);
+        return Math.floor(user.exp / pass.step_exp);
     }
 
     const isCellClaimed = (cell_id, premium) => {
@@ -83,7 +83,7 @@ export default function BattlePass({ user_data }) {
         battlepass.current.removeEventListener('mouseup', handleMouseUp);
     }
 
-    if(!user_data || !pass) {
+    if(!user || !pass) {
         return (
             <p>loading...</p>
         )
@@ -110,8 +110,8 @@ export default function BattlePass({ user_data }) {
                                         style={{
                                             width: 
                                                 index > 0
-                                                    ?  `${((user_data.exp / pass.step_exp) - index) * 100}%`
-                                                    : `calc(50% + ${((user_data.exp / pass.step_exp) - index) * 100}%)`
+                                                    ?  `${((user.exp / pass.step_exp) - index) * 100}%`
+                                                    : `calc(50% + ${((user.exp / pass.step_exp) - index) * 100}%)`
                                         }}>
                                     </div>
                                 }

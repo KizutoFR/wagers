@@ -1,57 +1,61 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './ProfilUpdate.css';
 import { useTranslation } from "react-i18next";
 import LinkAccountInput from '../../../components/LinkAccountInput';
+import { updateUser, useAuthState, useAuthDispatch } from '../../../context/Auth';
+import { headers } from '../../../utils/config';
 
-export default function ProfilUpdate({user_data, setUser}) {
+export default function ProfilUpdate() {
     const firstname = useRef();
     const lastname = useRef();
     const username = useRef();
     const email = useRef();
     const password = useRef();
     const confirmPassword= useRef();
-    const history = useHistory();
+    const navigate = useNavigate();
+    const dispatch = useAuthDispatch();
     const [errors, setErrors] = useState([]);
     const [changePass, setChangePass] = useState(false);
     const [games, setGames] = useState([]);
+    const {user} = useAuthState();
     const { t } = useTranslation();
 
-    useEffect(()=>{
+    useEffect(() => {
         getGames();
-    },[user_data])
+    },[])
 
     const getGames = async () => {
-        const gameInfo = await axios.get(process.env.REACT_APP_API_URL+'/games');
+        const gameInfo = await axios.get(process.env.REACT_APP_API_URL+'/games', headers);
         setGames(gameInfo.data.games);
     }
 
     const update = async (e) => {
         e.preventDefault();
         const data = {
-        firstname: firstname.current.value, 
-        lastname: lastname.current.value, 
-        username: username.current.value, 
-        email: email.current.value, 
-        id: user_data._id,
-        password: password.current.value,
-        confirmPassword: confirmPassword.current.value,
+          firstname: firstname.current.value, 
+          lastname: lastname.current.value, 
+          username: username.current.value, 
+          email: email.current.value, 
+          id: user._id,
+          password: password.current.value,
+          confirmPassword: confirmPassword.current.value,
         };
 
-        const result = await axios.post(process.env.REACT_APP_API_URL+'/users/update', data);
+        const result = await axios.post(process.env.REACT_APP_API_URL+'/users/update', data, headers);
         if (result.data.success) {
-        setUser(result.data.user)
-        history.push("/profil");
+          updateUser(dispatch, {user: result.data.user});
+          navigate("/profil");
         } else {
-        setErrors(result.data.errors)
+          setErrors(result.data.errors)
         }
     }
 
     return (
         <div className="edit-profil-container">
-        {user_data ? (
+        {user ? (
           <div className="edit-body">
            {errors.length > 0 
             ? errors.map((err, index) => <p key={index}>{err.msg}</p>)
@@ -66,20 +70,20 @@ export default function ProfilUpdate({user_data, setUser}) {
               <div className='edit-first-line'>
                 <div className='edit-group-duo'>
                   <label htmlFor="firstname">{t('modifUser.firstname')}</label>
-                  <input type="text" placeholder={t('modifUser.firstname')} name='firstname' className='edit-firstname' defaultValue={user_data.firstname} ref={firstname} />
+                  <input type="text" placeholder={t('modifUser.firstname')} name='firstname' className='edit-firstname' defaultValue={user.firstname} ref={firstname} />
                 </div>
                 <div className='edit-group-duo'>
                   <label htmlFor="lastname">{t('modifUser.lastname')}</label>
-                  <input type="text" placeholder={t('modifUser.lastname')} name='lastname' className='edit-lastname' defaultValue={user_data.lastname} ref={lastname} />
+                  <input type="text" placeholder={t('modifUser.lastname')} name='lastname' className='edit-lastname' defaultValue={user.lastname} ref={lastname} />
                 </div>
               </div>
               <div className='edit-group'>
                 <label htmlFor="email">{t('modifUser.email')}</label>
-                <input type="text" placeholder={t('modifUser.email')} name='email' className='edit-email' defaultValue={user_data.email} ref={email} />
+                <input type="text" placeholder={t('modifUser.email')} name='email' className='edit-email' defaultValue={user.email} ref={email} />
               </div>
               <div className='edit-group'>
                 <label htmlFor="pseudo">{t('modifUser.username')}</label>
-                <input type="text" placeholder={t('modifUser.username')} name='pseudo' className='edit-username' defaultValue={user_data.username} ref={username} />
+                <input type="text" placeholder={t('modifUser.username')} name='pseudo' className='edit-username' defaultValue={user.username} ref={username} />
               </div>
     
               <div className='edit-password-group' style={{display: changePass ? 'block' : 'none'}}>
@@ -108,7 +112,7 @@ export default function ProfilUpdate({user_data, setUser}) {
             </div>
             <div className="gameGroup">
               {games.map((game,index)=>(
-                <LinkAccountInput key={index} data={game} available={true} linked_list={user_data.linked_account} user_id={user_data._id}/>
+                <LinkAccountInput key={index} data={game} available={true} linked_list={user.linked_account} user_id={user._id}/>
               ))}
             </div>
           </section>

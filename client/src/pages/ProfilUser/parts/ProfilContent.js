@@ -3,7 +3,7 @@ import {Chart as Stat} from 'react-chartjs-2';
 import Chart from 'chart.js/auto'
 import './ProfilContent.css'
 
-export default function ProfilContent({user_data}) {
+export default function ProfilContent() {
     const state = {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
         datasets: [
