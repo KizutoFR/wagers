@@ -177,7 +177,7 @@ export default function Dashboard({ user_data, setToken }) {
             </div>
             <div className="dashboard-body">
                 <div className="dashboard-content">
-                    <div>
+                    <div className='dashboard-firstpart'>
                         <div className="dashboard-profile">
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
