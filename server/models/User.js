@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema({
     },
     auth_token: {
         type: String,
-        required: true
+        required: false
     },
     titles: [{
         type: mongoose.Schema.Types.ObjectId,
