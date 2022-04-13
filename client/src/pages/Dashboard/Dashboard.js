@@ -30,7 +30,8 @@ export default function Dashboard() {
         if(SLUG.includes(slug)){
             if(auth.user){
                 await getScoreBoard()
-                const linked = auth.user.linked_account.find(element => element.account_type.slug === slug)
+                console.log(auth.user);
+                const linked = auth.user.linked_account.find(element => element.account_type.type === slug)
                 setLinkedUsername(linked.username);
                 getChallenges(slug);
                 await getCurrentGameInfo(slug, linked.username);
