@@ -20,6 +20,7 @@ export async function login(dispatch, payload) {
 }
 
 export async function updateUser(dispatch, payload) {
+    console.log(payload);
     dispatch({type: 'UPDATE_USER', payload})
 }
 

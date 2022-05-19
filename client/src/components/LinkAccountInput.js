@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 import Swal from 'sweetalert2'
 import { headers } from '../utils/config';
+import { useAuthDispatch, useAuthState, updateUser } from '../context/Auth';
 
 
 export default function LinkAccountInput({ data, available, linked_list, user_id }) {
@@ -10,7 +11,8 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
     const [accountName, setAccountName] = useState('');
     const [modifiedName, setModifiedName] = useState('');
     const [linkedId, setLinkedId] = useState('');
-
+    const auth = useAuthState();
+    const dispatch = useAuthDispatch();
 
     const stopPropagation = (e) => {
         e.stopPropagation();
@@ -34,7 +36,10 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
 
         }
         if(res.data.success) {
-            //TODO: Afficher une jolie notif avec le message
+            const accountToUpdate = auth.user.linked_account.findIndex((elem) => elem.username === accountName);
+            auth.user.linked_account[accountToUpdate].username = modifiedName;
+            updateUser(dispatch, {user: auth.user});
+
             Swal.fire({
                 title: 'Account linked successfully !',
                 text: `${modifiedName} is now your account linked for one month`,
