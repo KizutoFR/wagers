@@ -71,5 +71,16 @@
         "stake2": "Pari",
         "afterBet": "Après pari",
         "confirmBet": "Confirmer le pari"
+    },
+    "match":{
+        "nomatch":"Aucune partie en cours"
+    },
+    "bet":{
+        "nobet":"Pas de pari en cours"
+    },
+    "challenges":{
+        "title":"Challenges",
+        "limitedtime":"durée limitée",
+        "nochallenges":"Aucun challenges disponible..."
     }
 }
