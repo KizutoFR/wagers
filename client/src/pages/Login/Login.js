@@ -12,7 +12,8 @@ export default function Login({setToken}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAuthDispatch()
-  const { loading, errorMessage } = useAuthState()
+  const { loading, errorMessage } = useAuthState();
+  
 
   const changePassword = (e) => {
     setPassword(e.target.value);

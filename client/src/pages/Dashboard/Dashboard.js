@@ -6,7 +6,6 @@ import { SLUG } from '../../utils/config'
 import './Dashboard.css';
 import Swal from 'sweetalert2'
 import { useTranslation } from "react-i18next";
-import { headers } from '../../utils/config';
 
 import CurrentBet from '../../components/CurrentBet/CurrentBet';
 import CurrentMatch from '../../components/CurrentMatch/CurrentMatch';
@@ -44,14 +43,13 @@ export default function Dashboard() {
     }, [auth.user, slug]);
 
     const getChallenges = (slug) => {
-        axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug, headers).then(res => {
+        axios.get(process.env.REACT_APP_API_URL+'/challenges/'+slug, auth.config).then(res => {
             setChallenges(res.data.challenges);
         })
     }
 
     async function getCurrentGameInfo(game_slug, username) {
-        console.log("CURRENT GAME INFO")
-        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username, headers).then(res => {
+        return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username, auth.config).then(res => {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
                 setBet(res.data.bet);
@@ -61,13 +59,13 @@ export default function Dashboard() {
     }
 
     async function getScoreBoard(){
-        return await axios.get(process.env.REACT_APP_API_URL+'/users/scoreboard', headers).then(res => {
+        return await axios.get(process.env.REACT_APP_API_URL+'/users/scoreboard', auth.config).then(res => {
             setScoreboard(res.data.users)
         })
     }
 
     const updateChallengesProgress = (id, value) => {
-        axios.post(process.env.REACT_APP_API_URL+'/challenges/progress', {challenge_id: id, value}, headers);
+        axios.post(process.env.REACT_APP_API_URL+'/challenges/progress', {challenge_id: id, value}, auth.config);
         const newChallenges = challenges.map(chall => {
             chall.progress = (chall.progress || 0) + value;
             return chall;
@@ -119,8 +117,8 @@ export default function Dashboard() {
                 valideBet = false;
             }
           if(valideBet){
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: auth.user.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)}, headers);
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + (100 * currentBet.requirements.length)}, headers);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: auth.user.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier)}, auth.config);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + (100 * currentBet.requirements.length)}, auth.config);
             auth.user.exp = auth.user.exp + (100 * currentBet.requirements.length);
             auth.user.coins = auth.user.coins + Math.ceil(currentBet.coin_put * currentBet.multiplier);
             Emitter.emit('UPDATE_COINS', auth.user.coins);
@@ -131,7 +129,7 @@ export default function Dashboard() {
               confirmButtonText: 'Ok'
             })
           } else {
-            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + DEFAULT_LOOSE_XP}, headers);
+            await axios.post(process.env.REACT_APP_API_URL+'/users/update-exp', {user_id: auth.user._id, new_exp: auth.user.exp + DEFAULT_LOOSE_XP}, auth.config);
             auth.user.exp = auth.user.exp + DEFAULT_LOOSE_XP;
             Swal.fire({
               title: 'You lost your bet :/',
@@ -140,7 +138,7 @@ export default function Dashboard() {
               confirmButtonText: 'Ok'
             })
           }
-          await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, headers);
+          await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, auth.config);
           setBet(null);
         } else {
           Swal.fire({
@@ -185,29 +183,29 @@ export default function Dashboard() {
                             </div>
                             <div className="dashboard-profile-footer">
                                 <h3>{auth.user.username}</h3>
-                                <p>Level 50</p>
+                                <p>{Math.round(auth.user.exp/1000)}</p>
                             </div>
                             <div className="dashboard-profile-xp">
                                 <div></div>
                             </div>
                         </div>
                         <div className="dashboard-game-selector">
-                            <div>
+                            <div className="disabled">
                                 <img src={"images/r6_selector.svg"} alt="game selector figure"/>
                             </div>
                             <div className="active">
                                 <img src={"images/lol_selector.png"} alt="game selector figure"/>
                             </div>
-                            <div>
+                            <div className="disabled">
                                 <img src={"images/valorant_selector.svg"} alt="game selector figure"/>
                             </div>
                         </div>
                         <div className="dashboard-scoreboard">
-                            <h2>{t('header.leaderboard')}</h2>
+                            <h2>{t('header.leaderboard').toUpperCase()}</h2>
                             <ul className="scoreboard-filters">
                                 <li className="active">{t('header.global')}</li>
-                                <li>{t('header.year')}</li>
-                                <li>{t('header.month')}</li>
+                                {/* <li>{t('header.year')}</li>
+                                <li>{t('header.month')}</li> */}
                             </ul>
                             <ul className="scoreboard-list">
                                 {scoreboard.map((u, index) => (
@@ -224,9 +222,9 @@ export default function Dashboard() {
                     </div>
                     <div>
                         <div className="dashboard-separator">
-                            <h3>challenges</h3>
+                            <h3>{t('challenges.title')}</h3>
                             <div className="separator separator-little"></div>
-                            <p>durée limitée</p>
+                            <p>{t('challenges.limitedtime')}</p>
                         </div>
 
                         {/* TODO: Faire un composant pour les challenges quand implentés */}
@@ -234,12 +232,12 @@ export default function Dashboard() {
                         {challenges.length > 0 ? challenges.map((challenge, index) => (
                             <Challenge challenge={challenge} key={index} />
                         )) : (
-                            <p>Aucun challenges disponible...</p>
+                            <p>{t('challenges.nochallenges')}</p>
                         )}
                         </div>
 
                         <div className="dashboard-separator">
-                            <h3>{t('header.current-match')}</h3>
+                            <h3>{t('header.current-match').toUpperCase()}</h3>
                             <div className="separator"></div>
                             {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>{t('header.make-a-bet')}</button> : <button style={{cursor: "not-allowed"}} disabled>{t('header.make-a-bet')}</button>}
                         </div>
@@ -257,14 +255,14 @@ export default function Dashboard() {
                 <div className="dashboard-row">
                     <div>
                         <div className="dashboard-separator">
-                            <h3>{t('header.current-bet')}</h3>
+                            <h3>{t('header.current-bet').toUpperCase()}</h3>
                             <div className="separator"></div>
                         </div>
                         <CurrentBet current_bet={currentBet} verifyBetWin={verifyBetWin} />
                     </div>
                     <div>
                         <div className="dashboard-separator">
-                            <h3>{t('header.shop')}</h3>
+                            <h3>{t('header.shop').toUpperCase()}</h3>
                             <div className="separator"></div>
                         </div>
                         <div className="dashboard-shop">

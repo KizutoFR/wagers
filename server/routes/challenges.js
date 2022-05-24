@@ -19,7 +19,6 @@ router.get('/:game', async (req, res) => {
         });
         res.status(200).json({challenges, success: true})
     } catch (err) {
-        console.log(err);
         res.status(400).json({message: err, success: false})
     }
 })

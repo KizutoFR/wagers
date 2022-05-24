@@ -2,7 +2,6 @@ import React, {useEffect,useState} from "react";
 import Emitter from '../../services/Emitter';
 import {useParams} from 'react-router-dom';
 import axios from '../../utils/axiosconfig';
-import { headers } from "../../utils/config";
 import { SLUG, VICTORY_REQUIREMENTS } from '../../utils/config.json'
 import './Game.css'
 import Swal from 'sweetalert2'
@@ -15,7 +14,7 @@ export default function Game() {
   const [betAlreadyExist, setBetAlreadyExist] = useState(false);
   const [verifying, setVerifying] = useState(false)
   const {slug} = useParams();
-  const {user} = useAuthState();
+  const {user, config} = useAuthState();
 
   useEffect(() => {
     if(SLUG.includes(slug)){
@@ -27,7 +26,7 @@ export default function Game() {
   }, [slug])
 
   const getCurrentGameInfo = async (game_slug, username) => {
-    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user._id+'/'+username, headers)
+    return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+user._id+'/'+username, config)
       .then(res => {
         setData({currentMatch: res.data.match.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.match.matchDetails})
         if(res.data.bet){
@@ -40,7 +39,7 @@ export default function Game() {
 
   const createBet = async (data) => {
     setBet(data);
-    await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (user.coins - data.coin_put)}, headers);
+    await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (user.coins - data.coin_put)}, config);
     user.coins = user.coins - data.coin_put;
     Emitter.emit('UPDATE_COINS', user.coins);
   }
@@ -62,7 +61,7 @@ export default function Game() {
         }
       })
       if(valideBet){
-        await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (currentBet.coin_put * currentBet.multiplier)}, headers);
+        await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: user._id, new_coins: (currentBet.coin_put * currentBet.multiplier)}, config);
         user.coins = currentBet.coin_put * currentBet.multiplier;
         Emitter.emit('UPDATE_COINS', user.coins);
         Swal.fire({
@@ -79,7 +78,7 @@ export default function Game() {
           confirmButtonText: 'Ok'
         })
       }
-      await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, headers);
+      await axios.post(process.env.REACT_APP_API_URL+'/games/bet/save', {bet_id: currentBet._id}, config);
       setBet(null);
     } else {
       Swal.fire({

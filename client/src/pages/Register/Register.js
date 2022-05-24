@@ -5,7 +5,6 @@ import './Register.css';
 import { useTranslation } from "react-i18next";
 import { FaAt,  FaKey} from 'react-icons/fa';
 import Lang from "../../components/Lang/Lang";
-import { headers } from '../../utils/config';
 
 export default function Register() {
   const email = useRef();
@@ -28,7 +27,7 @@ export default function Register() {
       password: password.current.value, 
       confirmPassword: confirmPassword.current.value
     };
-    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data, headers);
+    const result = await axios.post(process.env.REACT_APP_API_URL+'/auth/register', data);
     if (result.data.success) {
       navigate('/login');
     } else {

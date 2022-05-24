@@ -1,9 +1,10 @@
 import React from "react";
 import { FaEye} from 'react-icons/fa';
 import './CurrentMatch.css'
+import { useTranslation } from "react-i18next";
 
 export default function CurrentMatch({currentMatch, linkedUsername}) {
- 
+  const { t } = useTranslation();
 
   return (
     <div style={{height: "100%"}}>
@@ -15,10 +16,10 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
             </video>
             {currentMatch.participants.map((part, index) => (
               <div key={index} className={(part.summonerName === linkedUsername ? 'match-item active' : 'match-item')}>
-                  <div className="champ-banner" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
+                  <div className="champ-banner" style={{backgroundImage: `url('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
                     <div className="summoner-pic">
                       {/* Patch a retrouver sur : https://developer.riotgames.com/docs/lol */}
-                      <img src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
+                      <img src={`https://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
                       <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>
                     </div>
                     <p>{part.summonerName}</p>
@@ -27,7 +28,7 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
               </div>
             ))}
           </div>
-        ) : <p className="no-match">Aucune partie en cours</p>}
+        ) : <p className="no-match">{t('match.nomatch')}</p>}
     </div>
   )
 }

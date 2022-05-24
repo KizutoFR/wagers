@@ -207,7 +207,7 @@ router.post('/battlepass/cells/claim', async (req, res) => {
       user.banners.push(reward._id);
       break;
     default:
-      console.log("REWARD TYPE NOT FOUND");
+      console.error("REWARD TYPE NOT FOUND");
       break;
   }
 

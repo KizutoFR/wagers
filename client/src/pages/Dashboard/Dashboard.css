@@ -229,6 +229,7 @@
     align-items: center;
     list-style-type: none;
     margin: 25px 0;
+    justify-content: center;
 }
 
 .dashboard-content .dashboard-scoreboard .scoreboard-filters li {
@@ -489,6 +490,11 @@
     width: 100%;
 }
 
+.disabled{
+    pointer-events: none;
+    opacity: 0.7;
+}
+
 @media only screen and (max-width: 1200px) {
     .dashboard-banner h1 {
         font-size: 5em;
@@ -521,7 +527,7 @@
     }
 
     .dashboard-content > div:first-child {
-        width: 350px;
+        width: 450px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -569,7 +575,7 @@
 
 @media (max-width: 500px) {
     .dashboard-content > div:first-child {
-        width: 280px;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
     }

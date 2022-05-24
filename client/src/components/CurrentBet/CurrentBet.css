@@ -5,6 +5,7 @@
     position: relative;
     width: calc(100% - 15px);
     margin-top: 30px;
+    height: 350px;
 }
 
 .dashboard-bet > div {
@@ -109,7 +110,15 @@
 }
 
 .no-bet {
-    height: 350px;
+    
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    color: #464174;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    margin: 0;
+    font-size: 20px;
 }
 
 .dashboard-bet .dashboard-bet-right {

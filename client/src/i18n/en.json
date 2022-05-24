@@ -12,7 +12,7 @@
         "current-bet": "CURRENT BET",
         "shop": "Shop",
         "challenges": "CHALLENGES",
-        "leaderboard": "LEASERBOARD"
+        "leaderboard": "LEADERBOARD"
     },
     "login": {
         "register": "Register",
@@ -70,5 +70,16 @@
         "stake2": "Stake",
         "afterBet": "After bet",
         "confirmBet": "Confirm bet"
-        }
+        },
+    "match":{
+        "nomatch":"No current match"
+    },
+    "bet":{
+        "nobet":"No current bet"
+    },
+    "challenges":{
+        "title":"Challenges",
+        "limitedtime":"Limited Time",
+        "nochallenges":"No challenges available"
+    }
 }

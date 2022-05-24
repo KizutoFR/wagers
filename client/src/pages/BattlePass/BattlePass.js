@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from '../../utils/axiosconfig';
 import './BattlePass.css';
-import { headers } from '../../utils/config';
 import BattlePassCell from '../../components/BattlePassCell/BattlePassCell';
 import Emitter from '../../services/Emitter';
 import { useAuthState } from '../../context/Auth';
@@ -12,7 +11,7 @@ export default function BattlePass() {
     const cells = useRef([]);
     const battlepass = useRef();
     let pos = { left: 0, x: 0 };
-    const { user } = useAuthState();
+    const { user, config } = useAuthState();
 
     useEffect(() => {
         getCurrentBattlePass();
@@ -28,13 +27,13 @@ export default function BattlePass() {
     }, [cells, pass])
 
     const claimReward = (data) => {
-        axios.post(process.env.REACT_APP_API_URL+'/users/battlepass/cells/claim', {...data, pass_id: pass._id}, headers)
+        axios.post(process.env.REACT_APP_API_URL+'/users/battlepass/cells/claim', {...data, pass_id: pass._id}, config)
             .then((response) => setClaimedCells((prevState) => [...prevState, response.data.cell]))
             .catch(err => console.error(err));
     }
 
     const getCurrentBattlePass = async () => {
-        const currentPass = await axios.get(process.env.REACT_APP_API_URL+'/users/battlepass', headers);
+        const currentPass = await axios.get(process.env.REACT_APP_API_URL+'/users/battlepass', config);
         setPass(currentPass.data.pass);
         setClaimedCells(currentPass.data.claimedCells);
     }

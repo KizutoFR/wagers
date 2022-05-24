@@ -2,7 +2,6 @@ import axios from '../utils/axiosconfig';
 import React, { useEffect, useState } from 'react';
 import './LinkAccountInput.css';
 import Swal from 'sweetalert2'
-import { headers } from '../utils/config';
 import { useAuthDispatch, useAuthState, updateUser } from '../context/Auth';
 
 
@@ -27,12 +26,12 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
         if(accountName !== '') {
             //TODO: put <select> to choose account_region
             // modifyAccountName(modifiedName, linkedId, 'EUW');
-            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: modifiedName, linked_id:linkedId, account_region:'EUW' }, headers);
+            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/modify', { name: modifiedName, linked_id:linkedId, account_region:'EUW' }, auth.config);
 
         } else {
             //TODO: put <select> to choose account_region
             // createLinkedAccount(modifiedName, data._id, user_id, 'EUW');
-            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id:data._id, user_id, account_region:'EUW' }, headers);
+            res = await axios.post(process.env.REACT_APP_API_URL+'/accounts/linked/create', { name: modifiedName, account_id:data._id, user_id, account_region:'EUW' }, auth.config);
 
         }
         if(res.data.success) {

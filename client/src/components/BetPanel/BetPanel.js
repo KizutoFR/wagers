@@ -2,7 +2,7 @@ import axios from '../../utils/axiosconfig';
 import React, {useState, useEffect} from 'react';
 import Emitter from '../../services/Emitter';
 import { FaPlus, FaCaretLeft, FaTrash } from 'react-icons/fa';
-import { headers, VICTORY_REQUIREMENTS } from '../../utils/config'
+import { VICTORY_REQUIREMENTS } from '../../utils/config'
 import './BetPanel.css';
 import Swal from 'sweetalert2'
 import { useTranslation } from "react-i18next";
@@ -35,7 +35,7 @@ export default function BetPanel({slug, match_id, setBet, summonerName}) {
   }, [step])
 
   const calculateMultiplier = async () => {
-    await axios.post(process.env.REACT_APP_API_URL+'/games/bet/multiplier', {requirements: list, summonerName}, headers)
+    await axios.post(process.env.REACT_APP_API_URL+'/games/bet/multiplier', {requirements: list, summonerName}, auth.config)
       .then(response => {
         setMultiplier(response.data.multiplier)
         setLoading(false);
@@ -65,7 +65,7 @@ export default function BetPanel({slug, match_id, setBet, summonerName}) {
   }
 
   const confirmBetCreation = async () => {
-    await Promise.all(list.map(el => axios.post(process.env.REACT_APP_API_URL+'/games/requirements/add', el, headers)))
+    await Promise.all(list.map(el => axios.post(process.env.REACT_APP_API_URL+'/games/requirements/add', el, auth.config)))
       .then(async res => {
         const requirements = res.map(r => r.data.data._id);
         await axios.post(process.env.REACT_APP_API_URL+'/games/bet/add', {
@@ -77,10 +77,10 @@ export default function BetPanel({slug, match_id, setBet, summonerName}) {
           coin_put: stake,
           account_id: auth.user.linked_account.find((acc) => acc.account_type.type === slug),
           user: auth.user._id
-        }, headers)
+        }, auth.config)
         .then(async finalbet => {
           setBet(finalbet.data.data);
-          await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: (auth.user.coins - stake)}, headers)
+          await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: (auth.user.coins - stake)}, auth.config)
             .then(() => {
               auth.user.coins = auth.user.coins - stake;
               Emitter.emit('CLOSE_BET_PANEL');
