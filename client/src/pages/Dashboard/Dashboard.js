@@ -25,15 +25,15 @@ export default function Dashboard() {
     const { t } = useTranslation();
     const DEFAULT_LOOSE_XP = 25;
 
-    useEffect(async () => {
+    useEffect(() => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
         if(SLUG.includes(slug)){
             if(auth.user){
-                await getScoreBoard()
+                getScoreBoard()
                 const linked = auth.user.linked_account.find(element => element.account_type.type === slug)
                 setLinkedUsername(linked.username);
                 getChallenges(slug);
-                await getCurrentGameInfo(slug, linked.username);
+                getCurrentGameInfo(slug, linked.username);
             }
         } else {
             setSlug('league-of-legends');
@@ -50,6 +50,7 @@ export default function Dashboard() {
     }
 
     async function getCurrentGameInfo(game_slug, username) {
+        console.log("CURRENT GAME INFO")
         return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username, headers).then(res => {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){

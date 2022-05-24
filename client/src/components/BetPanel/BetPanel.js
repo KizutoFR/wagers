@@ -80,7 +80,7 @@ export default function BetPanel({slug, match_id, setBet, summonerName}) {
         }, headers)
         .then(async finalbet => {
           setBet(finalbet.data.data);
-          await axios.post(process.env.REACT_APP_API_URL+'/auth.users/update-wallet', {user_id: auth.user._id, new_coins: (auth.user.coins - stake)}, headers)
+          await axios.post(process.env.REACT_APP_API_URL+'/users/update-wallet', {user_id: auth.user._id, new_coins: (auth.user.coins - stake)}, headers)
             .then(() => {
               auth.user.coins = auth.user.coins - stake;
               Emitter.emit('CLOSE_BET_PANEL');

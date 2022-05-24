@@ -6,7 +6,7 @@ module.exports = function isAuthenticated(req, res, next) {
     const token = req.header('Authorization');
     if(token) {
         jwt.verify(token, process.env.AUTH_SECRET_TOKEN, (err, decoded) => {
-            req.currentUser = decoded.user;
+            req.currentUser = decoded?.user;
             next();
         })
     } else {

@@ -1,7 +1,9 @@
 .match-container {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-end;
     width: 100%;
     overflow: hidden;
     height: 100%;
