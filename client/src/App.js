@@ -17,7 +17,6 @@ import Footer from './components/Footer/Footer';
 
 import AuthRoute from './components/Route/AuthRoute';
 import UnAuthRoute from './components/Route/UnAuthRoute';
-import { headers } from './utils/config';
 
 export default function App() {
   const auth = useAuthState();
@@ -25,9 +24,8 @@ export default function App() {
 
   useEffect(() => {
     if (auth.auth_token) {
-      axios.get(process.env.REACT_APP_API_URL + '/users/'+ auth.user._id, headers)
+      axios.get(process.env.REACT_APP_API_URL + '/users/'+ auth.user._id, auth.config)
         .then((res) => {
-          console.log(res.data);
           updateUser(dispatch, {user: res.data.user});
         })
     }

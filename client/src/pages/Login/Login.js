@@ -26,7 +26,6 @@ export default function Login({setToken}) {
     e.preventDefault();
     const payload = { email, password };
     try {
-        console.log("try login")
         const res = await login(dispatch, payload);
         if (!res) return;
         navigate('/dashboard');

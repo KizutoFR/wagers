@@ -29,7 +29,6 @@ router.get('/:game/:username', async (req, res) => {
     const opgg = await RiotAPI.getOPGGByName(username, 'EUW');
     res.status(200).json({currentMatch, accountInfo, bet, opgg});
   } catch (err) {
-    console.log(err);
     res.status(400).json({success: false, error: err})
   }
 });

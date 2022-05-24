@@ -1,10 +1,9 @@
 import axios from '../../utils/axiosconfig';
-import { headers } from '../../utils/config';
 
 export async function login(dispatch, payload) {
     try {
         dispatch({ type: "REQUEST_LOGIN" });
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, payload, headers);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, payload);
 
         if (res.data.user) {
             dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
@@ -20,7 +19,6 @@ export async function login(dispatch, payload) {
 }
 
 export async function updateUser(dispatch, payload) {
-    console.log(payload);
     dispatch({type: 'UPDATE_USER', payload})
 }
 

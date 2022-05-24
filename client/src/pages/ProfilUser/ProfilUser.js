@@ -4,13 +4,12 @@ import { useTranslation } from "react-i18next";
 import './ProfilUser.css';
 import ProfilContent from './parts/ProfilContent';
 import ProfilUpdate from './parts/ProfilUpdate';
-import { headers } from '../../utils/config';
 import { useAuthState, logout, useAuthDispatch } from '../../context/Auth';
 
 export default function ProfilUser(){
     const [requestList, setRequestList] = useState([]);
     const [modifying, setModifying] = useState(false);
-    const {user} = useAuthState();
+    const {user, config} = useAuthState();
     const dispatch = useAuthDispatch();
     const { t } = useTranslation();
 
@@ -23,7 +22,7 @@ export default function ProfilUser(){
     }
 
     const getPendingRequest = async (id) => {
-        await axios.get(process.env.REACT_APP_API_URL+'/friends/requests/list/'+id, headers).then(res => setRequestList(res.data.list))
+        await axios.get(process.env.REACT_APP_API_URL+'/friends/requests/list/'+id, config).then(res => setRequestList(res.data.list))
     }
 
     return (

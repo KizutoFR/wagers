@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {useParams, useNavigate } from 'react-router-dom';
+import { useAuthState } from '../../context/Auth';
 import axios from '../../utils/axiosconfig';
-import { headers } from '../../utils/config';
 
 export default function ProfilGlobal({ logged_user }){
   const { id } = useParams();
+  const {config} = useAuthState()
   const [userData, setUserData] = useState(null);
   const [alreadyRequested, setAlreadyRequested] = useState(false)
   const [alreadyFriend, setAlreadyFriend] = useState(false)
@@ -23,13 +24,13 @@ export default function ProfilGlobal({ logged_user }){
   }, [id, logged_user])
 
   async function getUserData(id) {
-    return await axios.get(process.env.REACT_APP_API_URL+'/users/'+id, headers).then(res => {
+    return await axios.get(process.env.REACT_APP_API_URL+'/users/'+id, config).then(res => {
       setUserData(res.data.user)
     }).catch(err => console.error(err))
   }
 
   async function isAlreadyRequested(from, to) {
-    return await axios.get(process.env.REACT_APP_API_URL+'/friends/requested/' + from + '/' + to, headers).then(res => {
+    return await axios.get(process.env.REACT_APP_API_URL+'/friends/requested/' + from + '/' + to, config).then(res => {
       setIsSender(res.data.sender === logged_user._id)
       setAlreadyRequested(res.data.requested);
       setAlreadyFriend(res.data.accepted);
@@ -37,28 +38,28 @@ export default function ProfilGlobal({ logged_user }){
   }
 
   async function sendFriendRequest() {
-    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/create', {from: logged_user._id, to: id}, headers).then(res => {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/create', {from: logged_user._id, to: id}, config).then(res => {
       setIsSender(true)
       setAlreadyRequested(true);
     })
   }
 
   async function removeFromFriends() {
-    return await axios.post(process.env.REACT_APP_API_URL+'/friends/remove', {from: logged_user._id, to: id}, headers).then(res => {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/remove', {from: logged_user._id, to: id}, config).then(res => {
       setAlreadyFriend(false);
       setAlreadyRequested(false);
     })
   }
 
   async function acceptFriendRequest() {
-    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: true}, headers).then(res => {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: true}, config).then(res => {
       setAlreadyFriend(true);
       setAlreadyRequested(false);
     })
   }
 
   async function declineFriendRequest() {
-    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: false}, headers).then(res => {
+    return await axios.post(process.env.REACT_APP_API_URL+'/friends/requests/update', {from: id, to: logged_user._id, accept: false}, config).then(res => {
       setAlreadyFriend(true);
       setAlreadyRequested(false);
     })

@@ -12,6 +12,11 @@ export const initialState = {
     auth_token: auth_token,
     user: user,
     loading: false,
+    config: {
+        headers: {
+            'Authorization': auth_token
+        }
+    },
     errorMessage: null
 }
 
@@ -27,13 +32,21 @@ export const AuthReducer = (initialState, action) => {
                 ...initialState,
                 user: action.payload.user,
                 auth_token: action.payload.accessToken,
+                config: {
+                    headers: {
+                        'Authorization': action.payload.accessToken
+                    }
+                },
                 loading: false
             }
         case "LOGOUT":
             return {
                 ...initialState,
                 user: null,
-                auth_token: null
+                auth_token: null,
+                config: {
+                    headers: {}
+                },
             }
         case "LOGIN_ERROR":
             return {

@@ -96,7 +96,6 @@ class RiotAPI {
         return new Promise(async (resolve, reject) => {
             const summoner = await this.getSummonerByName(summonerName, region)
             let currentMatch = {}
-            console.log("get last match", summoner);
             if(summoner) {
                 currentMatch = await this.getLastMatch(summoner.id, region);
                 let current_match_id = match_id;

@@ -15,10 +15,10 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
             </video>
             {currentMatch.participants.map((part, index) => (
               <div key={index} className={(part.summonerName === linkedUsername ? 'match-item active' : 'match-item')}>
-                  <div className="champ-banner" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
+                  <div className="champ-banner" style={{backgroundImage: `url('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
                     <div className="summoner-pic">
                       {/* Patch a retrouver sur : https://developer.riotgames.com/docs/lol */}
-                      <img src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
+                      <img src={`https://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
                       <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>
                     </div>
                     <p>{part.summonerName}</p>

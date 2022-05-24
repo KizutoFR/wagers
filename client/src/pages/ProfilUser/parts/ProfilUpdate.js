@@ -6,7 +6,6 @@ import './ProfilUpdate.css';
 import { useTranslation } from "react-i18next";
 import LinkAccountInput from '../../../components/LinkAccountInput';
 import { updateUser, useAuthState, useAuthDispatch } from '../../../context/Auth';
-import { headers } from '../../../utils/config';
 
 export default function ProfilUpdate() {
     const firstname = useRef();
@@ -20,7 +19,7 @@ export default function ProfilUpdate() {
     const [errors, setErrors] = useState([]);
     const [changePass, setChangePass] = useState(false);
     const [games, setGames] = useState([]);
-    const {user} = useAuthState();
+    const {user, config} = useAuthState();
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function ProfilUpdate() {
     },[])
 
     const getGames = async () => {
-        const gameInfo = await axios.get(process.env.REACT_APP_API_URL+'/games', headers);
+        const gameInfo = await axios.get(process.env.REACT_APP_API_URL+'/games', config);
         setGames(gameInfo.data.games);
     }
 
@@ -44,7 +43,7 @@ export default function ProfilUpdate() {
           confirmPassword: confirmPassword.current.value,
         };
 
-        const result = await axios.post(process.env.REACT_APP_API_URL+'/users/update', data, headers);
+        const result = await axios.post(process.env.REACT_APP_API_URL+'/users/update', data, config);
         if (result.data.success) {
           updateUser(dispatch, {user: result.data.user});
           navigate("/profil");

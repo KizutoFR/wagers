@@ -1,5 +1,3 @@
-import { useAuthState } from "../context/Auth";
-
 export const SLUG = [
         "league-of-legends"
 ];
@@ -31,9 +29,3 @@ export const VICTORY_REQUIREMENTS = [
         "max": 11
     }
 ];
-
-export const headers = {
-    headers: {
-        'Authorization': localStorage.getItem('wagers_auth_token'),
-    }
-}
