@@ -17,6 +17,7 @@ import Footer from './components/Footer/Footer';
 
 import AuthRoute from './components/Route/AuthRoute';
 import UnAuthRoute from './components/Route/UnAuthRoute';
+import { headers } from './utils/config';
 
 export default function App() {
   const auth = useAuthState();
