@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEye} from 'react-icons/fa';
 import './CurrentMatch.css'
 
 export default function CurrentMatch({currentMatch, linkedUsername}) {
@@ -16,10 +17,12 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
               <div key={index} className={(part.summonerName === linkedUsername ? 'match-item active' : 'match-item')}>
                   <div className="champ-banner" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${part.championName}_0.jpg')`}}>
                     <div className="summoner-pic">
-                      <img src={`http://ddragon.leagueoflegends.com/cdn/11.24.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
+                      {/* Patch a retrouver sur : https://developer.riotgames.com/docs/lol */}
+                      <img src={`http://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
                       <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>
                     </div>
                     <p>{part.summonerName}</p>
+                    <a href={part.opgg} target="_blank">{part.summonerName}<FaEye className="currentmatch-icon" /></a>
                   </div>
               </div>
             ))}

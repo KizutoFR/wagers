@@ -41,6 +41,11 @@
         "email": "Email",
         "coin": "Coins"
     },
+    "profil": {
+        "modif": "Edit profile",
+        "cancel": "Cancel",
+        "logout":"Logout"
+    },
     "modifUser": {
         "firstname": "Firstname",
         "lastname": "Lastname",

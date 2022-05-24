@@ -180,7 +180,7 @@ export default function Dashboard() {
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>auth.user.current_title</p>
+                                    <p>{user_data.current_title ? user_data.current_title : "Novice"} </p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
@@ -254,7 +254,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div className="dashboard-row">
+                <div clasName="dashboard-row">
                     <div>
                         <div className="dashboard-separator">
                             <h3>{t('header.current-bet')}</h3>

@@ -45,8 +45,8 @@ export default function ProfilUser(){
                     <div className="containerProfilInfo">
                         <h2>{user.username}</h2>
                         <div className="containerProfilInfo1">
-                            <p onClick={() => setModifying(!modifying)}>{!modifying ? 'Modifier le profile' : 'Annuler'}</p>
-                            <button onClick={_logout}>Déconnection</button>
+                            <p onClick={() => setModifying(!modifying)}>{!modifying ? t('profil.modif') : t('profil.cancel')}</p>
+                            <button onClick={_logout}>{t('profil.logout')}</button>
                         </div>
                     </div>
                     {!modifying ? <ProfilContent /> : <ProfilUpdate />}

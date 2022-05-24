@@ -103,6 +103,7 @@ class RiotAPI {
                 if(currentMatch) {
                     currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
                         let summonerInfo = await this.getSummonerRank(p.summonerId, region);
+                        let opgg = await this.getOPGGByName(p.summonerName,"EUW")
                         const champ = findInChamp(p.championId);
                         let rank = "None";
                         if(summonerInfo){
@@ -114,7 +115,7 @@ class RiotAPI {
                             });
                             rank = rank ? rank.tier : null;
                         }
-                        return {...p, championName: champ, rank}
+                        return {...p, championName: champ, rank, opgg}
                     }))
                 } else {
                     currentMatch = {};
