@@ -103,6 +103,14 @@
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
-    margin-left: 15px;
+    cursor: pointer;
+    width: 100%;
+    
+}
+.containerProfilInfo1 p{
+    text-decoration: none;
+    color: grey;
+    font-size: small;
+    text-align: center;
     cursor: pointer;
 }

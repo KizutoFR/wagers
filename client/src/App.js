@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useAuthState } from "./context/Auth";
+import { updateUser, useAuthDispatch, useAuthState } from "./context/Auth";
 import './App.css';
 
 import Contact from './pages/Contact/Contact.js'
@@ -12,14 +12,26 @@ import ProfilUser from './pages/ProfilUser/ProfilUser.js';
 import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 import Header from './components/Header/Header';
-import axios from 'axios';
+import axios from './utils/axiosconfig';
 import Footer from './components/Footer/Footer';
 
 import AuthRoute from './components/Route/AuthRoute';
 import UnAuthRoute from './components/Route/UnAuthRoute';
+import { headers } from './utils/config';
 
 export default function App() {
   const auth = useAuthState();
+  const dispatch = useAuthDispatch();
+
+  useEffect(() => {
+    if (auth.auth_token) {
+      axios.get(process.env.REACT_APP_API_URL + '/users/'+ auth.user._id, headers)
+        .then((res) => {
+          console.log(res.data);
+          updateUser(dispatch, {user: res.data.user});
+        })
+    }
+  }, [])
 
   return (
     <div>

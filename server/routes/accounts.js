@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const RiotAPI = require('../lib/RiotAPI.js');
 const LinkedAccount = require('../models/LinkedAccount');
+const UserCoin = require('../models/UserCoin.js');
 
 router.post('/linked/modify', async (req, res) => {
   let name = req.body.name;
@@ -15,6 +16,19 @@ router.post('/linked/modify', async (req, res) => {
   } else {
     res.status(400).json({success: false, message: "Unknow summoner"});
   }
+})
+
+router.post('/save-coins',(req, res) =>{
+  User.find({}, async (err, users) => {
+    await users.map(user => {
+      const userCoins = new UserCoin({
+        date: Date.now(),
+        coin: user.coins
+      })
+      userCoins.save();
+    })
+    res.status(200).json({success: true})
+  })
 })
 
 router.post('/linked/create', async (req, res) => {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import { headers } from '../../utils/config';
 
 export async function login(dispatch, payload) {
@@ -20,6 +20,7 @@ export async function login(dispatch, payload) {
 }
 
 export async function updateUser(dispatch, payload) {
+    console.log(payload);
     dispatch({type: 'UPDATE_USER', payload})
 }
 

@@ -1,7 +1,9 @@
 .match-container {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-end;
     width: 100%;
     overflow: hidden;
     height: 100%;
@@ -63,6 +65,12 @@
     flex-direction: row-reverse;
 }
 
+.match-container .match-item:nth-last-child(-n+5) .champ-banner::before{
+    z-index: 0;
+}
+.match-container .match-item:nth-last-child(-n+5) .champ-banner::after{
+    z-index: 3;
+}
 .match-container .match-item .summoner-pic {
     width: 70px;
     height: 70px;
@@ -119,6 +127,8 @@
     font-weight: bolder;
     opacity: 0.2;
     position: absolute;
+    color: white;
+    text-decoration: none;
     text-transform: uppercase;
     left: 100px;
     margin: 0;
@@ -126,9 +136,27 @@
     transform: translateY(-50%);
     width: max-content;
     font-family: 'Akira';
+    z-index: 2;
+}
+
+.match-container .match-item .champ-banner a {
+    opacity: 1;
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    z-index: 5;
+    padding: 0 25px;
 }
 
 .match-container .match-item:nth-last-child(-n+5) .champ-banner p {
     right: 100px;
     left: unset;
+}
+
+.currentmatch-icon{
+    opacity: 0.5;
+    margin: 0 10px;
+}
+.currentmatch-icon:hover{
+    opacity: 1;
 }

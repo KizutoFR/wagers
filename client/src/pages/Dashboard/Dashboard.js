@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import { useAuthState } from "../../context/Auth";
 import Emitter from '../../services/Emitter';
 import { SLUG } from '../../utils/config'
@@ -25,15 +25,15 @@ export default function Dashboard() {
     const { t } = useTranslation();
     const DEFAULT_LOOSE_XP = 25;
 
-    useEffect(async () => {
+    useEffect(() => {
         Emitter.on('CLOSE_BET_PANEL', () => setBetPanel(false));
         if(SLUG.includes(slug)){
             if(auth.user){
-                await getScoreBoard()
-                const linked = auth.user.linked_account.find(element => element.account_type.slug === slug)
+                getScoreBoard()
+                const linked = auth.user.linked_account.find(element => element.account_type.type === slug)
                 setLinkedUsername(linked.username);
                 getChallenges(slug);
-                await getCurrentGameInfo(slug, linked.username);
+                getCurrentGameInfo(slug, linked.username);
             }
         } else {
             setSlug('league-of-legends');
@@ -50,6 +50,7 @@ export default function Dashboard() {
     }
 
     async function getCurrentGameInfo(game_slug, username) {
+        console.log("CURRENT GAME INFO")
         return await axios.get(process.env.REACT_APP_API_URL+'/games/'+game_slug+'/'+username, headers).then(res => {
             setData({currentMatch: res.data.currentMatch, accountInfo: res.data.accountInfo, matchDetails: res.data.currentMatch.matchDetails, opgg:res.data.opgg})
             if(res.data.bet){
@@ -179,7 +180,7 @@ export default function Dashboard() {
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>auth.user.current_title</p>
+                                    <p>{auth.user.current_title ? auth.user.current_title : "Novice"} </p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">

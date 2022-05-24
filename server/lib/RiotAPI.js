@@ -96,28 +96,26 @@ class RiotAPI {
         return new Promise(async (resolve, reject) => {
             const summoner = await this.getSummonerByName(summonerName, region)
             let currentMatch = {}
+            console.log("get last match", summoner);
             if(summoner) {
                 currentMatch = await this.getLastMatch(summoner.id, region);
                 let current_match_id = match_id;
                 if(currentMatch) {
                     currentMatch.participants = await Promise.all(currentMatch.participants.map(async p => {
                         let summonerInfo = await this.getSummonerRank(p.summonerId, region);
+                        let opgg = await this.getOPGGByName(p.summonerName,"EUW")
                         const champ = findInChamp(p.championId);
                         let rank = "None";
                         if(summonerInfo){
                             summonerInfo = summonerInfo.filter(info => allowedQueueType.includes(info.queueType))
                             rank = summonerInfo.find(info => {
-                                if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_SOLO_DUO && info.queueType === "RANKED_SOLO_5x5") {
-                                    return info;
-                                }
-
-                                if(currentMatch.gameQueueConfigId === allowedQueueId.RANKED_FLEX && info.queueType === "RANKED_FLEX_SR") {
+                                if (allowedQueueId.includes(currentMatch.gameQueueConfigId) && allowedQueueType.includes(info.queueType)) {
                                     return info;
                                 }
                             });
                             rank = rank ? rank.tier : null;
                         }
-                        return {...p, championName: champ, rank}
+                        return {...p, championName: champ, rank, opgg}
                     }))
                 } else {
                     currentMatch = {};
@@ -156,13 +154,15 @@ class RiotAPI {
 
 const allowedQueueType = [
     "RANKED_FLEX_SR",
-    "RANKED_SOLO_5x5"
+    "RANKED_SOLO_5x5",
+    "CUSTOM_GAME"
 ]
 
-const allowedQueueId = {
-    "RANKED_SOLO_DUO": 420,
-    "RANKED_FLEX": 440
-}
+const allowedQueueId = [
+    420,
+    440,
+    0
+]
 
 const checkStatus = res => {
     if (res.status === 200)

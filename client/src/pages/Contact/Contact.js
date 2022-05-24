@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
-import axios from 'axios';
 import './Contact.css';
 
 
