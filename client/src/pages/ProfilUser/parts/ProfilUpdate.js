@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../../utils/axiosconfig';
 import { Link } from 'react-router-dom';
 import './ProfilUpdate.css';
 import { useTranslation } from "react-i18next";
@@ -112,7 +112,9 @@ export default function ProfilUpdate() {
             </div>
             <div className="gameGroup">
               {games.map((game,index)=>(
-                <LinkAccountInput key={index} data={game} available={true} linked_list={user.linked_account} user_id={user._id}/>
+                <>
+                  {game.slug === 'league-of-legends' && <LinkAccountInput key={index} data={game} available={true} linked_list={user.linked_account} user_id={user._id}/>}
+                </>
               ))}
             </div>
           </section>

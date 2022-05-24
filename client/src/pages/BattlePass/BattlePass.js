@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import './BattlePass.css';
 import { headers } from '../../utils/config';
 import BattlePassCell from '../../components/BattlePassCell/BattlePassCell';

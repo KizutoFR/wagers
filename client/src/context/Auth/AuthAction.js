@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import { headers } from '../../utils/config';
 
 export async function login(dispatch, payload) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import { useTranslation } from "react-i18next";
 import './ProfilUser.css';
 import ProfilContent from './parts/ProfilContent';

@@ -12,7 +12,7 @@ import ProfilUser from './pages/ProfilUser/ProfilUser.js';
 import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
 import Header from './components/Header/Header';
-import axios from 'axios';
+import axios from './utils/axiosconfig';
 import Footer from './components/Footer/Footer';
 
 import AuthRoute from './components/Route/AuthRoute';

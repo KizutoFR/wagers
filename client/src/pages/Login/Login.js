@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { FaAt,  FaKey} from 'react-icons/fa';
-import axios from 'axios';
 import './Login.css';
 import { login, useAuthState, useAuthDispatch } from '../../context/Auth';
 import { useTranslation } from "react-i18next";
@@ -27,6 +26,7 @@ export default function Login({setToken}) {
     e.preventDefault();
     const payload = { email, password };
     try {
+        console.log("try login")
         const res = await login(dispatch, payload);
         if (!res) return;
         navigate('/dashboard');
@@ -41,7 +41,7 @@ export default function Login({setToken}) {
         <div className='logo'>
           <img src="/images/logo.svg" alt="logo"/>
         </div>
-       {errorMessage !== '' ? <p className="error-message">{errorMessage}</p> : ''}
+       {errorMessage !== '' ? <p className="error-message">{JSON.stringify(errorMessage)}</p> : ''}
         <form>
           <div className="form-element">
             <input type="text" placeholder="Email" value={email} onChange={changeEmail} />

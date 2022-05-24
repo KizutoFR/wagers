@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import { useAuthState } from "../../context/Auth";
 import Emitter from '../../services/Emitter';
 import { SLUG } from '../../utils/config'
@@ -180,7 +180,7 @@ export default function Dashboard() {
                             <div className="dashboard-profile-image">
                                 <img src={"images/lol_thumbnail.jpg"} alt="game thumbnail" />
                                 <div>
-                                    <p>{user_data.current_title ? user_data.current_title : "Novice"} </p>
+                                    <p>{auth.user.current_title ? auth.user.current_title : "Novice"} </p>
                                 </div>
                             </div>
                             <div className="dashboard-profile-footer">
@@ -254,7 +254,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div clasName="dashboard-row">
+                <div className="dashboard-row">
                     <div>
                         <div className="dashboard-separator">
                             <h3>{t('header.current-bet')}</h3>

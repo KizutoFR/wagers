@@ -26,7 +26,7 @@ export default function Header() {
 	<div className={click ?"header fixed" : "header"}>
 		<div className="logo-nav">
 			<div className="logo-container">
-				<a href="/dashboard">
+				<a href="/">
 					<img src="images/logo.svg" className="logo-header" />
 				</a>
 			</div>
@@ -41,9 +41,6 @@ export default function Header() {
 					</div>
 					<div className="option" onClick={closeMobileMenu}>
 						<a href="/shop">{t('header.shop')}</a>
-					</div>
-					<div className="option" onClick={closeMobileMenu}>
-						<a href="/about">{t('header.how-it-works')}</a>
 					</div>
 					<div className="option" onClick={closeMobileMenu}>
 						<a href="/contact">{t('header.contact')}</a>

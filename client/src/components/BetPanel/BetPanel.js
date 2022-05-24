@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utils/axiosconfig';
 import React, {useState, useEffect} from 'react';
 import Emitter from '../../services/Emitter';
 import { FaPlus, FaCaretLeft, FaTrash } from 'react-icons/fa';

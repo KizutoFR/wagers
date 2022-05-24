@@ -14,7 +14,7 @@ export default function ProfilContent() {
             backgroundColor: '#B33CED',
             borderColor: '#F970FE',
             borderWidth: 3,
-            data: [65, 59, 160, 56, 52, 46, 1, 90, 43, 12, 120, 86]
+            data: [65, 59, 160, 56, 52, 0, 0, 0, 0, 0, 0, 0]
             
           }
         ]
