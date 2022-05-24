@@ -1,9 +1,10 @@
 import React from "react";
 import { FaEye} from 'react-icons/fa';
 import './CurrentMatch.css'
+import { useTranslation } from "react-i18next";
 
 export default function CurrentMatch({currentMatch, linkedUsername}) {
- 
+  const { t } = useTranslation();
 
   return (
     <div style={{height: "100%"}}>
@@ -27,7 +28,7 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
               </div>
             ))}
           </div>
-        ) : <p className="no-match">Aucune partie en cours</p>}
+        ) : <p className="no-match">{t('match.nomatch')}</p>}
     </div>
   )
 }

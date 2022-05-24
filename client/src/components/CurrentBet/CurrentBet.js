@@ -1,10 +1,12 @@
 import React, {useRef, useEffect, useState} from 'react';
 import './CurrentBet.css';
+import { useTranslation } from "react-i18next";
 
 export default function CurrentBet({current_bet, verifyBetWin}) {
     const bet_element = useRef();
     const [circleNumber, setCircleNumber] = useState(0);
     const [verifying, setVerifying] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const circleSize = 40;
@@ -58,7 +60,7 @@ export default function CurrentBet({current_bet, verifyBetWin}) {
                     </div>
                 </div>
             ) : (
-                <div className='no-bet'>no bet</div>
+                <div className='no-bet'>{t('bet.nobet')}</div>
             )}
         </div>
     )

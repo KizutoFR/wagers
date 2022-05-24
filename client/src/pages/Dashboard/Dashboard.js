@@ -183,29 +183,29 @@ export default function Dashboard() {
                             </div>
                             <div className="dashboard-profile-footer">
                                 <h3>{auth.user.username}</h3>
-                                <p>Level 50</p>
+                                <p>{Math.round(auth.user.exp/1000)}</p>
                             </div>
                             <div className="dashboard-profile-xp">
                                 <div></div>
                             </div>
                         </div>
                         <div className="dashboard-game-selector">
-                            <div>
+                            <div className="disabled">
                                 <img src={"images/r6_selector.svg"} alt="game selector figure"/>
                             </div>
                             <div className="active">
                                 <img src={"images/lol_selector.png"} alt="game selector figure"/>
                             </div>
-                            <div>
+                            <div className="disabled">
                                 <img src={"images/valorant_selector.svg"} alt="game selector figure"/>
                             </div>
                         </div>
                         <div className="dashboard-scoreboard">
-                            <h2>{t('header.leaderboard')}</h2>
+                            <h2>{t('header.leaderboard').toUpperCase()}</h2>
                             <ul className="scoreboard-filters">
                                 <li className="active">{t('header.global')}</li>
-                                <li>{t('header.year')}</li>
-                                <li>{t('header.month')}</li>
+                                {/* <li>{t('header.year')}</li>
+                                <li>{t('header.month')}</li> */}
                             </ul>
                             <ul className="scoreboard-list">
                                 {scoreboard.map((u, index) => (
@@ -222,9 +222,9 @@ export default function Dashboard() {
                     </div>
                     <div>
                         <div className="dashboard-separator">
-                            <h3>challenges</h3>
+                            <h3>{t('challenges.title')}</h3>
                             <div className="separator separator-little"></div>
-                            <p>durée limitée</p>
+                            <p>{t('challenges.limitedtime')}</p>
                         </div>
 
                         {/* TODO: Faire un composant pour les challenges quand implentés */}
@@ -232,12 +232,12 @@ export default function Dashboard() {
                         {challenges.length > 0 ? challenges.map((challenge, index) => (
                             <Challenge challenge={challenge} key={index} />
                         )) : (
-                            <p>Aucun challenges disponible...</p>
+                            <p>{t('challenges.nochallenges')}</p>
                         )}
                         </div>
 
                         <div className="dashboard-separator">
-                            <h3>{t('header.current-match')}</h3>
+                            <h3>{t('header.current-match').toUpperCase()}</h3>
                             <div className="separator"></div>
                             {data.currentMatch && data.currentMatch.participants && !currentBet ? <button onClick={() => setBetPanel(true)}>{t('header.make-a-bet')}</button> : <button style={{cursor: "not-allowed"}} disabled>{t('header.make-a-bet')}</button>}
                         </div>
@@ -255,14 +255,14 @@ export default function Dashboard() {
                 <div className="dashboard-row">
                     <div>
                         <div className="dashboard-separator">
-                            <h3>{t('header.current-bet')}</h3>
+                            <h3>{t('header.current-bet').toUpperCase()}</h3>
                             <div className="separator"></div>
                         </div>
                         <CurrentBet current_bet={currentBet} verifyBetWin={verifyBetWin} />
                     </div>
                     <div>
                         <div className="dashboard-separator">
-                            <h3>{t('header.shop')}</h3>
+                            <h3>{t('header.shop').toUpperCase()}</h3>
                             <div className="separator"></div>
                         </div>
                         <div className="dashboard-shop">
