@@ -84,35 +84,32 @@ require('dotenv').config();
     }
   
     if (errors.length > 0) {
-      res.send({ success: false, errors: errors })
-    } else {
-      User.findOne({$or : [{ email: email }, {username: username}]}).then(user => {
-        if (user) {
-          errors.push({ msg: 'Email or username already registered' });
-          res.send({ success: false, errors: errors })
-        } else {
-          const newUser = new User({
-            firstname,
-            lastname,
-            username,
-            email,
-            password
-          });
-  
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser.save()
-                .then(() => {
-                  res.json({ success: true, errors: errors })
-                })
-                .catch(err => console.log(err.message));
-            });
-          });
-        }
-      });
+      return res.send({ success: false, errors: errors })
     }
+    User.findOne({$or : [{ email: email }, {username: username}]}).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email or username already registered' });
+        return res.send({ success: false, errors: errors })
+      }
+      const newUser = new User({
+        firstname,
+        lastname,
+        username,
+        email,
+        password
+      });
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser.save()
+            .then(() => {
+              res.json({ success: true, errors: errors })
+            })
+            .catch(err => console.log(err.message));
+        });
+      });
+    });
   })
 
   module.exports = router;
