@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { updateUser, useAuthDispatch, useAuthState } from "./context/Auth";
 import './App.css';
 
@@ -17,11 +17,11 @@ import Footer from './components/Footer/Footer';
 
 import AuthRoute from './components/Route/AuthRoute';
 import UnAuthRoute from './components/Route/UnAuthRoute';
-import { headers } from './utils/config';
 
 export default function App() {
   const auth = useAuthState();
   const dispatch = useAuthDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (auth.auth_token) {
@@ -32,26 +32,33 @@ export default function App() {
     }
   }, [])
 
+  const displayHeader = () => {
+    const routes = ['login', 'register'];
+    let valid = true;
+    for(const route of routes) {
+      if (location.pathname.includes(route)) valid = false
+    }
+    return valid;
+  }
+
   return (
     <div>
-      {auth.auth_token && <Header /> }
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AuthRoute redirect="/login" />}>
-            <Route exact path="/" element={<Homepage />} />
-            <Route exact path='/dashboard' element={<Dashboard />} />
-            <Route exact path="/profil/:id" element={<ProfilGlobal />} />
-            <Route exact path="/profil" element={<ProfilUser />} />
-            <Route exact path="/pass" element={<BattlePass />} />
-            <Route exact path="/contact" element={<Contact />} />
-          </Route>
-          <Route element={<UnAuthRoute redirect="/" />}>
-            <Route exact path='/login' element={<Login/>} />
-            <Route exact path='/register' element={<Register/>} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      {auth.auth_token && <Footer/>}
+      {displayHeader() && <Header />}
+      <Routes>
+        <Route exact path="/" element={<Homepage />} />
+        <Route element={<AuthRoute redirect="/login" />}>
+          <Route exact path='/dashboard' element={<Dashboard />} />
+          <Route exact path="/profil/:id" element={<ProfilGlobal />} />
+          <Route exact path="/profil" element={<ProfilUser />} />
+          <Route exact path="/pass" element={<BattlePass />} />
+          <Route exact path="/contact" element={<Contact />} />
+        </Route>
+        <Route element={<UnAuthRoute redirect="/" />}>
+          <Route exact path='/login' element={<Login/>} />
+          <Route exact path='/register' element={<Register/>} />
+        </Route>
+      </Routes>
+      <Footer/>
     </div>
   )
 }

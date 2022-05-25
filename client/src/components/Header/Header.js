@@ -22,7 +22,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-	setCoins(auth.user.coins)
+	if (auth.user) setCoins(auth.user.coins)
   }, [auth.user])
 
   return (
@@ -49,8 +49,7 @@ export default function Header() {
 						<a href="/contact">{t('header.contact')}</a>
 					</div>
 				</div>
-				<div className="container-right">
-					{/* <div className="container-right"> */}
+				{auth.auth_token && <div className="container-right">
 						<Lang/>
 						<div className="banner-left" onClick={closeMobileMenu}>
 							<button>{t('header.make-a-bet')}</button>
@@ -65,7 +64,7 @@ export default function Header() {
 						<div className="pdp" onClick={closeMobileMenu}>
 							<a href={`/profil`}><img src="/images/PP.svg" alt="profile picture"/></a>
 						</div>
-				</div>
+				</div>}
 			</div>
 
 		</div>
