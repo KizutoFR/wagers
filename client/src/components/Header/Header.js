@@ -15,12 +15,15 @@ export default function Header() {
   const auth = useAuthState();
 
   useEffect(() => {
-	setCoins(auth.user.coins)
 	Emitter.on('UPDATE_COINS', (val) => setCoins(val));
     return () => {
       Emitter.off('UPDATE_COINS')
     }
   }, []);
+
+  useEffect(() => {
+	setCoins(auth.user.coins)
+  }, [auth.user])
 
   return (
 	<div className={click ?"header fixed" : "header"}>
