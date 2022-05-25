@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard/Dashboard.js';
 import ProfilUser from './pages/ProfilUser/ProfilUser.js';
 import BattlePass from './pages/BattlePass/BattlePass.js';
 import ProfilGlobal from './pages/ProfilGlobal/ProfilGlobal';
+import NotFound from './pages/NotFound/NotFound';
 import Header from './components/Header/Header';
 import axios from './utils/axiosconfig';
 import Footer from './components/Footer/Footer';
@@ -57,6 +58,7 @@ export default function App() {
           <Route exact path='/login' element={<Login/>} />
           <Route exact path='/register' element={<Register/>} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
       {hideOnAuthPages() && <Footer />}
     </div>
