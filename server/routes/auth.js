@@ -38,7 +38,7 @@ require('dotenv').config();
       }) 
       .then(user => {
         if(!user) {
-          res.status(400).json({ success: false, message: 'Incorrect email or password'})
+          res.status(200).json({ success: false, message: 'Incorrect email or password'})
           return;
         }
         bcrypt.compare(password, user.password, (err, isMatch) => {
