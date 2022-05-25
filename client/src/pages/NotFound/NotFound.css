@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-p {
+.notfound-container p {
     color: #fff;
     font-size: 6rem;
     font-weight: bold;
