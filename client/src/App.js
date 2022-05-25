@@ -34,11 +34,11 @@ export default function App() {
 
   return (
     <div>
-      {auth.auth_token && <Header /> }
+      <Header />
       <BrowserRouter>
         <Routes>
+          <Route exact path="/" element={<Homepage />} />
           <Route element={<AuthRoute redirect="/login" />}>
-            <Route exact path="/" element={<Homepage />} />
             <Route exact path='/dashboard' element={<Dashboard />} />
             <Route exact path="/profil/:id" element={<ProfilGlobal />} />
             <Route exact path="/profil" element={<ProfilUser />} />
@@ -51,7 +51,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-      {auth.auth_token && <Footer/>}
+      <Footer/>
     </div>
   )
 }

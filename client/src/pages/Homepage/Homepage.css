@@ -108,18 +108,28 @@
     overflow-x: hidden;
   }
 
+  .Presentation3titre {
+    position: relative;
+  }
+
   .Presentation3titre h2{
    position: absolute;
-      text-align: center;
-      color:#F970FE;
+    text-align: center;
+    color:#F970FE;
+    font-family: 'Black Signature';
+    font-size: 4rem;
+    text-shadow: 0px 0px 20px rgba(249,112,254,0.91);
+    font-weight: 100;
+    margin: 0;
+    top: 0;
     width: 100%;
     text-align: center;
       
   }
   .Presentation3titre h3{
-    color:black;
+    color:#08061A;
     font-family: 'Akira Super';
-    font-size: 35px;
+    font-size: 6rem;
     text-align: center;
     margin-bottom:0 ;
     margin-top:25px;
@@ -141,7 +151,8 @@
   width: 75%;
   border-radius: 6px;
   z-index: 10;
-  border: 3px solid black;
+  -webkit-box-shadow: 0px 0px 45px -10px rgba(249,112,254,0.52); 
+  box-shadow: 0px 0px 45px -10px rgba(249,112,254,0.52);
 }
 .Presentation3imgbot{
   display: flex;
@@ -167,21 +178,26 @@
 .Profiltitre{
   z-index: auto;
   width: 100%;
+  position: relative;
 }
 .Profiltitre h2{
   position: absolute;
-      text-align: center;
-      color:#F970FE;
+    text-align: center;
+    color:#F970FE;
+    text-shadow: 0px 0px 20px rgba(249,112,254,0.91);
     width: 100%;
     text-align: center;
-    font-size:x-large;
-
+    font-family: 'Black Signature';
+    font-size: 4rem;
+    font-weight: 100;
+    margin: 0;
+    top: 0;
     
 }
 .Profiltitre h3{
-  color:black;
+  color:#08061A;
   font-family: 'Akira Super';
-  font-size: 35px;
+  font-size: 6rem;
   text-align: center;
   margin-bottom:0 ;
   margin-top:25px;
@@ -219,9 +235,9 @@
     
 }
 .Battletitre h3{
-  color:black;
+  color:#08061A;
   font-family: 'Akira Super';
-  font-size: 35px;
+  font-size: 6rem;
   text-align: center;
   margin-bottom:0 ;
   margin-top:25px;
@@ -260,93 +276,6 @@ margin-top: 400px;
   width: 100%;
   height: 100%;
 }
-
-
-.Custom{
-  position:relative;
-  margin-top: 5%; 
-  width: 100%;
-  position: relative;
-}
-.Customtitre{
-  z-index: auto;
-
-}
-.Customtitre h2{
- position: absolute;
-    text-align: center;
-    color:#F970FE;
-  width: 100%;
-  text-align: center;
-  font-size:x-large;
-
-    
-}
-.Customtitre h3{
-
-  color:black;
-  font-family: 'Akira Super';
-  font-size: 35px;
-  text-align: center;
-  margin-bottom:0 ;
-  margin-top:25px;
-  margin-left:0;
-  
-  
-}
-.Customimg{
-  display: flex;
-  margin-top: 150px;
-  position: relative;
-}
-.Customimgtop{
-
-display: flex;
-right:-150px;
-width: 55%;
-overflow: hidden;
-}
-.Customimgtop .banniere{
-width: 100%;
-height: 100%;
-}
-.Customimg1{
-  display: flex;
-  position: relative;
-  width:100%;
-  height:400px;
-}
-.Customimg1bot{
-  display:flex;
-  flex-direction: row;
-  justify-content: end;
-  position: absolute;
-  width: 55%;
-  top:-100px;
-  right:0;
-  
-}
-.Customimg1bot .banniere1{
-width: 100%;
-height: 100%;
-}
-.Customtxtbot{
-  display:flex;
-  flex-direction: row;
-  width: 40%;
-  margin-left: 20px;
-  }
-  .Customtxttop{
-    display:flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 0%;
-    margin-left: 20px;
-   
-    }
-
-
-
 
 
 .Yasuoimg{

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -14,7 +15,7 @@ const Homepage = () => {
                                 and be the one to dominate the leaderboard !
                             </div>
                             <div className="PresentationGauchebouton">
-                                <button>Get started</button>
+                                <Link to="/dashboard"><button>Get started</button></Link>
                             </div>
                         </div>
                         <div className="Presentationimg">
@@ -30,8 +31,8 @@ const Homepage = () => {
                 </div>
                 <div className="Presentation3">
                     <div className="Presentation3titre">
-                        <h2>Bet on</h2>
-                        <h3>Your skills</h3>
+                        <h2>bet on</h2>
+                        <h3>your skills</h3>
                     </div>
                     <div className='presentation3-wrapper'>
                         <div className="Presentation3imgtop">
@@ -44,8 +45,8 @@ const Homepage = () => {
                 </div>
                 <div className="Prfil">
                     <div className="Profiltitre">
-                        <h2>Follow your</h2>
-                        <h3>Progress</h3>
+                        <h2>follow your</h2>
+                        <h3>progress</h3>
                     </div>
                     <div className="Profilimgtop">
                         <img className="pfil" src="/images/pfil.png" />
