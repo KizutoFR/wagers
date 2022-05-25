@@ -32,7 +32,7 @@ export default function App() {
     }
   }, [])
 
-  const displayHeader = () => {
+  const hideOnAuthPages = () => {
     const routes = ['login', 'register'];
     let valid = true;
     for(const route of routes) {
@@ -43,7 +43,7 @@ export default function App() {
 
   return (
     <div>
-      {displayHeader() && <Header />}
+      {hideOnAuthPages() && <Header />}
       <Routes>
         <Route exact path="/" element={<Homepage />} />
         <Route element={<AuthRoute redirect="/login" />}>
@@ -58,7 +58,7 @@ export default function App() {
           <Route exact path='/register' element={<Register/>} />
         </Route>
       </Routes>
-      <Footer/>
+      {hideOnAuthPages() && <Footer />}
     </div>
   )
 }
