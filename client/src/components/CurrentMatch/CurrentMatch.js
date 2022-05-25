@@ -20,7 +20,7 @@ export default function CurrentMatch({currentMatch, linkedUsername}) {
                     <div className="summoner-pic">
                       {/* Patch a retrouver sur : https://developer.riotgames.com/docs/lol */}
                       <img src={`https://ddragon.leagueoflegends.com/cdn/12.9.1/img/profileicon/${part.profileIconId}.png`} alt="game profil icon" />
-                      <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>
+                      {part.rank && <img src={"images/ranks/Emblem_"+part.rank+".png"} alt='rank' className="rank"/>}
                     </div>
                     <p>{part.summonerName}</p>
                     <a href={part.opgg} target="_blank">{part.summonerName}<FaEye className="currentmatch-icon" /></a>
