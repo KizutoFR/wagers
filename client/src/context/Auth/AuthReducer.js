@@ -17,7 +17,7 @@ export const initialState = {
             'Authorization': auth_token
         }
     },
-    errorMessage: null
+    errorMessage: ""
 }
 
 export const AuthReducer = (initialState, action) => {
