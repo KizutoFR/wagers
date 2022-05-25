@@ -1,0 +1,366 @@
+.home{
+  background: rgb(8,6,26);
+  background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
+}
+.Presentation{
+    display: flex;
+    background-color: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 122px);
+  }
+
+  .presentationInnner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+
+  .PresentationGauche{
+    color:white;
+    width: 30%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .PresentationGauche h1 {
+    margin: 0 0 30px 0;
+    font-size: 4rem;
+  }
+
+  .PresentationGauchebouton{
+    width: 100%;
+  height: 100%;
+  }
+  .Presentationimg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+
+}
+.Presentationimg img{
+  width: 100%;
+  height: 100%;
+}
+.Presentation2{
+    width: 100%;
+    height: 400px;
+    position:relative;  
+}
+
+.Presentation2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0, 0), #100E22);
+}
+
+
+.Presentation2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(0,0,0, 0), #100E22);
+}
+
+.Presentation2 .bureau{
+    
+    width: 100%;
+    height: 100%;
+}
+
+.Presentation2 
+.separator{
+    
+    height: 100px;
+    
+}
+
+.PresentationGauchebouton button{
+    background: linear-gradient(120deg, #F970FE, #B33CED);
+  color: #fff;
+  font-weight: bold;
+	font-size: 13px;
+	cursor: pointer;
+	border-radius: 6px;
+  padding: 8px 25px;
+  margin-top: 100px;
+  
+  
+  }
+
+  .Presentation3{
+    margin-top: 50px; 
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .Presentation3titre h2{
+   position: absolute;
+      text-align: center;
+      color:#F970FE;
+    width: 100%;
+    text-align: center;
+      
+  }
+  .Presentation3titre h3{
+    color:black;
+    font-family: 'Akira Super';
+    font-size: 35px;
+    text-align: center;
+    margin-bottom:0 ;
+    margin-top:25px;
+    margin-left:0;
+  
+  }
+
+.Presentation3imgtop{
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.Presentation3imgtop .gain{
+  position: relative;
+  right: -150px;
+  width: 75%;
+  border-radius: 6px;
+  z-index: 10;
+  border: 3px solid black;
+}
+.Presentation3imgbot{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Presentation3imgbot .profils{
+  width:70%;
+  position: relative;
+  top: -80px;
+  left: 0px;
+}
+.Prfil{
+    margin-top: 50px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.Profiltitre{
+  z-index: auto;
+  width: 100%;
+}
+.Profiltitre h2{
+  position: absolute;
+      text-align: center;
+      color:#F970FE;
+    width: 100%;
+    text-align: center;
+    font-size:x-large;
+
+    
+}
+.Profiltitre h3{
+  color:black;
+  font-family: 'Akira Super';
+  font-size: 35px;
+  text-align: center;
+  margin-bottom:0 ;
+  margin-top:25px;
+  margin-left:0;
+  
+}
+.Profilimgtop{
+  width: 90%; 
+  margin-top: 80px;
+}
+.Profilimgtop .pfil{
+  width: 100%;
+  height: 100%;
+}
+
+.Battle{
+  margin-top: 5%; 
+  width: 100%;
+  height:auto;
+  position: relative;
+}
+.Battletitre{
+  z-index: auto;
+
+
+}
+.Battletitre h2{
+ position: absolute;
+    text-align: center;
+    color:#F970FE;
+  width: 100%;
+  text-align: center;
+  font-size:x-large;
+
+    
+}
+.Battletitre h3{
+  color:black;
+  font-family: 'Akira Super';
+  font-size: 35px;
+  text-align: center;
+  margin-bottom:0 ;
+  margin-top:25px;
+  margin-left:0;
+  
+  
+}
+.Battleimg{
+  display: flex;
+  position: relative;
+}
+.Battleimgtop{
+margin-top: 100px;
+right:-150px;
+width: 60%;
+
+}
+.Battleimgtop .degrade{
+  
+  background: rgb(16,14,34);
+background: linear-gradient(90deg, rgba(16,14,34,0) 0%, rgba(16,14,34,1) 100%);
+}
+.Battleimgtop .battle{
+width: 100%;
+height: 100%;
+}
+.Battleimgbot{
+position: absolute;
+right:0px;
+width: 70%;
+margin-top: 400px;
+
+
+}
+.Battleimgbot .battle1{
+  width: 100%;
+  height: 100%;
+}
+
+
+.Custom{
+  position:relative;
+  margin-top: 5%; 
+  width: 100%;
+  position: relative;
+}
+.Customtitre{
+  z-index: auto;
+
+}
+.Customtitre h2{
+ position: absolute;
+    text-align: center;
+    color:#F970FE;
+  width: 100%;
+  text-align: center;
+  font-size:x-large;
+
+    
+}
+.Customtitre h3{
+
+  color:black;
+  font-family: 'Akira Super';
+  font-size: 35px;
+  text-align: center;
+  margin-bottom:0 ;
+  margin-top:25px;
+  margin-left:0;
+  
+  
+}
+.Customimg{
+  display: flex;
+  margin-top: 150px;
+  position: relative;
+}
+.Customimgtop{
+
+display: flex;
+right:-150px;
+width: 55%;
+overflow: hidden;
+}
+.Customimgtop .banniere{
+width: 100%;
+height: 100%;
+}
+.Customimg1{
+  display: flex;
+  position: relative;
+  width:100%;
+  height:400px;
+}
+.Customimg1bot{
+  display:flex;
+  flex-direction: row;
+  justify-content: end;
+  position: absolute;
+  width: 55%;
+  top:-100px;
+  right:0;
+  
+}
+.Customimg1bot .banniere1{
+width: 100%;
+height: 100%;
+}
+.Customtxtbot{
+  display:flex;
+  flex-direction: row;
+  width: 40%;
+  margin-left: 20px;
+  }
+  .Customtxttop{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 0%;
+    margin-left: 20px;
+   
+    }
+
+
+
+
+
+.Yasuoimg{
+  background: rgb(8,6,26);
+  background: linear-gradient(90deg, rgba(8,6,26,1) 0%, rgba(23,21,42,1) 0%);
+  width: 100%;
+  margin-top: 50px;
+}
+.Yasuoimg1 {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.Yasuoimg .Yasuoimg1 .yasuo{
+  width: 100%;
+  height: 100%;
+ 
+}
