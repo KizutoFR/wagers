@@ -30,9 +30,11 @@ export default function Dashboard() {
             if(auth.user){
                 getScoreBoard()
                 const linked = auth.user.linked_account.find(element => element.account_type.type === slug)
-                setLinkedUsername(linked.username);
+                if (linked) {
+                    setLinkedUsername(linked.username);
+                    getCurrentGameInfo(slug, linked.username);
+                }
                 getChallenges(slug);
-                getCurrentGameInfo(slug, linked.username);
             }
         } else {
             setSlug('league-of-legends');
