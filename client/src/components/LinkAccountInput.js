@@ -36,7 +36,13 @@ export default function LinkAccountInput({ data, available, linked_list, user_id
         }
         if(res.data.success) {
             const accountToUpdate = auth.user.linked_account.findIndex((elem) => elem.username === accountName);
-            auth.user.linked_account[accountToUpdate].username = modifiedName;
+            console.log(auth.user.linked_account, accountToUpdate)
+            if (accountToUpdate > -1) {
+                auth.user.linked_account[accountToUpdate].username = modifiedName;
+            } else {
+                auth.user.linked_account.push({username: modifiedName});
+            }
+
             updateUser(dispatch, {user: auth.user});
 
             Swal.fire({
